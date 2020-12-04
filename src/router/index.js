@@ -1,28 +1,48 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import StudentDashboard from "../views/StudentHome.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home
+    redirect: 'studentdashboard',
+    name: "StudentHome",
+    component: StudentDashboard,
+    children : [
+      {
+        path: 'reviewverfassen',
+        component: () =>
+            import(/* webpackChunkName: "ErhalteneReviews" */ '../components/ReviewVerfassen')
+      },
+      {
+        path: 'offeneworkshops',
+        component: () =>
+            import(/* webpackChunkName: "ErhalteneReviews" */ '../components/OffeneWorkshops')
+      },
+      {
+        path: 'workshopabgabe',
+        component: () =>
+            import(/* webpackChunkName: "ErhalteneReviews" */ '../components/WorkshopAbgabe')
+      },
+      {
+        path: 'studentdashboard',
+        component: () =>
+            import(/* webpackChunkName: "StudentenHome" */ '../components/StudentDashboard')
+      }
+    ]
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    path: "*",
+    name: "notFound",
+    redirect: 'studentdashboard'
   }
 ];
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: "history"
 });
 
 export default router;
