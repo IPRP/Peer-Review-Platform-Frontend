@@ -11,25 +11,26 @@ const routes = [
     name: "StudentHome",
     component: StudentDashboard,
     children : [
+      //in the future: path: 'reviewverfassen/:id', same for similar children
       {
         path: 'reviewverfassen',
         component: () =>
-            import(/* webpackChunkName: "ErhalteneReviews" */ '../components/ReviewVerfassen')
+            import(/* webpackChunkName: "ReviewVerfassen" */ '../components/ReviewVerfassen')
       },
       {
         path: 'offeneworkshops',
         component: () =>
-            import(/* webpackChunkName: "ErhalteneReviews" */ '../components/OffeneWorkshops')
+            import(/* webpackChunkName: "OffeneWorkshops" */ '../components/OffeneWorkshops')
       },
       {
         path: 'workshopabgabe',
         component: () =>
-            import(/* webpackChunkName: "ErhalteneReviews" */ '../components/WorkshopAbgabe')
+            import(/* webpackChunkName: "WorkshopAbgabe" */ '../components/WorkshopAbgabe')
       },
       {
         path: 'studentdashboard',
         component: () =>
-            import(/* webpackChunkName: "StudentenHome" */ '../components/StudentDashboard')
+            import(/* webpackChunkName: "StudentDashboard" */ '../components/StudentDashboard')
       }
     ]
   },

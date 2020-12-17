@@ -1,11 +1,24 @@
 @import "~vue-material/dist/theme/engine"; // Import the theme engine
 
 @include md-register-theme("default", (
-        primary: #0c0ced,
-        accent: #0ccef7,
+        primary: #007ae0,
+        accent: lighten(#0ccef7, 20%),
         theme: light
 ));
 
 @import "~vue-material/dist/theme/all"; // Apply the theme
+
+.prp-success {
+  color: white !important;
+  background: #00C851 !important;
+}
+
+.prp-success-icon {
+  color: white !important;
+}
+
+.prp-danger {
+  color: #ff4444 !important;
+}
 
 

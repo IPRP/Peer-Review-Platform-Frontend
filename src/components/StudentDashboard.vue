@@ -1,63 +1,77 @@
 <template>
-  <div class="p-3">
-    <h1 class="d-flex justify-content-start">Mein Dashboard</h1>
-
+  <div class="p-5">
+    <h1 class="pl-5">Mein Dashboard</h1>
     <div class="d-flex">
-      <div class="mr-auto ml-auto">
-        <h2 class="d-flex justify-content-start">Laufende Reviews</h2>
-        <md-list>
-          <md-list-item>
-            <span class="pr-5">Workshop 1 (Abgabe von Lukas Nowy)</span>
-            <div>
-              <md-button class="md-icon-button md-list-action">
-                <md-icon>add_circle</md-icon>
-              </md-button>
-              <md-button class="md-icon-button md-list-action">
-                <md-icon>forward</md-icon>
-              </md-button>
-            </div>
-          </md-list-item>
-        </md-list>
+      <div class="pl-5 pr-5 flex-grow-1">
+        <div class="pb-5">
+          <md-table md-card>
+            <md-table-toolbar>
+              <h1 class="md-title">Laufende Reviews</h1>
+            </md-table-toolbar>
+            <md-table-row>
+              <md-table-cell>Workshop 1 (Abgabe von Lukas Nowy)</md-table-cell>
+              <md-table-cell class="prp-table-action-cell">
+                <md-button class="md-icon-button md-list-action">
+                  <md-icon>add_circle</md-icon>
+                </md-button>
+                <md-button class="md-icon-button md-list-action">
+                  <md-icon>forward</md-icon>
+                </md-button>
+              </md-table-cell>
+            </md-table-row>
+          </md-table>
+        </div>
 
-        <h2 class="d-flex justify-content-start pt-5">Laufende Abgaben</h2>
-        <md-list>
-          <md-list-item>
-            <span class="pr-5">Workshop 3 (Abgabe fehlt)</span>
-            <div>
-              <md-button class="md-icon-button md-list-action">
-                <md-icon>add_circle</md-icon>
-              </md-button>
-              <md-button class="md-icon-button md-list-action">
-                <md-icon>forward</md-icon>
-              </md-button>
-            </div>
-          </md-list-item>
-        </md-list>
-
+        <div>
+          <md-table md-card>
+            <md-table-toolbar>
+              <h1 class="md-title">Laufende Abgaben</h1>
+            </md-table-toolbar>
+            <md-table-row>
+              <md-table-cell>Workshop 3 (Abgabe fehlt)</md-table-cell>
+              <md-table-cell class="prp-table-action-cell">
+                <md-button class="md-icon-button md-list-action">
+                  <md-icon>add_circle</md-icon>
+                </md-button>
+                <md-button class="md-icon-button md-list-action" to="/reviewverfassen">
+                  <md-icon>forward</md-icon>
+                </md-button>
+              </md-table-cell>
+            </md-table-row>
+          </md-table>
+        </div>
       </div>
-      <div class="mr-auto ml-auto">
-        <h2 class="d-flex justify-content-start">Meine Workshops</h2>
 
-        <md-list>
-          <md-list-item>
-            <span class="pr-5">Workshop 32 (Lukas Nowy)</span>
-            <md-button class="md-icon-button md-list-action">
-              <md-icon>info</md-icon>
-            </md-button>
-          </md-list-item>
-          <md-list-item>
-            <span class="pr-5">Workshop 31 (Max Mustermann)</span>
-            <md-button class="md-icon-button md-list-action">
-              <md-icon>info</md-icon>
-            </md-button>
-          </md-list-item>
-          <md-list-item>
-            <span class="pr-5">Workshop 32 (Lukas Nowy)</span>
-            <md-button class="md-icon-button md-list-action">
-              <md-icon>info</md-icon>
-            </md-button>
-          </md-list-item>
-        </md-list>
+      <div class="pr-5 flex-grow-1">
+        <md-table md-card>
+          <md-table-toolbar>
+            <h1 class="md-title">Meine Workshops</h1>
+          </md-table-toolbar>
+          <md-table-row>
+            <md-table-cell>Workshop 32 (Lukas Nowy)</md-table-cell>
+            <md-table-cell class="prp-table-action-cell">
+              <md-button class="md-icon-button md-list-action">
+                <md-icon>info</md-icon>
+              </md-button>
+            </md-table-cell>
+          </md-table-row>
+          <md-table-row>
+            <md-table-cell>Workshop 31 (Max Mustermann)</md-table-cell>
+            <md-table-cell class="prp-table-action-cell">
+              <md-button class="md-icon-button md-list-action">
+                <md-icon>info</md-icon>
+              </md-button>
+            </md-table-cell>
+          </md-table-row>
+          <md-table-row>
+            <md-table-cell>Workshop 32 (Lukas Nowy)</md-table-cell>
+            <md-table-cell class="prp-table-action-cell">
+              <md-button class="md-icon-button md-list-action">
+                <md-icon>info</md-icon>
+              </md-button>
+            </md-table-cell>
+          </md-table-row>
+        </md-table>
       </div>
     </div>
   </div>
@@ -65,9 +79,14 @@
 
 <script>
 export default {
-name: "StudentHome.vue"
+  name: "StudentHome.vue"
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+.prp-table-action-cell {
+  text-align: right;
+}
+
 </style>

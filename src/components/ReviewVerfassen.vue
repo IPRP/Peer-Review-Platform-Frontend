@@ -1,12 +1,15 @@
 <template>
-  <div class="p-3">
-    <h1 class="d-flex justify-content-start">Review verfassen</h1>
-    <h3 class="d-flex justify-content-start">Workshop: WS1, Abgabe: Lukas Nowy</h3>
-    <md-button class="d-flex justify-content-start">
-      <span>Abgabe_Nowy.pdf</span>
-      <md-icon>get_app</md-icon>
-    </md-button>
-    <div>
+  <div class="p-5">
+    <h1 class="pl-5">Review verfassen</h1>
+    <h3 class="pl-5">Workshop: WS1, Abgabe: Lukas Nowy</h3>
+    <div class="pl-5">
+      <md-button>
+        <span>Abgabe_Nowy.pdf</span>
+        <md-icon>get_app</md-icon>
+      </md-button>
+    </div>
+
+    <div class="pl-5 pr-5">
       <h3 class="d-flex justify-content-start">Kriterien:</h3>
       <md-list class="d-flex" :md-expand-single="true">
         <md-list-item md-expand>
@@ -61,13 +64,13 @@
         </md-field>
       </form>
       <div class="d-flex justify-content-end">
-        <md-button class="md-raised md-accent">
+        <md-button class="md-raised prp-danger">
           <span class="p-1">Abbrechen</span>
-          <md-icon>delete</md-icon>
+          <md-icon class="prp-danger">delete</md-icon>
         </md-button>
-        <md-button class="md-raised md-primary">
+        <md-button class="md-raised prp-success">
           <span class="p-1">Speichern</span>
-          <md-icon>done_all</md-icon>
+          <md-icon class="prp-success-icon">done_all</md-icon>
         </md-button>
       </div>
     </div>
