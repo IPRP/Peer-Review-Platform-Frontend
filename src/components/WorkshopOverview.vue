@@ -1,10 +1,10 @@
 <template>
   <div class="p-5">
     <h1 class="pl-5">Workshop Übersicht</h1>
-    <h3 class="pl-5">Workshop: {{ title }}</h3>
+    <h3 class="pl-5">Workshop: {{ $route.params.id }}</h3>
 
 
-    <div class="pl-5 p  r-5">
+    <div class="pl-5 pr-5">
       <div>
         <h3 class="d-flex justify-content-start">Angabe:</h3>
         <textarea v-model="angabe" placeholder="Text der Angabe kommt hierhin" readonly></textarea>
@@ -15,7 +15,37 @@
         </md-button>
       </div>
       <div>
-        <h4>Deadline:</h4><p>{{ deadline }}</p>
+        <p>Deadline: {{ deadline }}</p>
+      </div>
+
+      <div>
+        <md-list class="d-flex" :md-expand-single="true">
+          <md-list-item md-expand>
+            <span class="md-list-item-text ">Bisherige Abgaben</span>
+            <md-list slot="md-expand">
+              <md-list-item>
+                <div class="d-flex">
+                  <div class="pr-4">
+                    <span class="md-text">Abgabe vom {{ dateAbgabe1 }}</span>
+                  </div>
+                </div>
+                <md-button class="md-icon-button md-list-action"  to="/reviewoverview">
+                  <md-icon>info</md-icon>
+                </md-button>
+              </md-list-item>
+              <md-list-item>
+              <div class="d-flex">
+                <div class="pr-4">
+                  <span class="md-text">Abgabe vom {{ dateAbgabe2 }}</span>
+                </div>
+              </div>
+              <md-button class="md-icon-button md-list-action"  to="/reviewoverview">
+                <md-icon>info</md-icon>
+              </md-button>
+            </md-list-item>
+            </md-list>
+          </md-list-item>
+        </md-list>
       </div>
 
       <div id="abgabe">
@@ -45,8 +75,9 @@ export default {
 name: "WorkshopOverview",
   data: function () {
     return {
-      title: "WS3",
       angabe: "Die Workshop-Beschreibung kommt hier hin",
+      dateAbgabe1: "8.1.2021",
+      dateAbgabe2: "19.1.2021",
       deadline: "20.2.2021"
     }
   },

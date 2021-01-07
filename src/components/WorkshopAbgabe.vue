@@ -1,10 +1,10 @@
 <template>
   <div class="p-5">
     <h1 class="pl-5">Workshop Abgabe</h1>
-    <h3 class="pl-5">Workshop: {{ title }}</h3>
+    <h3 class="pl-5">Workshop: {{ $route.params.id }}</h3>
 
 
-    <div class="pl-5 p  r-5">
+    <div class="pl-5 pr-5">
       <div>
         <h3 class="d-flex justify-content-start">Angabe:</h3>
         <textarea v-model="angabe" placeholder="Text der Angabe kommt hierhin" readonly></textarea>
@@ -46,7 +46,6 @@
     name: "WorkshopAbgeben",
     data: function () {
       return {
-        title: "WS3",
         angabe: "Die Workshop-Beschreibung kommt hier hin",
         deadline: "20.2.2021"
       }
