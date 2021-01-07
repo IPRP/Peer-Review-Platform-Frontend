@@ -33,42 +33,6 @@ class DataService {
       deadline: deadline,
       anonym: is_anonym,
       members: members,
-      submissions: [
-        {
-          done: [
-            {
-              rid: 3,
-              name: "Georg",
-              lated: true
-            }
-          ],
-          open: [
-            {
-              rid: 1,
-              name: "Georg",
-              lated: true
-            }
-          ]
-        }
-      ],
-      reviews: [
-        {
-          done: [
-            {
-              sid: 4,
-              from: "Lukas",
-              to: "Georg"
-            }
-          ],
-          open: [
-            {
-              sid: 2,
-              from: "Lukas",
-              to: "Georg"
-            }
-          ]
-        }
-      ],
       kriterien: [
         {
           id: 1,

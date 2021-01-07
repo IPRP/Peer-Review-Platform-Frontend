@@ -196,7 +196,7 @@ export default {
 
   },
   created() {
-     this.students = ["Lukas Nowy", "Georg Reisinger"];
+     this.students = ["Lukas", "Georg"];
      this.criteria = [{id: 1, name: "Kriterium", beschreibung: "Beschreibung", janein: true, prozent: -1, punkte: -1}];
      this.is_anonym = true;
   }

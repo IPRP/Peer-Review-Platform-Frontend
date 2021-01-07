@@ -185,8 +185,8 @@ export default {
     },
 
     editWorkshop() {
-      console.log(this.workshop.title, this.workshop.description, "13-12-2020 13:33", this.workshop.is_anonym, this.workshop.students)
-      DataService.editWorkshopT(this.workshop.title, this.workshop.description, "13-12-2020 13:33", this.workshop.is_anonym, this.workshop.students)
+      console.log(this.workshop.title, this.workshop.beschreibung, "13-12-2020 13:33", this.workshop.is_anonym, this.workshop.members)
+      DataService.editWorkshopT(this.workshop.title, this.workshop.beschreibung, "13-12-2020 13:33", this.workshop.is_anonym, this.workshop.members)
         .then(response => {
           console.log(response.data);
         })
