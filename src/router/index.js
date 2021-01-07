@@ -19,9 +19,9 @@ const routes = [
             import(/* webpackChunkName: "ReviewVerfassen" */ '../components/ReviewVerfassen')
       },
       {
-        path: 'offeneworkshops',
+        path: 'workshopoverview',
         component: () =>
-            import(/* webpackChunkName: "OffeneWorkshops" */ '../components/OffeneWorkshops')
+            import(/* webpackChunkName: "OffeneWorkshops" */ '../components/WorkshopOverview')
       },
       {
         path: 'workshopabgabe',

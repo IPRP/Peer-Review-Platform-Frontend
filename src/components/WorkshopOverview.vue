@@ -1,6 +1,6 @@
 <template>
   <div class="p-5">
-    <h1 class="pl-5">Workshop Abgabe</h1>
+    <h1 class="pl-5">Workshop Übersicht</h1>
     <h3 class="pl-5">Workshop: {{ title }}</h3>
 
 
@@ -41,22 +41,21 @@
 </template>
 
 <script>
-
-  export default {
-    name: "WorkshopAbgeben",
-    data: function () {
-      return {
-        title: "WS3",
-        angabe: "Die Workshop-Beschreibung kommt hier hin",
-        deadline: "20.2.2021"
-      }
-    },
-  }
+export default {
+name: "WorkshopOverview",
+  data: function () {
+    return {
+      title: "WS3",
+      angabe: "Die Workshop-Beschreibung kommt hier hin",
+      deadline: "20.2.2021"
+    }
+  },
+}
 </script>
 
 <style scoped>
-  textarea {
-    display: block;
-    width: 100%;
-  }
+textarea {
+  display: block;
+  width: 100%;
+}
 </style>

@@ -14,7 +14,7 @@
                 <md-button class="md-icon-button md-list-action">
                   <md-icon>add_circle</md-icon>
                 </md-button>
-                <md-button class="md-icon-button md-list-action">
+                <md-button class="md-icon-button md-list-action"  to="/reviewverfassen">
                   <md-icon>forward</md-icon>
                 </md-button>
               </md-table-cell>
@@ -33,7 +33,7 @@
                 <md-button class="md-icon-button md-list-action">
                   <md-icon>add_circle</md-icon>
                 </md-button>
-                <md-button class="md-icon-button md-list-action" to="/reviewverfassen">
+                <md-button class="md-icon-button md-list-action" to="/workshopabgabe">
                   <md-icon>forward</md-icon>
                 </md-button>
               </md-table-cell>
@@ -50,7 +50,7 @@
           <md-table-row>
             <md-table-cell>Workshop 32 (Lukas Nowy)</md-table-cell>
             <md-table-cell class="prp-table-action-cell">
-              <md-button class="md-icon-button md-list-action">
+              <md-button class="md-icon-button md-list-action"  to="/workshopoverview">
                 <md-icon>info</md-icon>
               </md-button>
             </md-table-cell>
@@ -58,7 +58,7 @@
           <md-table-row>
             <md-table-cell>Workshop 31 (Max Mustermann)</md-table-cell>
             <md-table-cell class="prp-table-action-cell">
-              <md-button class="md-icon-button md-list-action">
+              <md-button class="md-icon-button md-list-action"  to="/workshopoverview">
                 <md-icon>info</md-icon>
               </md-button>
             </md-table-cell>
@@ -66,7 +66,7 @@
           <md-table-row>
             <md-table-cell>Workshop 32 (Lukas Nowy)</md-table-cell>
             <md-table-cell class="prp-table-action-cell">
-              <md-button class="md-icon-button md-list-action">
+              <md-button class="md-icon-button md-list-action"  to="/workshopoverview">
                 <md-icon>info</md-icon>
               </md-button>
             </md-table-cell>
