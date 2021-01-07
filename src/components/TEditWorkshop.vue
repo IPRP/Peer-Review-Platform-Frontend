@@ -110,7 +110,7 @@
     <md-switch v-model="workshop.anonym"><td>{{ workshop.anonym }}</td></md-switch>
     <br><br>
 
-    <md-button class="btn-green" @click="editWorkshopInBackend()">Update</md-button>
+    <md-button class="btn-green" @click="editWorkshop()">Update</md-button>
     <md-button to="/teacher" class="btn-red">Abbrechen</md-button>
 
 
@@ -141,7 +141,6 @@
 
 <script>
 import DataService from "../services/DataService";
-import axios from "axios";
 export default {
   name: 'TNewWorkshop',
   data() {
@@ -184,55 +183,16 @@ export default {
       this.workshop.kriterien.push({id: this.workshop.kriterien.length + this.cid_counter, name: "Kriterium", beschreibung: "Beschreibung", janein: true, prozent: 0.0, punkte: 0.0});
       this.cid_counter++;
     },
-    async editWorkshopInBackend() {
-      const url = "http://localhost:8080/teacher/workshop/" + this.getIDfromURL();
 
-      const client = axios.create({
-          auth: {
-            username: "admin",  //This could be your email
-            password: "admin"
-          },
-          headers: {
-            "Content-Type": "application/json"
-          }
-      });
-
-      console.log(await client.put(url, {
-        id: this.workshop.id,
-        title: this.workshop.title,
-        beschreibung: this.workshop.description,
-        deadline: this.workshop.deadline,
-        anonym: this.workshop.is_anonym,
-        members: this.workshop.students,
-        kriterien: this.workshop.criteria /*[
-          {
-            id: 1,
-            name: "Kriteriumfgdh 1 Ja Nein",
-            beschreibung: "Besdfgchreibung 1",
-            prozent: 0.0,
-            punkte: 0.0,
-            janein: true
-          },
-          {
-            id: 2,
-            name: "Kriterium 2fgdh Punkte",
-            beschreibung: "Besdfgchreibung 2",
-            prozent: 100.0,
-            punkte: 0.0,
-            janein: false
-          },
-          {
-            id: 3,
-            name: "Kriterium 3 Pdfghrozent",
-            beschreibung: "Beschrefdghibung 3",
-            prozent: 0.0,
-            punkte: 100.0,
-            janein: false
-          }
-        ]*/
-      })
-      .catch(err => err));
-      //window.location.href = '/teacher';
+    editWorkshop() {
+      console.log(this.workshop.title, this.workshop.description, "13-12-2020 13:33", this.workshop.is_anonym, this.workshop.students)
+      DataService.editWorkshopT(this.workshop.title, this.workshop.description, "13-12-2020 13:33", this.workshop.is_anonym, this.workshop.students)
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
 
      getWorkshop() {

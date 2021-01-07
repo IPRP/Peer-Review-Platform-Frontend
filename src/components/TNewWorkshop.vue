@@ -110,7 +110,7 @@
     <md-switch v-model="is_anonym"><td>{{ is_anonym }}</td></md-switch>
     <br><br>
 
-    <md-button class="btn-green" @click="createWorkshopInBackend()">Bestätigen</md-button>
+    <md-button class="btn-green" @click="createWorkshop()">Bestätigen</md-button>
     <md-button to="/teacher" class="btn-red">Abbrechen</md-button>
 
 
@@ -140,7 +140,8 @@
 </template>
 
 <script>
-import axios from "axios";
+
+import DataService from "../services/DataService";
 export default {
   name: 'TNewWorkshop',
   data() {
@@ -177,63 +178,26 @@ export default {
     },
 
     addCriteria() {
-      this.criteria.push({id: this.criteria.length + this.cid_counter + 1, name: "Kriterium", beschreibung: "Beschreibung", janein: true, prozent: 0.0, punkte: 0.0});
+      this.criteria.push({id: this.criteria.length + this.cid_counter + 1, name: "Kriterium", beschreibung: "Beschreibung", janein: true, prozent: -1, punkte: -1});
       this.cid_counter++;
     },
-    async createWorkshopInBackend() {
-      const url = "http://localhost:8080/teacher/workshop";
 
-      const client = axios.create({
-          auth: {
-            username: "admin",  //This could be your email
-            password: "admin"
-          },
-          headers: {
-            "Content-Type": "application/json"
-          }
-      });
+    createWorkshop() {
+      console.log(this.title, this.description, "13-12-2020 13:33", this.is_anonym, this.students, this.criteria);
 
-      console.log(await client.post(url, {
-        id: 3,
-        title: this.title,
-        beschreibung: this.description,
-        deadline: this.deadline,
-        anonym: this.is_anonym,
-        members: this.students,
-        kriterien: this.criteria /*[
-          {
-            id: 1,
-            name: "Kriteriumfgdh 1 Ja Nein",
-            beschreibung: "Besdfgchreibung 1",
-            prozent: 0.0,
-            punkte: 0.0,
-            janein: true
-          },
-          {
-            id: 2,
-            name: "Kriterium 2fgdh Punkte",
-            beschreibung: "Besdfgchreibung 2",
-            prozent: 100.0,
-            punkte: 0.0,
-            janein: false
-          },
-          {
-            id: 3,
-            name: "Kriterium 3 Pdfghrozent",
-            beschreibung: "Beschrefdghibung 3",
-            prozent: 0.0,
-            punkte: 100.0,
-            janein: false
-          }
-        ]*/
-      })
-      .catch(err => err));
-      //window.location.href = '/teacher';
+      DataService.addWorkshopT(this.title, this.description, "13-12-2020 13:33", this.is_anonym, this.students, this.criteria)
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
+
   },
   created() {
-     this.students = ["Lukas Nowy", "Georg Reisinger", "Noch wer"];
-     this.criteria = [{id: 1, name: "Kriterium", beschreibung: "Beschreibung", janein: true, prozent: 0.0, punkte: 0.0}];
+     this.students = ["Lukas Nowy", "Georg Reisinger"];
+     this.criteria = [{id: 1, name: "Kriterium", beschreibung: "Beschreibung", janein: true, prozent: -1, punkte: -1}];
      this.is_anonym = true;
   }
 }
