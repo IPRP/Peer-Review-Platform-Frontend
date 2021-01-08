@@ -7,8 +7,9 @@
     <div class="pl-5 pr-5">
       <div>
         <h3 class="d-flex justify-content-start">Angabe:</h3>
-        <textarea v-model="angabe" placeholder="Text der Angabe kommt hierhin" readonly></textarea>
-
+        <md-field>
+          <md-textarea v-model="angabe" placeholder="Text der Angabe kommt hierhin" readonly></md-textarea>
+        </md-field>
         <md-button>
           <span>Angabe.pdf</span>
           <md-icon>get_app</md-icon>

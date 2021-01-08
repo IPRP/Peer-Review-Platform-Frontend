@@ -11,9 +11,6 @@
             <md-table-row>
               <md-table-cell>Workshop 1 (Abgabe von Lukas Nowy)</md-table-cell>
               <md-table-cell class="prp-table-action-cell">
-                <md-button class="md-icon-button md-list-action">
-                  <md-icon>add_circle</md-icon>
-                </md-button>
                 <md-button class="md-icon-button md-list-action"  to="/reviewverfassen">
                   <md-icon>forward</md-icon>
                 </md-button>
@@ -30,9 +27,6 @@
             <md-table-row>
               <md-table-cell>Workshop 3 (Abgabe fehlt)</md-table-cell>
               <md-table-cell class="prp-table-action-cell">
-                <md-button class="md-icon-button md-list-action">
-                  <md-icon>add_circle</md-icon>
-                </md-button>
                 <md-button class="md-icon-button md-list-action" to="/workshopabgabe/3">
                   <md-icon>forward</md-icon>
                 </md-button>
@@ -47,26 +41,10 @@
           <md-table-toolbar>
             <h1 class="md-title">Meine Workshops</h1>
           </md-table-toolbar>
-          <md-table-row>
-            <md-table-cell>Workshop 32 (Lukas Nowy)</md-table-cell>
+          <md-table-row v-for="workshop in workshops" :key="workshop.id">
+            <md-table-cell>{{ workshop.title }}</md-table-cell>
             <md-table-cell class="prp-table-action-cell">
-              <md-button class="md-icon-button md-list-action"  to="/workshopoverview/32">
-                <md-icon>info</md-icon>
-              </md-button>
-            </md-table-cell>
-          </md-table-row>
-          <md-table-row>
-            <md-table-cell>Workshop 31 (Max Mustermann)</md-table-cell>
-            <md-table-cell class="prp-table-action-cell">
-              <md-button class="md-icon-button md-list-action"  to="/workshopoverview/31">
-                <md-icon>info</md-icon>
-              </md-button>
-            </md-table-cell>
-          </md-table-row>
-          <md-table-row>
-            <md-table-cell>Workshop 32 (Lukas Nowy)</md-table-cell>
-            <md-table-cell class="prp-table-action-cell">
-              <md-button class="md-icon-button md-list-action"  to="/workshopoverview/32">
+              <md-button class="md-icon-button md-list-action" :to="{ name: 'workshopoverview', params: { id: workshop.id }}">
                 <md-icon>info</md-icon>
               </md-button>
             </md-table-cell>
@@ -78,8 +56,27 @@
 </template>
 
 <script>
+
+import axios from "axios";
+
 export default {
-  name: "StudentHome.vue"
+  name: "StudentHome.vue",
+  data() {
+    return {
+      workshops: null
+    }
+  },
+  mounted() {
+    axios
+        .get('http://localhost:8080/student/workshops', {
+            auth: {
+              username: 's1',
+              password: 'admin'
+            }
+        })
+        //.then(response => console.log(response.data.workshops))
+        .then(response => (this.workshops = response.data.workshops))
+  }
 }
 </script>
 

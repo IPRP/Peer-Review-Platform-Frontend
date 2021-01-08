@@ -13,7 +13,7 @@ class DataService {
     return http.delete(`/teacher/workshop/${id}`);
   }
 
-  addWorkshopT(title, description, deadline, is_anonym, students, criteria){
+  addWorkshopT(title, description, deadline, is_anonym, students, criteria) {
     return http.post(`/teacher/workshop`, {
       id: "01",
       title: title,

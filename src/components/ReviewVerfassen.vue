@@ -87,7 +87,7 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 .md-list-item-text {
   white-space: normal;

@@ -20,11 +20,12 @@ const routes = [
       },
       {
         path: 'workshopoverview/:id',
+        name: 'workshopoverview',
         component: () =>
             import(/* webpackChunkName: "OffeneWorkshops" */ '../components/WorkshopOverview')
       },
       {
-        path: 'workshopabgabe/:id',
+        path: 'workshopabgabe',
         component: () =>
             import(/* webpackChunkName: "WorkshopAbgabe" */ '../components/WorkshopAbgabe')
       },
