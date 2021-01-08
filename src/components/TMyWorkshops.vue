@@ -11,19 +11,26 @@
       </md-table-toolbar>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
-        <md-table-cell md-label="Title" md-sort-by="title">{{ item.title }}</md-table-cell>
+        <md-table-cell md-label="Titel" md-sort-by="id" md-numeric>{{ item.title }}</md-table-cell>
+        <md-table-cell md-label="Beschreibung" md-sort-by="title">{{ item.beschreibung }}</md-table-cell>
         <md-table-cell md-label="Actions">
            <md-button class="md-flat"  :to="{ path: '/teacher/workshopdetail/' + item.id }"><md-icon class="icon fa fa-info"></md-icon></md-button>
            <md-button class="md-flat"  :to="{ path: '/teacher/editworkshop/' + item.id }"><md-icon class="icon fa fa-edit"></md-icon></md-button>
-           <md-button class="md-flat" @click="deleteWorkshop(item.id)"><md-icon class="icon fa fa-trash"></md-icon></md-button>
+           <md-button class="md-flat" @click="deleteWorkshop(item.id), ddialog = true"><md-icon class="icon fa fa-trash"></md-icon></md-button>
           
           
         </md-table-cell>
 
       </md-table-row>
     </md-table>
+
+        <md-dialog-alert
+      :md-active.sync="ddialog"
+      md-content="Workshop has been deleted!"
+      md-confirm-text="Ok" />
   </div>
+
+  
 </template>
 
 <script>
@@ -35,6 +42,12 @@ export default {
   props: {
     workshops: []
   },
+  data() {
+    return {
+      ddialog: false
+    }
+  },
+
   methods: {
 
     getWorkshops() {

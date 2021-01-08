@@ -41,7 +41,7 @@
 
     <p>Kriterien</p>
     <div>
-          <md-card v-for="item in workshop.kriterien" :key="item.id">
+          <md-card v-for="item in this.workshop.kriterien" :key="item.id">
 
       <md-card-header>
         <div class="md-layout md-gutter md-alignment-center">
@@ -107,7 +107,7 @@
     <md-datepicker v-model="testdate" />
 
     <p>Anonym</p>
-    <md-switch v-model="workshop.anonym"><td>{{ workshop.anonym }}</td></md-switch>
+    <md-switch v-model="workshop.anonym"><td>{{ this.workshop.anonym }}</td></md-switch>
     <br><br>
 
     <md-button class="btn-green" @click="editWorkshop()">Update</md-button>
@@ -185,10 +185,11 @@ export default {
     },
 
     editWorkshop() {
-      console.log(this.workshop.title, this.workshop.beschreibung, "13-12-2020 13:33", this.workshop.is_anonym, this.workshop.members)
-      DataService.editWorkshopT(this.workshop.title, this.workshop.beschreibung, "13-12-2020 13:33", this.workshop.is_anonym, this.workshop.members)
+      console.log(this.workshop.id, this.workshop.title, this.workshop.beschreibung, this.testdate, this.workshop.anonym, this.workshop.members)
+      DataService.editWorkshopT(this.workshop.title, this.workshop.beschreibung, this.testdate, this.workshop.anonym, this.workshop.members)
         .then(response => {
           console.log(response.data);
+          window.location.href = 'http://localhost:8081/teacher';
         })
         .catch(e => {
           console.log(e);
@@ -200,10 +201,13 @@ export default {
         .then(response => {
           this.workshop = response.data[0].find(obj => {return obj.id == this.getIDfromURL()});
           console.log(response.data);
+          this.testdate = this.workshop.deadline.split("T")[0];
         })
         .catch(e => {
           console.log(e);
         });
+
+
     },
 
     getIDfromURL(){

@@ -167,6 +167,7 @@ export default {
 
     addStudent(name) {
      this.students.push(name);
+     console.log(this.students);
     },
     editKriterium(title) {
       console.log(title);
@@ -185,13 +186,15 @@ export default {
     createWorkshop() {
       console.log(this.title, this.description, "13-12-2020 13:33", this.is_anonym, this.students, this.criteria);
 
-      DataService.addWorkshopT(this.title, this.description, "13-12-2020 13:33", this.is_anonym, this.students, this.criteria)
+      DataService.addWorkshopT(this.title, this.description, this.deadline, this.is_anonym, this.students, this.criteria)
         .then(response => {
           console.log(response.data);
+          window.location.href = 'http://localhost:8081/teacher';
         })
         .catch(e => {
           console.log(e);
         });
+
     }
 
   },
