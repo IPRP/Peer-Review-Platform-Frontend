@@ -86,8 +86,4 @@ name: "WorkshopOverview",
 </script>
 
 <style scoped>
-textarea {
-  display: block;
-  width: 100%;
-}
 </style>

@@ -33,6 +33,12 @@ const routes = [
         path: 'studentdashboard',
         component: () =>
             import(/* webpackChunkName: "StudentDashboard" */ '../components/StudentDashboard')
+      },
+      {
+        path: 'reviewoverview/:id',
+        name: 'reviewoverview',
+        component: () =>
+            import(/* webpackChunkName: "ReviewOverview" */ '../components/ReviewOverview')
       }
     ]
   },

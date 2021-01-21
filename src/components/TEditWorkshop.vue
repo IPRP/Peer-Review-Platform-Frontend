@@ -1,7 +1,5 @@
 <template>
   <div class="container cn2">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <h1>Workshop bearbeiten</h1>
     <br>
 
@@ -31,7 +29,7 @@
         <md-table-cell>{{item}}</md-table-cell>
         <md-table-cell>
           <md-button class="md-flat" v-on:click="remStudent(item)">
-            <md-icon class="icon fa fa-minus-circle"></md-icon>
+            <md-icon>remove_circle</md-icon>
             </md-button>
         </md-table-cell>
       </md-table-row>
@@ -54,7 +52,7 @@
           </div>
           <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
                  <md-button class="md-flat" v-on:click="remCriteria(item.id)">
-            <md-icon class="icon fa fa-trash"></md-icon>
+            <md-icon>delete</md-icon>
             </md-button>
           </div>
         </div>
@@ -67,7 +65,7 @@
 
           <md-card-expand-trigger>
             <md-button class="md-icon-button">
-              <md-icon class="icon fa fa-chevron-down"></md-icon>
+              <md-icon>expand_more</md-icon>
             </md-button>
 
           </md-card-expand-trigger>

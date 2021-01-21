@@ -18,7 +18,6 @@
             </md-table-row>
           </md-table>
         </div>
-
         <div>
           <md-table md-card>
             <md-table-toolbar>
@@ -35,7 +34,6 @@
           </md-table>
         </div>
       </div>
-
       <div class="pr-5 flex-grow-1">
         <md-table md-card>
           <md-table-toolbar>

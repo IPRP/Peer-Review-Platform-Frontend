@@ -1,7 +1,5 @@
 <template>
   <div class="container cn2">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <h1>Workshop Ansicht</h1>
     <br>
 
@@ -14,9 +12,9 @@
         <md-table-cell md-label="Titel" md-sort-by="id" md-numeric>{{ item.title }}</md-table-cell>
         <md-table-cell md-label="Beschreibung" md-sort-by="title">{{ item.beschreibung }}</md-table-cell>
         <md-table-cell md-label="Actions">
-           <md-button class="md-flat"  :to="{ path: '/teacher/workshopdetail/' + item.id }"><md-icon class="icon fa fa-info"></md-icon></md-button>
-           <md-button class="md-flat"  :to="{ path: '/teacher/editworkshop/' + item.id }"><md-icon class="icon fa fa-edit"></md-icon></md-button>
-           <md-button class="md-flat" @click="deleteWorkshop(item.id), ddialog = true"><md-icon class="icon fa fa-trash"></md-icon></md-button>
+           <md-button class="md-flat"  :to="{ path: '/teacher/workshopdetail/' + item.id }"><md-icon>info</md-icon></md-button>
+           <md-button class="md-flat"  :to="{ path: '/teacher/editworkshop/' + item.id }"><md-icon>edit</md-icon></md-button>
+           <md-button class="md-flat" @click="deleteWorkshop(item.id), ddialog = true"><md-icon>delete</md-icon></md-button>
           
           
         </md-table-cell>
@@ -80,9 +78,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .icon {
-    margin: 5px;
-  }
 
   .cn2 {
     margin-top: 40px;

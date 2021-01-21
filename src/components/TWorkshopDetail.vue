@@ -1,14 +1,15 @@
 <template>
   <div class="container cn2">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <h1>Workshop: {{this.workshop.title}}</h1>
     <br>
     <h4>Abgegeben:</h4>
     <md-list v-for="item in this.workshop.reviews[0].done" :key="item.sid">
       <md-list-item>
         {{item.to}} (Abgabe von: {{item.from}})
-         <md-button href="https://www.google.at/?gws_rd=ssl" class="md-flat"><md-icon class="icon fa fa-arrow-right"></md-icon></md-button>
-        </md-list-item>
+         <md-button href="https://www.google.at/?gws_rd=ssl" class="md-flat">
+           <md-icon>arrow_forward</md-icon>
+         </md-button>
+      </md-list-item>
 
     </md-list>
 
