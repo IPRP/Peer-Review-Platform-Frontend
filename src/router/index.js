@@ -25,7 +25,8 @@ const routes = [
             import(/* webpackChunkName: "OffeneWorkshops" */ '../components/WorkshopOverview')
       },
       {
-        path: 'workshopabgabe',
+        path: 'workshopabgabe/:id',
+        name: 'workshopabgabe',
         component: () =>
             import(/* webpackChunkName: "WorkshopAbgabe" */ '../components/WorkshopAbgabe')
       },
