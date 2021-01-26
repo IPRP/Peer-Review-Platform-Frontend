@@ -118,31 +118,24 @@
         <md-dialog :md-active.sync="showDialog">
       <md-dialog-title>Person hinzufügen</md-dialog-title>
 
- <div md-dynamic-height>
+      <div md-dynamic-height>
         <div class="container">
           <b>Nach Vor und Nachname suchen</b>
-        <md-field>
-          <label>Vorname</label>
-          <md-input v-model="vorname"></md-input>
-        </md-field>
-        <md-field>
-          <label>Nachname</label>
-          <md-input v-model="nachname"></md-input>
-        </md-field>
-        <b>oder</b>
-        <b> nach Gruppe</b>
-        <md-field>
-          <label>Gruppe</label>
-          <md-input v-model="group"></md-input>
-        </md-field>
-        <b>oder</b>
-        <b> nach ID</b>
-        <md-field>
-          <label>ID</label>
-          <md-input v-model="id"></md-input>
-        </md-field>
+          <md-field>
+            <label>Vorname</label>
+            <md-input v-model="vorname"></md-input>
+          </md-field>
+          <md-field>
+            <label>Nachname</label>
+            <md-input v-model="nachname"></md-input>
+          </md-field>
+          <b>oder</b>
+          <b> nach Gruppe suchen</b>
+          <md-field>
+            <label>Gruppe</label>
+            <md-input v-model="group"></md-input>
+          </md-field>
         </div>
-
       </div>
 
 
