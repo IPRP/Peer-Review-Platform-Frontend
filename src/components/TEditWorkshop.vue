@@ -25,7 +25,7 @@
       </md-table-row>
 
       <md-table-row v-for="item in workshop.members" v-bind:key="item">
-        <md-table-cell>{{item}}</md-table-cell>
+        <md-table-cell>{{item.firstname}} {{item.lastname}}</md-table-cell>
         <md-table-cell>
           <md-button class="md-flat" v-on:click="remStudent(item)">
             <md-icon>remove_circle</md-icon>

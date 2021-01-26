@@ -27,7 +27,7 @@
       </md-table-row>
 
       <md-table-row v-for="item in students" v-bind:key="item.id">
-        <md-table-cell>{{item}}</md-table-cell>
+        <md-table-cell>{{item.firstname}} {{item.lastname}}</md-table-cell>
         <md-table-cell>
           <md-button class="md-flat" v-on:click="remStudent(item)">
             <md-icon>remove_circle</md-icon>
@@ -120,9 +120,26 @@
 
  <div md-dynamic-height>
         <div class="container">
+          <b>Nach Vor und Nachname suchen</b>
         <md-field>
-          <label>Name</label>
-          <md-input v-model="name"></md-input>
+          <label>Vorname</label>
+          <md-input v-model="vorname"></md-input>
+        </md-field>
+        <md-field>
+          <label>Nachname</label>
+          <md-input v-model="nachname"></md-input>
+        </md-field>
+        <b>oder</b>
+        <b> nach Gruppe</b>
+        <md-field>
+          <label>Gruppe</label>
+          <md-input v-model="group"></md-input>
+        </md-field>
+        <b>oder</b>
+        <b> nach ID</b>
+        <md-field>
+          <label>ID</label>
+          <md-input v-model="id"></md-input>
         </md-field>
         </div>
 
@@ -131,7 +148,7 @@
 
       <md-dialog-actions>
         <md-button class="md-primary" @click="showDialog = false">Close</md-button>
-        <md-button class="md-primary" @click="showDialog = false; addStudent(name)">Save</md-button>
+        <md-button class="md-primary" @click="showDialog = false; findStudent(vorname,nachname,group, id)">Suche</md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -149,7 +166,7 @@ export default {
       criteria: [],
       is_anonym: Boolean,
       showDialog: false,
-      cid_counter: 1
+      cid_counter: 1,
     }
   },
   methods: {
@@ -164,8 +181,18 @@ export default {
         });
     },
 
-    addStudent(name) {
-     this.students.push(name);
+    findStudent(vorname, nachname, group, id) {
+      if(!id){
+        id = ""
+      }if(!vorname){
+        vorname =""
+      }if(!nachname){
+        nachname = ""
+      }
+      if(!group){
+        group =""
+      }
+     this.students.push({id: id, firstname: vorname, lastname: nachname, group: group});
      console.log(this.students);
     },
     editKriterium(title) {
@@ -198,7 +225,7 @@ export default {
 
   },
   created() {
-     this.students = ["Lukas", "Georg"];
+    this.students = []
      this.criteria = [{id: 1, name: "Kriterium", beschreibung: "Beschreibung", janein: true, prozent: -1, punkte: -1}];
      this.is_anonym = true;
   }
