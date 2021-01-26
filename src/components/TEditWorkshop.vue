@@ -2,7 +2,6 @@
   <div class="container cn2">
     <h1>Workshop bearbeiten</h1>
     <br>
-
     <md-field>
       <label>Titel</label>
       <md-input v-model="workshop.title"></md-input>
@@ -184,7 +183,7 @@ export default {
 
     editWorkshop() {
       console.log(this.workshop.id, this.workshop.title, this.workshop.beschreibung, this.testdate, this.workshop.anonym, this.workshop.members)
-      DataService.editWorkshopT(this.workshop.title, this.workshop.beschreibung, this.testdate, this.workshop.anonym, this.workshop.members)
+      DataService.editWorkshopT(this.$route.params.id, this.workshop.title, this.workshop.beschreibung, this.testdate, this.workshop.anonym, this.workshop.members)
         .then(response => {
           console.log(response.data);
           window.location.href = 'http://localhost:8081/teacher';
