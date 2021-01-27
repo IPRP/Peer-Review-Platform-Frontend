@@ -12,8 +12,8 @@
         <md-table-cell md-label="Titel" md-sort-by="id" md-numeric>{{ item.title }}</md-table-cell>
         <md-table-cell md-label="Beschreibung" md-sort-by="title">{{ item.beschreibung }}</md-table-cell>
         <md-table-cell md-label="Actions">
-           <md-button class="md-flat"  :to="{ path: '/teacher/workshopdetail/' + item.id }"><md-icon>info</md-icon></md-button>
-           <md-button class="md-flat"  :to="{ path: '/teacher/editworkshop/' + item.id }"><md-icon>edit</md-icon></md-button>
+           <md-button class="md-flat"  :to="{ path: '/teacherdashboard/workshopdetail/' + item.id }"><md-icon>info</md-icon></md-button>
+           <md-button class="md-flat"  :to="{ path: '/teacherdashboard/editworkshop/' + item.id }"><md-icon>edit</md-icon></md-button>
            <md-button class="md-flat" @click="deleteWorkshop(item.id), ddialog = true"><md-icon>delete</md-icon></md-button>
           
           

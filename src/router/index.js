@@ -44,8 +44,8 @@ const routes = [
     ]
   },
   {
-    path: "/teacher",
-    redirect: "teacher",
+    path: "/teacherdashboard",
+    redirect: "teacherdashboard",
     name: "TeacherHome",
     component: TeacherDashboard,
     children : [
@@ -76,7 +76,7 @@ const routes = [
             import(/* webpackChunkName: "StudentDashboard" */ '../components/TEditWorkshop.vue')
       },
       {
-        path: '/teacher',
+        path: '/teacherdashboard',
         component: () =>
             import(/* webpackChunkName: "StudentDashboard" */ '../components/TMyWorkshops.vue')
       }

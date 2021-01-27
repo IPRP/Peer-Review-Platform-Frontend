@@ -108,7 +108,7 @@
     <br><br>
 
     <md-button class="btn-green" @click="editWorkshop()">Update</md-button>
-    <md-button to="/teacher" class="btn-red">Abbrechen</md-button>
+    <md-button to="/teacherdashboard" class="btn-red">Abbrechen</md-button>
 
 
     <br>
@@ -206,7 +206,7 @@ export default {
       DataService.editWorkshopT(this.$route.params.id, this.workshop.title, this.workshop.beschreibung, this.testdate, this.workshop.anonym, this.workshop.members)
         .then(response => {
           console.log(response.data);
-          window.location.href = 'http://localhost:8081/teacher';
+          window.location.href = 'http://localhost:8081/teacherdashboard';
         })
         .catch(e => {
           console.log(e);

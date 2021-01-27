@@ -110,7 +110,7 @@
     <br><br>
 
     <md-button class="btn-green" @click="createWorkshop()">Bestätigen</md-button>
-    <md-button to="/teacher" class="btn-red">Abbrechen</md-button>
+    <md-button to="/teacherdashboard" class="btn-red">Abbrechen</md-button>
 
 
     <br>
@@ -208,7 +208,7 @@ export default {
       DataService.addWorkshopT(this.title, this.description, this.deadline, this.is_anonym, this.students, this.criteria)
         .then(response => {
           console.log(response.data);
-          window.location.href = 'http://localhost:8081/teacher';
+          window.location.href = 'http://localhost:8081/teacherdashboard';
         })
         .catch(e => {
           console.log(e);
