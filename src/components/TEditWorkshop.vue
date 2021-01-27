@@ -25,7 +25,7 @@
       </md-table-row>
 
       <md-table-row v-for="item in workshop.members" v-bind:key="item">
-        <md-table-cell>{{item.firstname}} {{item.lastname}}</md-table-cell>
+        <md-table-cell>{{item.firstname}} {{item.lastname}} {{item.group}}</md-table-cell>
         <md-table-cell>
           <md-button class="md-flat" v-on:click="remStudent(item)">
             <md-icon>remove_circle</md-icon>
@@ -116,20 +116,29 @@
         <md-dialog :md-active.sync="showDialog">
       <md-dialog-title>Person hinzufügen</md-dialog-title>
 
- <div md-dynamic-height>
+      <div md-dynamic-height>
         <div class="container">
-        <md-field>
-          <label>Name</label>
-          <md-input v-model="name"></md-input>
-        </md-field>
+          <b>Nach Vor und Nachname suchen</b>
+          <md-field>
+            <label>Vorname</label>
+            <md-input v-model="vorname"></md-input>
+          </md-field>
+          <md-field>
+            <label>Nachname</label>
+            <md-input v-model="nachname"></md-input>
+          </md-field>
+          <b>oder</b>
+          <b> nach Gruppe suchen</b>
+          <md-field>
+            <label>Gruppe</label>
+            <md-input v-model="group"></md-input>
+          </md-field>
         </div>
-
       </div>
-
 
       <md-dialog-actions>
         <md-button class="md-primary" @click="showDialog = false">Close</md-button>
-        <md-button class="md-primary" @click="showDialog = false; addStudent(name)">Save</md-button>
+        <md-button class="md-primary" @click="showDialog = false; findStudent(vorname,nachname,group, id)">Save</md-button>
       </md-dialog-actions>
     </md-dialog>
 
@@ -163,8 +172,19 @@ export default {
         });
     },
 
-    addStudent(name) {
-     this.workshop.members.push(name);
+    findStudent(vorname, nachname, group, id) {
+      if(!id){
+        id = ""
+      }if(!vorname){
+        vorname =""
+      }if(!nachname){
+        nachname = ""
+      }
+      if(!group){
+        group =""
+      }
+     this.workshop.members.push({id: id, firstname: vorname, lastname: nachname, group: group});
+     console.log(this.students);
     },
     editKriterium(title) {
       console.log(title);

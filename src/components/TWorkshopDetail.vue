@@ -23,6 +23,17 @@
       <md-list-item v-if="item.lated" >{{item.name}}</md-list-item>
     </md-list>
 
+<md-switch v-model="stulisteanzeigen" class="md-primary">Studentenliste anzeigen</md-switch>
+
+<md-table v-show="stulisteanzeigen">
+      <md-table-row>
+        <md-table-head>Name</md-table-head>
+      </md-table-row>
+
+      <md-table-row v-for="item in workshop.members" v-bind:key="item">
+        <md-table-cell>{{item.firstname}} {{item.lastname}} {{item.group}}</md-table-cell>
+      </md-table-row>
+    </md-table>
   </div>
 </template>
 
@@ -34,7 +45,8 @@ export default {
   name: 'TWorkshopDetail',
   data() {
     return {
-      workshop: {}
+      workshop: {},
+      stulisteanzeigen:false
     }
   },
   methods: {
