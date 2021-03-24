@@ -2,14 +2,10 @@
   <div class="p-5">
     <h1 class="pl-5">Workshop Übersicht</h1>
     <h3 class="pl-5">Workshop: {{ $route.params.id }}</h3>
-
-
-    <div class="pl-5 pr-5">
+    <div class="px-5">
       <div>
         <h3 class="d-flex justify-content-start">Angabe:</h3>
-        <md-field>
-          <md-textarea v-model="angabe" placeholder="Text der Angabe kommt hierhin" readonly></md-textarea>
-        </md-field>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque dignissimos dolorem doloribus earum fuga iste iure nostrum quibusdam sapiente voluptatibus? Ab asperiores distinctio id, magni molestiae quia ratione sequi totam!</p>
         <md-button>
           <span>Angabe.pdf</span>
           <md-icon>get_app</md-icon>
@@ -18,7 +14,6 @@
       <div>
         <p>Deadline: {{ deadline }}</p>
       </div>
-
       <div>
         <md-list class="d-flex" :md-expand-single="true">
           <md-list-item md-expand>
@@ -48,15 +43,12 @@
           </md-list-item>
         </md-list>
       </div>
-
       <div id="abgabe">
         <h3 class="d-flex justify-content-start">Abgabe Datei</h3>
-
-        <form action="">
-          <input type="file" id="abgabeFile" name="filename">
+        <form>
+          <input type="file" name="filename">
         </form>
       </div>
-
       <div class="d-flex justify-content-end">
         <md-button class="md-raised prp-danger">
           <span class="p-1">Abbrechen</span>
@@ -76,7 +68,6 @@ export default {
 name: "WorkshopOverview",
   data: function () {
     return {
-      angabe: "Die Workshop-Beschreibung kommt hier hin",
       dateAbgabe1: "8.1.2021",
       dateAbgabe2: "19.1.2021",
       deadline: "20.2.2021"

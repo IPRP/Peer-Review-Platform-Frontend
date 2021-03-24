@@ -2,13 +2,10 @@
   <div class="p-5">
     <h1 class="pl-5">Workshop Abgabe</h1>
     <h3 class="pl-5">Workshop: {{ $route.params.id }}</h3>
-
-
-    <div class="pl-5 pr-5">
+    <div class="px-5">
       <div>
         <h3 class="d-flex justify-content-start">Angabe:</h3>
-        <textarea v-model="angabe" placeholder="Text der Angabe kommt hierhin" readonly></textarea>
-
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus assumenda consequatur cupiditate ducimus, esse eum id ipsum itaque natus nesciunt nobis nulla omnis provident quam quo ratione unde, voluptas voluptates! </p>
         <md-button>
           <span>Angabe.pdf</span>
           <md-icon>get_app</md-icon>
@@ -17,15 +14,12 @@
       <div>
         <h4>Deadline:</h4><p>{{ deadline }}</p>
       </div>
-
-      <div id="abgabe">
+      <div>
         <h3 class="d-flex justify-content-start">Abgabe Datei</h3>
-
-        <form action="">
-          <input type="file" id="abgabeFile" name="filename">
+        <form>
+          <input type="file" name="filename">
         </form>
       </div>
-
       <div class="d-flex justify-content-end">
         <md-button class="md-raised prp-danger">
           <span class="p-1">Abbrechen</span>
@@ -43,7 +37,7 @@
 <script>
 
   export default {
-    name: "WorkshopAbgeben",
+    name: "WorkshopSubmission",
     data: function () {
       return {
         angabe: "Die Workshop-Beschreibung kommt hier hin",
@@ -54,8 +48,5 @@
 </script>
 
 <style scoped>
-  textarea {
-    display: block;
-    width: 100%;
-  }
+
 </style>

@@ -2,7 +2,7 @@
   <div class="p-5">
     <h1 class="pl-5">Mein Dashboard</h1>
     <div class="d-flex">
-      <div class="pl-5 pr-5 flex-grow-1">
+      <div class="px-5 flex-grow-1">
         <div class="pb-5">
           <md-table md-card>
             <md-table-toolbar>
@@ -58,7 +58,7 @@
 import axios from "axios";
 
 export default {
-  name: "StudentHome.vue",
+  name: "StudentDashboard",
   data() {
     return {
       workshops: null

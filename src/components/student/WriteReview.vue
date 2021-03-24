@@ -8,11 +8,16 @@
         <md-icon>get_app</md-icon>
       </md-button>
     </div>
-
-    <div class="pl-5 pr-5">
+    <div class="px-5">
       <h3 class="d-flex justify-content-start">Kriterien:</h3>
       <md-list class="d-flex" :md-expand-single="true">
         <md-list-item md-expand>
+
+          <!--
+          rebuild with card instead of list
+          -->
+
+
           <span class="md-list-item-text">Kriterium 1</span>
           <md-list slot="md-expand">
             <md-list-item>
@@ -79,7 +84,7 @@
 
 <script>
   export default {
-  name: "ReviewVerfassen",
+  name: "WriteReview",
     data:() => ({
       criteria1: false,
       criteria2: false

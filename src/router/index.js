@@ -16,30 +16,30 @@ const routes = [
       {
         path: 'reviewverfassen',
         component: () =>
-            import(/* webpackChunkName: "ReviewVerfassen" */ '../components/ReviewVerfassen')
+            import(/* webpackChunkName: "ReviewVerfassen" */ '../components/student/WriteReview')
       },
       {
         path: 'workshopoverview/:id',
         name: 'workshopoverview',
         component: () =>
-            import(/* webpackChunkName: "OffeneWorkshops" */ '../components/WorkshopOverview')
+            import(/* webpackChunkName: "OffeneWorkshops" */ '../components/student/WorkshopOverview')
       },
       {
         path: 'workshopabgabe/:id',
         name: 'workshopabgabe',
         component: () =>
-            import(/* webpackChunkName: "WorkshopAbgabe" */ '../components/WorkshopAbgabe')
+            import(/* webpackChunkName: "WorkshopAbgabe" */ '../components/student/WorkshopSubmission')
       },
       {
         path: 'studentdashboard',
         component: () =>
-            import(/* webpackChunkName: "StudentDashboard" */ '../components/StudentDashboard')
+            import(/* webpackChunkName: "StudentDashboard" */ '../components/student/StudentDashboard')
       },
       {
         path: 'reviewoverview/:id',
         name: 'reviewoverview',
         component: () =>
-            import(/* webpackChunkName: "ReviewOverview" */ '../components/ReviewOverview')
+            import(/* webpackChunkName: "ReviewOverview" */ '../components/student/ReviewOverview')
       }
     ]
   },
@@ -53,32 +53,32 @@ const routes = [
       {
         path: 'myworkshops',
         component: () =>
-            import(/* webpackChunkName: "StudentDashboard" */ '../components/TMyWorkshops.vue')
+            import(/* webpackChunkName: "StudentDashboard" */ '../components/teacher/MyWorkshops')
       },
       {
         path: 'profile',
         component: () =>
-            import(/* webpackChunkName: "StudentDashboard" */ '../components/TProfile.vue')
+            import(/* webpackChunkName: "StudentDashboard" */ '../components/teacher/Profile')
       },
       {
         path: 'workshopdetail/:id',
         component: () =>
-            import(/* webpackChunkName: "StudentDashboard" */ '../components/TWorkshopDetail.vue')
+            import(/* webpackChunkName: "StudentDashboard" */ '../components/teacher/WorkshopDetails')
       },
       {
         path: 'newworkshop',
         component: () =>
-            import(/* webpackChunkName: "StudentDashboard" */ '../components/TNewWorkshop.vue')
+            import(/* webpackChunkName: "StudentDashboard" */ '../components/teacher/CreateWorkshop')
       },
       {
         path: 'editworkshop/:id',
         component: () =>
-            import(/* webpackChunkName: "StudentDashboard" */ '../components/TEditWorkshop.vue')
+            import(/* webpackChunkName: "StudentDashboard" */ '../components/teacher/CreateWorkshop')
       },
       {
         path: '/teacherdashboard',
         component: () =>
-            import(/* webpackChunkName: "StudentDashboard" */ '../components/TMyWorkshops.vue')
+            import(/* webpackChunkName: "StudentDashboard" */ '../components/teacher/MyWorkshops')
       }
     ]
   },
