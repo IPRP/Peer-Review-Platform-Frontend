@@ -1,8 +1,8 @@
 <template>
-  <div class="p-5">
-    <h1 class="pl-5">Workshop Übersicht</h1>
-    <h3 class="pl-5">Workshop: {{ $route.params.id }}</h3>
-    <div class="px-5">
+  <div class="p-1 p-md-5">
+    <h1 class="pl-1 pl-md-5">Workshop Übersicht</h1>
+    <h3 class="pl-1 pl-md-5">Workshop: {{ $route.params.id }}</h3>
+    <div class="px-1 px-md-5">
       <div>
         <h3 class="d-flex justify-content-start">Angabe:</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque dignissimos dolorem doloribus earum fuga iste iure nostrum quibusdam sapiente voluptatibus? Ab asperiores distinctio id, magni molestiae quia ratione sequi totam!</p>
@@ -49,7 +49,7 @@
           <input type="file" name="filename">
         </form>
       </div>
-      <div class="d-flex justify-content-end">
+      <div class="pt-3 d-flex justify-content-center justify-content-md-end">
         <md-button class="md-raised prp-danger">
           <span class="p-1">Abbrechen</span>
           <md-icon class="prp-danger">delete</md-icon>

@@ -1,14 +1,19 @@
 <template>
-  <div class="p-5">
-    <h1 class="pl-5">Meine Workshops</h1>
+  <div class="p-1 p-md-5">
+    <h1 class="pl-1 pl-md-5">Mein Dashboard</h1>
     <div class="d-flex">
-      <div class="px-5 flex-grow-1">
+      <div class="px-1 px-md-5 flex-grow-1">
+        <md-button class="md-raised" to="/teacherdashboard/createworkshop">
+          <span>Neuer Workshop</span>
+          <md-icon>add</md-icon>
+        </md-button>
+
         <md-table v-model="workshops" md-card>
           <md-table-row slot="md-table-row" slot-scope="{ item }">
             <md-table-cell md-label="Titel" md-sort-by="id" md-numeric>{{ item.title }}</md-table-cell>
             <md-table-cell md-label="Beschreibung" md-sort-by="title">{{ item.beschreibung }}</md-table-cell>
             <md-table-cell md-label="Actions">
-              <md-button class="md-flat"  :to="{ path: '/teacherdashboard/workshopdetail/' + item.id }"><md-icon>info</md-icon></md-button>
+              <md-button class="md-flat"  :to="{ path: '/teacherdashboard/workshopdetails/' + item.id }"><md-icon>info</md-icon></md-button>
               <md-button class="md-flat"  :to="{ path: '/teacherdashboard/editworkshop/' + item.id }"><md-icon>edit</md-icon></md-button>
               <md-button class="md-flat" @click="deleteWorkshop(item.id), deleteDialog = true"><md-icon>delete</md-icon></md-button>
             </md-table-cell>
@@ -30,7 +35,7 @@
 import DataService from "../../services/DataService";
 
 export default {
-  name: 'MyWorkshops',
+  name: 'TeacherDashboard',
   props: {
     workshops: []
   },

@@ -14,7 +14,7 @@ const routes = [
     children : [
       //in the future: path: 'reviewverfassen/:id', same for similar children
       {
-        path: 'reviewverfassen',
+        path: 'writereview',
         component: () =>
             import(/* webpackChunkName: "ReviewVerfassen" */ '../components/student/WriteReview')
       },
@@ -25,8 +25,8 @@ const routes = [
             import(/* webpackChunkName: "OffeneWorkshops" */ '../components/student/WorkshopOverview')
       },
       {
-        path: 'workshopabgabe/:id',
-        name: 'workshopabgabe',
+        path: 'workshopsubmission/:id',
+        name: 'workshopsubmission',
         component: () =>
             import(/* webpackChunkName: "WorkshopAbgabe" */ '../components/student/WorkshopSubmission')
       },
@@ -51,9 +51,9 @@ const routes = [
     children : [
       //in the future: path: 'reviewverfassen/:id', same for similar children
       {
-        path: 'myworkshops',
+        path: 'teacherdashboard',
         component: () =>
-            import(/* webpackChunkName: "StudentDashboard" */ '../components/teacher/MyWorkshops')
+            import(/* webpackChunkName: "StudentDashboard" */ '../components/teacher/TeacherDashboard')
       },
       {
         path: 'profile',
@@ -61,12 +61,12 @@ const routes = [
             import(/* webpackChunkName: "StudentDashboard" */ '../components/teacher/Profile')
       },
       {
-        path: 'workshopdetail/:id',
+        path: 'workshopdetails/:id',
         component: () =>
             import(/* webpackChunkName: "StudentDashboard" */ '../components/teacher/WorkshopDetails')
       },
       {
-        path: 'newworkshop',
+        path: 'createworkshop',
         component: () =>
             import(/* webpackChunkName: "StudentDashboard" */ '../components/teacher/CreateWorkshop')
       },
@@ -78,7 +78,7 @@ const routes = [
       {
         path: '/teacherdashboard',
         component: () =>
-            import(/* webpackChunkName: "StudentDashboard" */ '../components/teacher/MyWorkshops')
+            import(/* webpackChunkName: "StudentDashboard" */ '../components/teacher/TeacherDashboard')
       }
     ]
   },

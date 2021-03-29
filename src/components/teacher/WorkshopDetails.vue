@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5">
+  <div class="p-1 p-md-5">
     <h1>Workshop: {{ this.workshop.title }}</h1>
     <h4>Abgegeben:</h4>
     <md-list v-for="item in this.workshop.reviews[0].done" :key="item.sid">

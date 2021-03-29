@@ -1,6 +1,6 @@
 <template>
-  <div class="p-5">
-    <div class="pl-5">
+  <div class="p-1 p-md-5">
+    <div class="pl-1 pl-md-5">
       <h1>Review Overview</h1>
       <h3>Workshop: {placeholder}</h3>
       <h3>Angabe:</h3>
