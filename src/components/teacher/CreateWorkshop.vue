@@ -1,6 +1,6 @@
 <template>
 <form novalidate class="md-layout container md-alignment-top-center" @submit.prevent="validateWorkshop">
-  <div class="md-layout-item xl-size-70 lg-size-75 md-size-80 md-small-size-95 md-xsmall-size-95">
+  <div class="md-layout-item md-xlarge-size-70 md-large-size-75 md-medium-size-80 md-small-size-95 md-xsmall-size-95">
     <h1 class="">Neuen Workshop erstellen</h1>
     <div class="">
       <form @submit.prevent="validateWorkshop">
