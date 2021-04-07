@@ -1,8 +1,8 @@
 <template>
-<form novalidate class="md-layout" @submit.prevent="validateWorkshop">
-  <div class="p-1 p-md-5">
-    <h1 class="pl-1 pl-md-5">Neuen Workshop erstellen</h1>
-    <div class="px-1 px-md-5">
+<form novalidate class="md-layout container md-alignment-top-center" @submit.prevent="validateWorkshop">
+  <div class="md-layout-item xl-size-70 lg-size-75 md-size-80 md-small-size-95 md-xsmall-size-95">
+    <h1 class="">Neuen Workshop erstellen</h1>
+    <div class="">
       <form @submit.prevent="validateWorkshop">
         <md-field :class="getValidationClass('title')">
           <label>Titel</label>
@@ -22,9 +22,9 @@
         </md-field>
 
         <h2 class="pt-3">Personen</h2>
-        <div class="pb-3">
+        <div class="md-layout-item md-size-100">
           <md-field :class="getValidationClass('members')">
-          <md-table name="members" id="members" v-model="form.members" :disabled="sending">
+          <md-table name="members" id="members" v-model="form.members" :disabled="sending" class="md-layout-item md-size-100">
             <md-table-row>
               <md-table-head>Name</md-table-head>
               <md-table-head>Actions</md-table-head>
@@ -42,7 +42,7 @@
           <span class="md-error" v-if="!$v.form.members.required">At least one member is required</span>
 
           </md-field>
-          <div class="d-flex justify-content-end">
+          <div class="d-flex ">
             <md-button class="prp-success md-raised" @click="showDialog = true">
               <span class="p-1">Person/Verband hinzufügen</span>
               <md-icon class="prp-success-icon">add</md-icon>
@@ -51,9 +51,9 @@
         </div>
 
         <h2>Kriterien</h2>
-        <div class="pb-3" >
-          <md-field :class="getValidationClass('criteria')" name="criteria" id="criteria" v-model="form.criteria" :disabled="sending">
-            <md-card class="mb-2" v-for="item in form.criteria" :key="item.id">
+        <div class="">
+          <md-field class="md-layout md-gutter md-size-100" :class="getValidationClass('criteria')" name="criteria" id="criteria" v-model="form.criteria" :disabled="sending">
+            <md-card class="md-layout-item md-size-100" v-for="item in form.criteria" :key="item.id">
             <md-card-header>
               <div class="md-layout md-gutter md-alignment-center">
                 <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
@@ -102,17 +102,17 @@
                 </div>
               </md-card-expand-content>
             </md-card-expand>
-          </md-card>
+          </md-card>         
+          
+          <span class="md-error" v-if="!$v.form.criteria.required">At least one criteria is required</span>
+          </md-field>
 
-          <div class="d-flex justify-content-end">
+                    <div class="d-flex">
             <md-button class="prp-success md-raised" @click="addCriteria()">
               <span class="p-1">Kriterium hinzugügen</span>
               <md-icon class="prp-success-icon">add</md-icon>
             </md-button>
           </div>
-
-          <span class="md-error" v-if="!$v.form.criteria.required">At least one criteria is required</span>
-          </md-field>
 
         </div>
 
@@ -303,5 +303,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  .container{
+    //width: 80%;
+    margin: auto;
+  }
 
+  .criteria_btn {
+    float: right !important;
+  }
 </style>
