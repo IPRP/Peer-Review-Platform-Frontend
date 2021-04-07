@@ -15,17 +15,20 @@
             <md-table-cell md-label="Actions">
               <md-button class="md-flat"  :to="{ path: '/teacherdashboard/workshopdetails/' + item.id }"><md-icon>info</md-icon></md-button>
               <md-button class="md-flat"  :to="{ path: '/teacherdashboard/editworkshop/' + item.id }"><md-icon>edit</md-icon></md-button>
-              <md-button class="md-flat" @click="deleteWorkshop(item.id), deleteDialog = true"><md-icon>delete</md-icon></md-button>
+              <md-button class="md-flat" @click="currentID = item.id, deleteDialog = true"><md-icon>delete</md-icon></md-button>
             </md-table-cell>
           </md-table-row>
         </md-table>
 
-        <md-dialog-alert
-            :md-active.sync="deleteDialog"
-            md-content="Workshop wurde gelöscht!"
-            md-confirm-text="Ok"/>
-
-        </div>
+    <md-dialog-confirm
+      :md-active.sync="deleteDialog"
+      md-title="Delete this Workshop?"
+      md-content="This action cannot be undone!"
+      md-confirm-text="Confirm"
+      md-cancel-text="Cancel"
+      @md-cancel="onCancel"
+      @md-confirm="onConfirm" />
+</div>
     </div>
   </div>
 </template>
@@ -41,10 +44,14 @@ export default {
   },
   data() {
     return {
-      deleteDialog: false
+      deleteDialog: false,
+      currentID: null
     }
   },
   methods: {
+      onConfirm (id) {
+        this.deleteWorkshop(id)
+      },
 
     getWorkshops() {
       DataService.getAllWorkshopsTeacher()
@@ -56,8 +63,8 @@ export default {
           console.log(e);
         });
     },
-    deleteWorkshop(id) {
-      DataService.deleteWorkshopTeacher(id)
+    deleteWorkshop() {
+      DataService.deleteWorkshopTeacher(this.currentID)
           .then(response => {
             this.workshops = response.data[0];
             console.log(response.data);
