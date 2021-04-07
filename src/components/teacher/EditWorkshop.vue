@@ -1,52 +1,59 @@
 <template>
-  <div class="p-1 p-md-5">
-    <h1 class="pl-1 pl-md-5">Workshop bearbeiten</h1>
-    <div class="px-1 px-md-5">
-      <form>
-        <md-field>
+<form novalidate class="md-layout container md-alignment-top-center" @submit.prevent="validateWorkshop">
+  <div class="md-layout-item md-xlarge-size-70 md-large-size-75 md-medium-size-80 md-small-size-95 md-xsmall-size-95">
+    <h1 class="">Workshop bearbeiten</h1>
+    <div class="">
+      <form @submit.prevent="validateWorkshop">
+        <md-field :class="getValidationClass('title')">
           <label>Titel</label>
-          <md-input v-model="workshop.title"></md-input>
+          <md-input name="title" id="title" v-model="form.title" :disabled="sending"></md-input>
+          <span class="md-error" v-if="!$v.form.title.required">A title is required</span>
+          <span class="md-error" v-else-if="!$v.form.title.minlength">Invalid title (too short)</span>
         </md-field>
 
         <md-field>
           <label>Beschreibung</label>
-          <md-textarea v-model="workshop.beschreibung"></md-textarea>
+          <md-textarea v-model="form.description"></md-textarea>
         </md-field>
 
         <md-field>
           <label>Datei auswählen</label>
-          <md-file v-model="single"/>
+          <md-file v-model="form.file"/>
         </md-field>
 
         <h2 class="pt-3">Personen</h2>
-        <div class="pb-3">
-          <md-table>
+        <div class="md-layout-item md-size-100">
+          <md-field :class="getValidationClass('members')">
+          <md-table name="members" id="members" v-model="form.members" :disabled="sending" class="md-layout-item md-size-100">
             <md-table-row>
               <md-table-head>Name</md-table-head>
               <md-table-head>Actions</md-table-head>
             </md-table-row>
-            <md-table-row v-for="item in workshop.members" v-bind:key="item">
+            <md-table-row v-for="item in form.members" v-bind:key="item.id">
               <md-table-cell>{{ item.firstname }} {{ item.lastname }} {{ item.group }}</md-table-cell>
               <md-table-cell>
-                <md-button class="md-flat" v-on:click="remStudent(item)">
+                <md-button class="md-icon-button md-list-action" v-on:click="removeMember(item)">
                   <md-icon>remove_circle</md-icon>
                 </md-button>
               </md-table-cell>
             </md-table-row>
           </md-table>
-          <md-button class="md-raised btn-green" @click="showDialog = true">Person/Verband hinzufügen</md-button>
-          <div class="d-flex justify-content-end">
+
+          <span class="md-error" v-if="!$v.form.members.required">At least one member is required</span>
+
+          </md-field>
+          <div class="d-flex ">
             <md-button class="prp-success md-raised" @click="showDialog = true">
               <span class="p-1">Person/Verband hinzufügen</span>
-              <md-icon class="prp-success-icon"></md-icon>
+              <md-icon class="prp-success-icon">add</md-icon>
             </md-button>
           </div>
         </div>
 
         <h2>Kriterien</h2>
-        <div class="pb-3">
-          <md-card v-for="item in this.workshop.kriterien" :key="item.id">
-
+        <div class="">
+          <md-field class="md-layout md-gutter md-size-100" :class="getValidationClass('criteria')" name="criteria" id="criteria" v-model="form.criteria" :disabled="sending">
+            <md-card class="md-layout-item md-size-100" v-for="item in form.criteria" :key="item.id">
             <md-card-header>
               <div class="md-layout md-gutter md-alignment-center">
                 <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
@@ -73,7 +80,7 @@
               </md-card-actions>
 
               <md-card-expand-content>
-                <div class="px-1 px-md-3">
+                <div class="px-3">
                   <div class="md-layout md-gutter md-alignment-center">
                     <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
                       <md-field>
@@ -95,23 +102,30 @@
                 </div>
               </md-card-expand-content>
             </md-card-expand>
-          </md-card>
+          </md-card>         
+          
+          <span class="md-error" v-if="!$v.form.criteria.required">At least one criteria is required</span>
+          </md-field>
 
-          <div class="d-flex justify-content-end">
-            <md-button class="prp-success md-raised" @click="addCriteria">
+                    <div class="d-flex">
+            <md-button class="prp-success md-raised" @click="addCriteria()">
               <span class="p-1">Kriterium hinzugügen</span>
               <md-icon class="prp-success-icon">add</md-icon>
             </md-button>
           </div>
+
         </div>
 
         <h2>Deadline</h2>
-        <md-datepicker v-model="testdate"/>
+        <md-field :class="getValidationClass('deadline')">
+            <md-datepicker name="deadline" id="deadline" v-model="form.deadline" :disabled="sending"/>
+            <span class="md-error" v-if="!$v.form.deadline.required">A deadline is required</span>
+        </md-field>
 
         <h2>Anonym</h2>
         <div class="pb-3">
-          <md-switch v-model="workshop.anonym">
-            <td>{{ this.workshop.anonym }}</td>
+          <md-switch v-model="form.anonymous">
+            <td>{{ form.anonymous }}</td>
           </md-switch>
         </div>
 
@@ -120,8 +134,8 @@
             <span class="p-1">Abbrechen</span>
             <md-icon class="prp-danger">delete</md-icon>
           </md-button>
-          <md-button class="md-raised prp-success" @click="editWorkshop">
-            <span class="p-1">Update</span>
+          <md-button class="md-raised prp-success" type="submit" :disabled="sending">
+            <span class="p-1">Aktualisieren</span>
             <md-icon class="prp-success-icon">done_all</md-icon>
           </md-button>
         </div>
@@ -129,15 +143,15 @@
         <md-dialog :md-active.sync="showDialog">
           <md-dialog-title>Person hinzufügen</md-dialog-title>
 
-          <div>
+          <md-dialog-content>
             <b>Nach Vor und Nachname suchen</b>
             <md-field>
               <label>Vorname</label>
-              <md-input v-model="vorname"></md-input>
+              <md-input v-model="firstname"></md-input>
             </md-field>
             <md-field>
               <label>Nachname</label>
-              <md-input v-model="nachname"></md-input>
+              <md-input v-model="lastname"></md-input>
             </md-field>
             <b>oder</b>
             <b> nach Gruppe suchen</b>
@@ -145,11 +159,11 @@
               <label>Gruppe</label>
               <md-input v-model="group"></md-input>
             </md-field>
-          </div>
+          </md-dialog-content>
 
           <md-dialog-actions>
             <md-button class="md-primary" @click="showDialog = false">Close</md-button>
-            <md-button class="md-primary" @click="showDialog = false; findStudent(vorname,nachname,group, id)">Save
+            <md-button class="md-primary" @click="showDialog = false; findStudent(firstname, lastname ,group)">Suche
             </md-button>
           </md-dialog-actions>
         </md-dialog>
@@ -157,129 +171,169 @@
       </form>
     </div>
   </div>
+</form>
 </template>
 
 <script>
+
 import DataService from "../../services/DataService";
+import { validationMixin } from 'vuelidate'
+import {
+    required,
+    minLength
+  } from 'vuelidate/lib/validators'
 
 export default {
   name: 'CreateWorkshop',
+  mixins: [validationMixin],
   data() {
     return {
-      //students: [],
-      //criteria: [],
-      //is_anonym: Boolean,
       showDialog: false,
-      workshop: {},
-      testdate: String,
-      cid_counter: 1
+      cid_counter: 1,
+      form: {
+        title: null,
+        description: null,
+        file: null,
+        members: [],
+        criteria: [],
+        deadline: null,
+        anonymous: true
+      },
+      sending: false
     }
   },
+  validations: {
+      form: {
+        title: {
+          required,
+          minLength: minLength(3)
+      },
+      members: {
+        required
+      },
+
+      deadline: {
+        required
+      },
+
+      criteria: {
+        required
+      }
+    }
+    },
   methods: {
-    remStudent(name) {
-      this.workshop.members = this.workshop.members.filter(function (obj) {
-        return obj != name;
+    removeMember(id) {
+      this.form.members = this.form.members.filter(function (obj) {
+        return obj !== id;
       });
     },
+
     removeCriteria(id) {
-      this.workshop.kriterien = this.workshop.kriterien.filter(function (obj) {
+      this.form.criteria = this.form.criteria.filter(function (obj) {
         return obj.id !== id;
       });
     },
 
-    findStudent(vorname, nachname, group, id) {
-      if (!id) {
-        id = ""
-      }
-      if (!vorname) {
-        vorname = ""
-      }
-      if (!nachname) {
-        nachname = ""
-      }
-      if (!group) {
-        group = ""
-      }
-      this.workshop.members.push({id: id, firstname: vorname, lastname: nachname, group: group});
-      console.log(this.students);
+    findStudent(fn, ln, grp) {
+
+      this.form.members.push({firstname: fn, lastname: ln, group: grp});
     },
-    editKriterium(title) {
+
+    editCriteria(title) {
       console.log(title);
     },
-    delKriterium(id) {
-      this.workshop.kriterien = this.workshop.kriterien.filter(function (obj) {
-        return obj.id != id;
+
+    deleteCriteria(title) {
+      this.form.criteria = this.form.criteria.filter(function (obj) {
+        return obj.title !== title;
       });
     },
 
     addCriteria() {
-      alert(this.cid_counter);
-      this.workshop.kriterien.push({
-        id: this.workshop.kriterien.length + this.cid_counter,
+      this.form.criteria.push({
+        id: this.form.criteria.length + this.cid_counter + 1,
         name: "Kriterium",
         beschreibung: "Beschreibung",
         janein: true,
-        prozent: 0.0,
-        punkte: 0.0
+        prozent: -1,
+        punkte: -1
       });
       this.cid_counter++;
     },
 
-    editWorkshop() {
-      console.log(this.workshop.id, this.workshop.title, this.workshop.beschreibung, this.testdate, this.workshop.anonym, this.workshop.members)
-      DataService.editWorkshopTeacher(this.$route.params.id, this.workshop.title, this.workshop.beschreibung, this.testdate, this.workshop.anonym, this.workshop.members)
+    createWorkshop() {
+
+      DataService.addWorkshopTeacher(this.form.title, this.form.description, this.form.deadline, this.form.anonymous, this.members, this.form.criteria)
           .then(response => {
             console.log(response.data);
             window.location.href = 'http://localhost:8081/teacherdashboard';
           })
           .catch(e => {
             console.log(e);
+            alert("Fehler");
           });
+
     },
 
-    getWorkshop() {
-      DataService.getWorkshopDetailsTeacher()
+    getValidationClass (fieldName) {
+        const field = this.$v.form[fieldName]
+
+        if (field) {
+          return {
+            'md-invalid': field.$invalid && field.$dirty
+          }
+        }
+      },
+
+      validateWorkshop () {
+        this.$v.$touch()
+
+        if (!this.$v.$invalid) {
+          this.createWorkshop();
+        }
+      },
+
+    getIdFromUrl() {
+      return window.location.pathname.split('/')[3];
+    },
+
+    loadWorkshop(){
+          DataService.getWorkshopDetailsTeacher()
           .then(response => {
-            this.workshop = response.data[0].find(obj => {
-              return obj.id == this.getIDfromURL()
+            let workshop = response.data[0].find(obj => {
+              return obj.id == this.getIdFromUrl();
             });
-            console.log(response.data);
-            this.testdate = this.workshop.deadline.split("T")[0];
+
+            this.form.title = workshop.title;
+            this.form.description = workshop.beschreibung;
+            this.form.file = workshop.file,
+            this.form.members = workshop.members;
+            this.form.criteria = workshop.criteria;
+            this.form.deadline = workshop.deadline;
+            this.form.anonymous = workshop.anonymous;
           })
           .catch(e => {
             console.log(e);
           });
-
-
-    },
-
-    getIDfromURL() {
-      return window.location.pathname.split('/')[3];
     }
+
   },
-  mounted() {
-    //this.students = ["Lukas Nowy", "Georg Reisinger", "Noch wer"];
-    //this.criteria = [{id: 1, name: "Kriterium", beschreibung: "Beschreibung", janein: true, prozent: 0.0, punkte: 0.0}];
-    //this.is_anonym = true;
-    this.getWorkshop();
+  created() {
+    //this.criteria = [{id: 1, name: "Kriterium", beschreibung: "Beschreibung", janein: true, prozent: -1, punkte: -1}];
+    this.is_anonym = true;
+    this.loadWorkshop();
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.btn-green {
-  float: right;
-  background-color: rgb(0, 201, 67) !important;
-}
+<style lang="scss" scoped>
+  .container{
+    //width: 80%;
+    margin: auto;
+  }
 
-.btn-red {
-  float: right;
-  background-color: rgb(255, 74, 61) !important;
-}
-
-.crit_cont {
-  margin-left: 4%;
-  margin-right: 4%;
-}
+  .criteria_btn {
+    float: right !important;
+  }
 </style>
