@@ -139,34 +139,124 @@
             <md-icon class="prp-success-icon">done_all</md-icon>
           </md-button>
         </div>
+<!--
+<md-dialog :md-active.sync="showDialog">
+      <md-dialog-title>Add Students</md-dialog-title>
 
-        <md-dialog :md-active.sync="showDialog">
-          <md-dialog-title>Person hinzufügen</md-dialog-title>
+      <div class="container">
+         <div class="md-layout md-gutter md-alignment-center">
+          <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+            <md-field>
+              <label>First Name</label>
+              <md-input v-model="searchBox.firstname"></md-input>
+            </md-field>
+          </div>
+          <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+            <md-field>
+              <label>Last Name</label>
+              <md-input v-model="searchBox.lastname"></md-input>
+            </md-field>
+          </div>
+          <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+            <md-button class="md-raised md-primary" @click="searchStudentsByName()">Search</md-button>
+          </div>
+        </div>
 
-          <md-dialog-content>
-            <b>Nach Vor und Nachname suchen</b>
-            <md-field>
-              <label>Vorname</label>
-              <md-input v-model="firstname"></md-input>
-            </md-field>
-            <md-field>
-              <label>Nachname</label>
-              <md-input v-model="lastname"></md-input>
-            </md-field>
-            <b>oder</b>
-            <b> nach Gruppe suchen</b>
-            <md-field>
-              <label>Gruppe</label>
-              <md-input v-model="group"></md-input>
-            </md-field>
-          </md-dialog-content>
+        <md-dialog-content>
+    <md-table md-card>
+      <md-table-toolbar>
+        <h1 class="md-title">Students</h1>
+      </md-table-toolbar>
 
-          <md-dialog-actions>
-            <md-button class="md-primary" @click="showDialog = false">Close</md-button>
-            <md-button class="md-primary" @click="showDialog = false; findStudent(firstname, lastname ,group)">Suche
-            </md-button>
-          </md-dialog-actions>
-        </md-dialog>
+      <md-table-row>
+        <md-table-head md-numeric>ID</md-table-head>
+        <md-table-head>First Name</md-table-head>
+        <md-table-head>Last Name</md-table-head>
+        <md-table-head>Group</md-table-head>
+        <md-table-head>Action</md-table-head>
+      </md-table-row>
+
+      <md-table-row v-for="item in this.searchBox.students" :key="item.id">
+        <md-table-cell md-numeric>{{item.id}}</md-table-cell>
+        <md-table-cell>{{item.firstname}}</md-table-cell>
+        <md-table-cell>{{item.lastname}}</md-table-cell>
+        <md-table-cell>{{item.group}}</md-table-cell>
+        <md-table-cell>
+          <md-button class="md-icon-button md-raised md-primary">
+            <md-icon>add</md-icon>
+          </md-button>
+        </md-table-cell>
+      </md-table-row>
+    </md-table>
+  </md-dialog-content>
+      </div>
+
+
+
+
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="showDialog = false">Cancel</md-button>
+        <md-button class="md-primary" @click="showDialog = false">Confirm</md-button>
+      </md-dialog-actions>
+    </md-dialog>-->
+
+    <md-dialog :md-active.sync="showDialog">
+      <md-dialog-title>Add Students</md-dialog-title>
+
+              <div class="md-layout md-gutter md-alignment-center container">
+          <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+            <md-field>
+              <label>First Name</label>
+              <md-input v-model="searchBox.firstname"></md-input>
+            </md-field>
+          </div>
+          <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+            <md-field>
+              <label>Last Name</label>
+              <md-input v-model="searchBox.lastname"></md-input>
+            </md-field>
+          </div>
+          <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+            <md-button class="md-raised md-primary" @click="searchStudentsByName()">Search</md-button>
+          </div>
+        </div>
+
+      <md-dialog-content>
+
+
+    <md-table md-card>
+      <md-table-toolbar>
+        <h1 class="md-title">Students</h1>
+      </md-table-toolbar>
+
+      <md-table-row>
+        <md-table-head md-numeric>ID</md-table-head>
+        <md-table-head>First Name</md-table-head>
+        <md-table-head>Last Name</md-table-head>
+        <md-table-head>Group</md-table-head>
+        <md-table-head>Action</md-table-head>
+      </md-table-row>
+
+      <md-table-row v-for="item in this.searchBox.students" :key="item.id">
+        <md-table-cell md-numeric>{{item.id}}</md-table-cell>
+        <md-table-cell>{{item.firstname}}</md-table-cell>
+        <md-table-cell>{{item.lastname}}</md-table-cell>
+        <md-table-cell>{{item.group}}</md-table-cell>
+        <md-table-cell>
+          <md-button :disabled="form.members.find(obj => {return obj.id == item.id})" class="md-icon-button md-raised md-primary" @click="addStudent(item.id)">
+            <md-icon>add</md-icon>
+          </md-button>
+        </md-table-cell>
+      </md-table-row>
+    </md-table>
+      </md-dialog-content>
+
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="showDialog = false">Close</md-button>
+        <md-button class="md-primary" @click="showDialog = false">OK</md-button>
+      </md-dialog-actions>
+    </md-dialog>
+
 
       </form>
     </div>
@@ -199,7 +289,12 @@ export default {
         deadline: null,
         anonymous: true
       },
-      sending: false
+      sending: false,
+      searchBox: {
+        firstname: "",
+        lastname: "",
+        students: []
+      }
     }
   },
   validations: {
@@ -222,6 +317,22 @@ export default {
     }
     },
   methods: {
+
+    addStudent(id) {
+      this.form.members.push(this.searchBox.students.find(obj => {return obj.id == id}));
+    },
+
+    searchStudentsByName() {
+        DataService.searchStudentsByName(this.searchBox.firstname, this.searchBox.lastname)
+          .then(response => {
+            console.log(response.data);
+            this.searchBox.students = response.data;
+          })
+          .catch(e => {
+            console.log(e);
+            alert("Fehler");
+          });
+    },
     removeMember(id) {
       this.form.members = this.form.members.filter(function (obj) {
         return obj !== id;
@@ -232,11 +343,6 @@ export default {
       this.form.criteria = this.form.criteria.filter(function (obj) {
         return obj.id !== id;
       });
-    },
-
-    findStudent(fn, ln, grp) {
-
-      this.form.members.push({firstname: fn, lastname: ln, group: grp});
     },
 
     editCriteria(title) {
@@ -263,7 +369,7 @@ export default {
 
     createWorkshop() {
 
-      DataService.addWorkshopTeacher(this.form.title, this.form.description, this.form.deadline, this.form.anonymous, this.members, this.form.criteria)
+      DataService.addWorkshopTeacher(this.form.title, this.form.description, this.form.deadline, this.form.anonymous, this.form.members, this.form.criteria)
           .then(response => {
             console.log(response.data);
             window.location.href = 'http://localhost:8081/teacherdashboard';

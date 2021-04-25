@@ -11,7 +11,7 @@
         <md-table v-model="workshops" md-card>
           <md-table-row slot="md-table-row" slot-scope="{ item }">
             <md-table-cell md-label="Titel" md-sort-by="id" md-numeric>{{ item.title }}</md-table-cell>
-            <md-table-cell md-label="Beschreibung" md-sort-by="title">{{ item.beschreibung }}</md-table-cell>
+            <md-table-cell md-label="Beschreibung" md-sort-by="title">{{ item.content }}</md-table-cell>
             <md-table-cell md-label="Actions">
               <md-button class="md-flat"  :to="{ path: '/teacherdashboard/workshopdetails/' + item.id }"><md-icon>info</md-icon></md-button>
               <md-button class="md-flat"  :to="{ path: '/teacherdashboard/editworkshop/' + item.id }"><md-icon>edit</md-icon></md-button>
@@ -39,11 +39,9 @@ import DataService from "../../services/DataService";
 
 export default {
   name: 'TeacherDashboard',
-  props: {
-    workshops: []
-  },
   data() {
     return {
+      workshops: [],
       deleteDialog: false,
       currentID: null
     }
@@ -56,8 +54,7 @@ export default {
     getWorkshops() {
       DataService.getAllWorkshopsTeacher()
         .then(response => {
-          this.workshops = response.data[0];
-          console.log(response.data);
+          this.workshops = response.data;
         })
         .catch(e => {
           console.log(e);
@@ -65,13 +62,10 @@ export default {
     },
     deleteWorkshop() {
       DataService.deleteWorkshopTeacher(this.currentID)
-          .then(response => {
-            this.workshops = response.data[0];
-            console.log(response.data);
-          })
         .catch(e => {
           console.log(e);
         });
+      this.workshops = this.workshops.filter(obj => {return obj.id != this.currentID});
     }
   },
   mounted() {

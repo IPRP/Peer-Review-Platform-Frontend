@@ -298,18 +298,16 @@ export default {
     },
 
     loadWorkshop(){
-          DataService.getWorkshopDetailsTeacher()
+          DataService.getWorkshopDetailsTeacher(this.getIdFromUrl())
           .then(response => {
-            let workshop = response.data[0].find(obj => {
-              return obj.id == this.getIdFromUrl();
-            });
+            let workshop = response.data;
 
             this.form.title = workshop.title;
-            this.form.description = workshop.beschreibung;
+            this.form.description = workshop.content;
             this.form.file = workshop.file,
-            this.form.members = workshop.members;
+            this.form.members = workshop.students;
             this.form.criteria = workshop.criteria;
-            this.form.deadline = workshop.deadline;
+            this.form.deadline = workshop.end;
             this.form.anonymous = workshop.anonymous;
           })
           .catch(e => {
