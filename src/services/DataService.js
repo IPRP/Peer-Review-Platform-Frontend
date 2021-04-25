@@ -42,6 +42,18 @@ class DataService {
             criteria: criteria
         });
     }
+
+    editWorkshopTeacher(id, title, description, deadline, is_anonym, students, criteria) {
+        return http.put(`/teacher/workshop/${id}`, {
+            title: title,
+            content: description,
+            end: deadline,
+            anonymous: is_anonym,
+            teachers: ["lukas"],
+            students: students,
+            criteria: criteria
+        });
+    }
 }
 
 export default new DataService();
