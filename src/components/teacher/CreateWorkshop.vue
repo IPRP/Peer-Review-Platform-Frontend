@@ -53,7 +53,7 @@
         <h2>Kriterien</h2>
         <div class="">
           <md-field class="md-layout md-gutter md-size-100" :class="getValidationClass('criteria')" name="criteria" id="criteria" v-model="form.criteria" :disabled="sending">
-            <md-card class="md-layout-item md-size-100" v-for="item in form.criteria" :key="item.id">
+            <md-card class="md-layout-item md-size-100 criteria_card" v-for="item in form.criteria" :key="item.id">
             <md-card-header>
               <div class="md-layout md-gutter md-alignment-center">
                 <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
@@ -416,5 +416,9 @@ export default {
 
   .criteria_btn {
     float: right !important;
+  }
+
+  .criteria_card {
+    margin-bottom: 10px;
   }
 </style>
