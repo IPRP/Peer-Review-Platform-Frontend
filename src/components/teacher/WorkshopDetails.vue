@@ -2,7 +2,7 @@
   <div class="md-layout md-alignment-top-center">
     <div class="md-layout-item md-xlarge-size-70 md-large-size-70 md-medium-size-80 md-small-size-95 md-xsmall-size-95">
     <h1>Workshop: {{ this.workshop.title }}</h1>
-    <p>{{this.workshop.beschreibung}}</p>
+    <p>{{this.workshop.content}}</p>
 
     <md-switch v-model="showOutstandingSubmissions" class="md-primary">Offene Workshop Abgaben</md-switch>
     <md-switch v-model="showLatedSubmissions" class="md-primary">Verspätete Workshop Abgaben</md-switch>
@@ -75,11 +75,9 @@ export default {
   methods: {
 
     getWorkshop() {
-      DataService.getWorkshopDetailsTeacher()
+      DataService.getWorkshopDetailsTeacher(this.getIdFromUrl())
           .then(response => {
-            this.workshop = response.data[0].find(obj => {
-              return obj.id == this.getIdFromUrl()
-            });
+            this.workshop = response.data;
             console.log(this.workshop);
           })
           .catch(e => {
