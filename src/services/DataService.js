@@ -30,6 +30,16 @@ class DataService {
         });
     }
 
+    searchStudentByID(id) {
+        return http.request({
+            method: 'GET',
+            url: `/teacher/search/student`,
+            params: {
+                id: id
+            },
+        })
+    }
+
     addWorkshopTeacher(title, description, deadline, is_anonym, students, criteria) {
 
         var std = [];
@@ -51,13 +61,20 @@ class DataService {
     }
 
     editWorkshopTeacher(id, title, description, deadline, is_anonym, students, criteria) {
+
+        var std = [];
+
+        for(let item of students) {
+            std.push(item.id);
+        }
+
         return http.put(`/teacher/workshop/${id}`, {
             title: title,
             content: description,
             end: deadline,
             anonymous: is_anonym,
             teachers: ["lukas"],
-            students: students,
+            students: std,
             criteria: criteria
         });
     }
