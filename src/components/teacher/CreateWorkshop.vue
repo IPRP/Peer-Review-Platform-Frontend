@@ -53,17 +53,17 @@
         <h2>Kriterien</h2>
         <div class="">
           <md-field class="md-layout md-gutter md-size-100" :class="getValidationClass('criteria')" name="criteria" id="criteria" v-model="form.criteria" :disabled="sending">
-            <md-card class="md-layout-item md-size-100 criteria_card" v-for="item in form.criteria" :key="item.id">
+            <md-card class="md-layout-item md-size-100 criteria_card" v-for="item in form.criteria" :key="item.title">
             <md-card-header>
               <div class="md-layout md-gutter md-alignment-center">
                 <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
                   <md-field>
                     <label>Kriteriumname</label>
-                    <md-input v-model="item.name"></md-input>
+                    <md-input v-model="item.title"></md-input>
                   </md-field>
                 </div>
                 <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
-                  <md-button class="md-icon-button md-list-action" @click="removeCriteria(item.id)">
+                  <md-button class="md-icon-button md-list-action" @click="removeCriteria(item.title)">
                     <md-icon>delete</md-icon>
                   </md-button>
                 </div>
@@ -85,16 +85,17 @@
                     <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
                       <md-field>
                         <label></label>
-                        <md-textarea v-model="item.beschreibung"></md-textarea>
+                        <md-textarea v-model="item.content"></md-textarea>
                       </md-field>
                     </div>
                     <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
                       <md-field>
-                        <label for="movie">Bewertung</label>
-                        <md-select v-model="item.bewertung" name="movie" id="movie">
-                          <md-option value="yn">Ja/Nein</md-option>
-                          <md-option value="percent">Prozent</md-option>
-                          <md-option value="points">Punkte</md-option>
+                        <label>Bewertung</label>
+                        <md-select v-model="item.type">
+                          <md-option value="truefalse">Ja/Nein</md-option>
+                          <md-option value="percentage">Prozent</md-option>
+                          <md-option value="point">Punkte</md-option>
+                          <md-option value="grade">Note</md-option>
                         </md-select>
                       </md-field>
                     </div>
@@ -339,9 +340,9 @@ export default {
       });
     },
 
-    removeCriteria(id) {
+    removeCriteria(title) {
       this.form.criteria = this.form.criteria.filter(function (obj) {
-        return obj.id !== id;
+        return obj.title !== title;
       });
     },
 
@@ -357,12 +358,10 @@ export default {
 
     addCriteria() {
       this.form.criteria.push({
-        id: this.form.criteria.length + this.cid_counter + 1,
-        name: "Kriterium",
-        beschreibung: "Beschreibung",
-        janein: true,
-        prozent: -1,
-        punkte: -1
+        title: "Kriterium",
+        content: "Beschreibung",
+        type: "point",
+        weight: 1.0
       });
       this.cid_counter++;
     },
