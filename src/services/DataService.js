@@ -86,7 +86,7 @@ class DataService {
             content: description,
             end: deadline,
             anonymous: is_anonym,
-            teachers: ["lukas"],
+            teachers: [1],
             students: std,
             criteria: criteria
         });
