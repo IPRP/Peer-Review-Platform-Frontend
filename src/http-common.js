@@ -3,7 +3,7 @@ import axios from "axios";
 export default axios.create({
     baseURL: "http://localhost:3000", //mocked backend
     auth: {
-        username: "lukas",
+        username: "lukasbeck",
         password: "1234"
     },
     headers: {

@@ -78,6 +78,20 @@ class DataService {
             criteria: criteria
         });
     }
+
+    //Student
+
+    getStudentWorkshops(){
+        return http.get(`/student/workshops`, {
+
+        });
+    }
+
+    getStudentTodo(){
+        return http.get(`/student/todos`, {
+
+        });
+    }
 }
 
 export default new DataService();

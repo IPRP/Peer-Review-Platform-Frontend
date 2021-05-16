@@ -4,14 +4,17 @@
     <div class="d-flex flex-wrap flex-md-nowrap">
       <div class="px-1 px-md-5 flex-grow-1">
         <div class="pb-5">
+
           <md-table md-card>
             <md-table-toolbar>
               <h1 class="md-title">Laufende Reviews</h1>
             </md-table-toolbar>
-            <md-table-row>
-              <md-table-cell>Workshop 1 (Abgabe von Lukas Nowy)</md-table-cell>
+            <md-table-row v-for="(item, i) in this.reviewstodo" :key="i">
+              <md-table-cell>Review {{item.workshopName}} (Review fehlt)</md-table-cell>  <!--  //item.workshopName ist die review id siehe https://docs.google.com/spreadsheets/d/1X2nMEH33EQm5FCdruBNx2x0NtEMzxlOo/edit#gid=136308832  !-->
               <md-table-cell class="prp-table-action-cell">
-                <md-button class="md-icon-button md-list-action"  to="/writereview">
+                <md-button
+                  class="md-icon-button md-list-action"
+                  :to="{path: '/writereview/' + item.workshopName + '/' + item.submission}">
                   <md-icon>forward</md-icon>
                 </md-button>
               </md-table-cell>
@@ -23,10 +26,12 @@
             <md-table-toolbar>
               <h1 class="md-title">Laufende Abgaben</h1>
             </md-table-toolbar>
-            <md-table-row>
-              <md-table-cell>Workshop 3 (Abgabe fehlt)</md-table-cell>
+            <md-table-row v-for="(item, i) in this.submissionstodo" :key="i">
+              <md-table-cell>Workshop {{ item.id }} (Abgabe fehlt)</md-table-cell>
               <md-table-cell class="prp-table-action-cell">
-                <md-button class="md-icon-button md-list-action" to="/workshopsubmission/3">
+                <md-button
+                  class="md-icon-button md-list-action"
+                  :to="{path: '/workshopsubmission/' + item.id}">
                   <md-icon>forward</md-icon>
                 </md-button>
               </md-table-cell>
@@ -40,10 +45,13 @@
           <md-table-toolbar>
             <h1 class="md-title">Meine Workshops</h1>
           </md-table-toolbar>
-          <md-table-row v-for="workshop in workshops" :key="workshop.id">
+          <md-table-row v-for="(workshop, w) in this.workshops" :key="w">
             <md-table-cell>{{ workshop.title }}</md-table-cell>
             <md-table-cell class="prp-table-action-cell">
-              <md-button class="md-icon-button md-list-action" :to="{ name: 'workshopoverview', params: { id: workshop.id }}">
+              <md-button
+                class="md-icon-button md-list-action"
+                :to="{ name: 'workshopoverview', params: { id: workshop.id } }"
+              >
                 <md-icon>info</md-icon>
               </md-button>
             </md-table-cell>
@@ -55,34 +63,59 @@
 </template>
 
 <script>
-
-import axios from "axios";
+// import axios from "axios";
+import DataService from "../../services/DataService";
 
 export default {
   name: "StudentDashboard",
   data() {
     return {
-      workshops: null
+      workshops: [],
+      submissionstodo: [],
+      reviewstodo: []
+    };
+  },
+  methods: {
+    getStudentWorkshops() {
+      DataService.getStudentWorkshops()
+        .then(response => {
+          this.workshops = response.data;
+          console.log(this.workshops);
+        })
+        .catch(e => {
+          console.error(e);
+        });
+    },
+    getStudentTodo() {
+      DataService.getStudentTodo().then(response => {
+        this.reviewstodo = response.data.reviews;
+        this.submissionstodo = response.data.submissions;
+        console.log(this.reviewstodo);
+        console.log(this.submissionstodo);
+      })
+      .catch(e => {
+        console.error(e)
+      });
     }
   },
   mounted() {
-    axios
-        .get('http://localhost:8080/student/workshops', {
-            auth: {
-              username: 's1',
-              password: 'admin'
-            }
-        })
-        //.then(response => console.log(response.data.workshops))
-        .then(response => (this.workshops = response.data.workshops))
+    this.getStudentWorkshops();
+    this.getStudentTodo();
+    // axios
+    //     .get('http://localhost:8080/student/workshops', {
+    //         auth: {
+    //           username: 's1',
+    //           password: 'admin'
+    //         }
+    //     })
+    //     //.then(response => console.log(response.data.workshops))
+    //     .then(response => (this.workshops = response.data.workshops))
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-
 .prp-table-action-cell {
   text-align: right;
 }
-
 </style>

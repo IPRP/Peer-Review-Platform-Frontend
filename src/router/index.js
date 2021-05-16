@@ -13,7 +13,7 @@ const routes = [{
         children: [
             //in the future: path: 'reviewverfassen/:id', same for similar children
             {
-                path: 'writereview',
+                path: 'writereview/:reviewid/:submissionid',
                 component: () =>
                     import ( /* webpackChunkName: "ReviewVerfassen" */ '../components/student/WriteReview')
             },
