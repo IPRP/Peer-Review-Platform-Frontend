@@ -44,7 +44,11 @@
           </md-field>
           <div class="d-flex ">
             <md-button class="prp-success md-raised" @click="showDialog = true">
-              <span class="p-1">Person/Verband hinzufügen</span>
+              <span class="p-1">Personen hinzufügen</span>
+              <md-icon class="prp-success-icon">add</md-icon>
+            </md-button>
+            <md-button class="prp-success md-raised" @click="showDialog1 = true">
+              <span class="p-1">Verband hinzufügen</span>
               <md-icon class="prp-success-icon">add</md-icon>
             </md-button>
           </div>
@@ -258,6 +262,62 @@
       </md-dialog-actions>
     </md-dialog>
 
+    <!-- Verband PopUp -->
+
+      <md-dialog :md-active.sync="showDialog1">
+      <md-dialog-title>Add Students</md-dialog-title>
+
+              <div class="md-layout md-gutter md-alignment-center container">
+          <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+            <md-field>
+              <label>Group</label>
+              <md-input v-model="searchBox.group"></md-input>
+            </md-field>
+          </div>
+          <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+            <md-button class="md-raised md-primary" @click="searchStudentsByGroup()">Search</md-button>
+          </div>
+          <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+            <md-button class="md-raised md-primary" @click="addEntireGroup()" :disabled="!this.searchBox.students.length > 0">Add Entire Group</md-button>
+          </div>
+        </div>
+
+      <md-dialog-content>
+
+
+    <md-table md-card>
+      <md-table-toolbar>
+        <h1 class="md-title">Students</h1>
+      </md-table-toolbar>
+
+      <md-table-row>
+        <md-table-head md-numeric>ID</md-table-head>
+        <md-table-head>First Name</md-table-head>
+        <md-table-head>Last Name</md-table-head>
+        <md-table-head>Group</md-table-head>
+        <md-table-head>Action</md-table-head>
+      </md-table-row>
+
+      <md-table-row v-for="item in this.searchBox.students" :key="item.id">
+        <md-table-cell md-numeric>{{item.id}}</md-table-cell>
+        <md-table-cell>{{item.firstname}}</md-table-cell>
+        <md-table-cell>{{item.lastname}}</md-table-cell>
+        <md-table-cell>{{item.group}}</md-table-cell>
+        <md-table-cell>
+          <md-button :disabled="form.members.find(obj => {return obj.id == item.id})" class="md-icon-button md-raised md-primary" @click="addStudent(item.id)">
+            <md-icon>add</md-icon>
+          </md-button>
+        </md-table-cell>
+      </md-table-row>
+    </md-table>
+      </md-dialog-content>
+
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="showDialog1 = false">Close</md-button>
+        <md-button class="md-primary" @click="showDialog1 = false">OK</md-button>
+      </md-dialog-actions>
+    </md-dialog>
+
 
       </form>
     </div>
@@ -280,6 +340,7 @@ export default {
   data() {
     return {
       showDialog: false,
+      showDialog1: false,
       cid_counter: 1,
       form: {
         id: null,
@@ -295,6 +356,7 @@ export default {
       searchBox: {
         firstname: "",
         lastname: "",
+        group: "",
         students: []
       }
     }
@@ -355,6 +417,23 @@ export default {
       this.form.criteria = this.form.criteria.filter(function (obj) {
         return obj.title !== title;
       });
+    },
+
+    addEntireGroup() {
+      this.form.members = this.form.members.concat(this.searchBox.students);
+    },
+
+    
+    searchStudentsByGroup() {
+        DataService.searchStudentsByGroup(this.searchBox.group)
+          .then(response => {
+            console.log(response.data);
+            this.searchBox.students = response.data;
+          })
+          .catch(e => {
+            console.log(e);
+            alert("Fehler");
+          });
     },
 
     addCriteria() {
