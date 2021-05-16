@@ -14,7 +14,7 @@
               <md-table-cell class="prp-table-action-cell">
                 <md-button
                   class="md-icon-button md-list-action"
-                  :to="{path: '/writereview/' + item.workshopName + '/' + item.submission}">
+                  :to="{path: '/writereview/' + item.workshopName + '/' + item.submission + '/' + item.id}">
                   <md-icon>forward</md-icon>
                 </md-button>
               </md-table-cell>
@@ -27,11 +27,11 @@
               <h1 class="md-title">Laufende Abgaben</h1>
             </md-table-toolbar>
             <md-table-row v-for="(item, i) in this.submissionstodo" :key="i">
-              <md-table-cell>Workshop {{ item.id }} (Abgabe fehlt)</md-table-cell>
+              <md-table-cell>Workshop {{ item.workshopName }} (Abgabe fehlt)</md-table-cell>
               <md-table-cell class="prp-table-action-cell">
                 <md-button
                   class="md-icon-button md-list-action"
-                  :to="{path: '/workshopsubmission/' + item.id}">
+                  :to="{path: '/workshopsubmission/' + item.id + '/' + item.workshopName}">
                   <md-icon>forward</md-icon>
                 </md-button>
               </md-table-cell>

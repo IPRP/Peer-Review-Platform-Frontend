@@ -1,7 +1,8 @@
 <template>
   <div class="p-1 p-md-5">
-    <h1 class="pl-1 pl-md-5">Review {{ $route.params.reviewid }} verfassen</h1>
-    <h3 class="pl-1 pl-md-5">Abgabe: {{ $route.params.submissionid }}, Abgabe: Lukas Nowy</h3>
+    <h1 class="pl-1 pl-md-5">Workshop {{ $route.params.workshopid }} verfassen</h1>
+    <h2 class="pl-1 pl-md-5">Review ID: {{ $route.params.reviewid }}</h2>
+   <h3 class="pl-1 pl-md-5">Abgabe ID: {{ $route.params.submissionid }} <!--, Abgabe: Lukas Nowy--></h3>
     <div class="pl-1 pl-md-5">
       <md-button>
         <span>Abgabe_Nowy.pdf</span>

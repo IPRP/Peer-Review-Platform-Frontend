@@ -1,7 +1,7 @@
 <template>
   <div class="p-1 p-md-5">
-    <h1 class="pl-1 pl-md-5">Workshop Abgabe</h1>
-    <h3 class="pl-1 pl-md-5">Workshop: {{ $route.params.id }}</h3>
+    <h1 class="pl-1 pl-md-5">Workshop {{$route.params.workshopname}} Abgabe</h1>
+    <h3 class="pl-1 pl-md-5">Workshop ID: {{ $route.params.id }}</h3>
     <div class="px-1 px-md-5">
       <div>
         <h3 class="d-flex justify-content-start">Angabe:</h3>
