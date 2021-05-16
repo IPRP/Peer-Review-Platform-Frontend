@@ -9,24 +9,28 @@
     <md-switch v-model="showOutstandingReviews" class="md-primary">Offene Review Abgaben</md-switch>
     <md-switch v-model="showLatedReviews" class="md-primary">Verspätete Reviews anzeigen</md-switch>
 
-<md-table v-model="workshop.members" v-show="showOutstandingSubmissions">
+<md-table v-model="workshop.submissions" v-show="showOutstandingSubmissions">
       <md-table-row>
-        <md-table-head>Offene Workshop Abgaben</md-table-head>
+        <md-table-head>Workshop Abgaben</md-table-head>
       </md-table-row>
 
-      <md-table-row v-for="item in this.workshop.members" :key="item">
-        <md-table-cell>{{item}}</md-table-cell>
+      <md-table-row v-for="item in this.workshop.submissions" :key="item">
+        <md-table-cell v-if="item.reviewsDone == true">
+          {{item.title}} ({{item.points}}/{{item.maxPoints}} Punkte)
+        </md-table-cell>
       </md-table-row>
 
     </md-table>
 
-    <md-table v-model="workshop.members" v-show="showLatedSubmissions" >
+    <md-table v-model="workshop.submissions" v-show="showLatedSubmissions" >
       <md-table-row>
-        <md-table-head>Verspätete Workshop Abgaben</md-table-head>
+        <md-table-head>Offene/Verspätete Workshop Abgaben</md-table-head>
       </md-table-row>
 
-      <md-table-row v-for="item in this.workshop.members" :key="item">
-        <md-table-cell>{{item}}</md-table-cell>
+      <md-table-row v-for="item in this.workshop.submissions" :key="item">
+        <md-table-cell v-if="item.reviewsDone == false">
+           {{item.title}}
+        </md-table-cell>
       </md-table-row>
 
     </md-table>
