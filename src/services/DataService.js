@@ -25,8 +25,12 @@ class DataService {
     }
 
     searchStudentsByGroup(group) {
-        return http.get(`/teacher/search/student`, {
-            group: group
+        return http.request({
+            method: "GET",
+            url: `/teacher/search/student`,
+            params: {
+                group: group
+            }
         });
     }
 
