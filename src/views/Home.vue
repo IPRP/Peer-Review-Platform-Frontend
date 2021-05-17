@@ -1,7 +1,7 @@
 <template>
   <div class="prp-home">
     <md-toolbar class="md-primary prp-toolbar">
-
+      <img src="logo.png" width="50" height="50">
       <!--      Login Navbar-->
       <h3 v-if="!authenticated" class="md-title">Peer Review</h3>
       <!--      Teacher Navbar-->
@@ -12,7 +12,7 @@
         "
         to="/teacherdashboard"
       >
-        <img src="favicon.png" width="50" height="50">
+
 <!--        <h3 class="md-title">Peer Review</h3>-->
       </router-link>
       <md-button
@@ -40,7 +40,6 @@
         "
         to="/studentdashboard"
       >
-        <img src="favicon.png" width="50" height="50">
 <!--        <h3 class="md-title">Peer Review</h3>-->
       </router-link>
       <md-button
