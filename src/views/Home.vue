@@ -3,7 +3,6 @@
     <md-toolbar class="md-primary prp-toolbar">
 
       <!--      Login Navbar-->
-      <img v-if="!authenticated" src="logo.png" width="50" height="50">
       <h3 v-if="!authenticated" class="md-title">Peer Review</h3>
       <!--      Teacher Navbar-->
       <router-link

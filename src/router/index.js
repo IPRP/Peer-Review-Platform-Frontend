@@ -36,7 +36,7 @@ const routes = [
           )
       },
       {
-        path: "workshopsubmission/:id/:workshopname",
+        path: "workshopsubmission/:id/:workshopname/:submissionid",
         name: "workshopsubmission",
         component: () =>
           import(
