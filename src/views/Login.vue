@@ -37,10 +37,8 @@ export default {
             this.$emit("pw", this.input.password);
             const username = this.input.username
             if(username != 'georgreisinger' && username != 'lukasnowy'){
-              alert("to student")
               this.$router.push('studentdashboard') ;
             }else{
-              alert("to teacher")
               this.$router.push('/teacherdashboard');
             }
           }else {
