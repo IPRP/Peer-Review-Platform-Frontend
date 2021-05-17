@@ -82,7 +82,13 @@ export default {
   data: () => ({
     criteria1: false,
     criteria2: false
-  })
+  }),
+  mounted() {
+    if(!this.$parent.authenticated) {
+      // this.$router.replace({ name: "Login" });
+      window.location.href = "/login"
+    }
+  }
 }
 </script>
 

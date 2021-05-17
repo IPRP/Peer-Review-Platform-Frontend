@@ -52,7 +52,7 @@ export default {
       },
 
     getWorkshops() {
-      DataService.getAllWorkshopsTeacher()
+      DataService.getAllWorkshopsTeacher(this.$parent.username, this.$parent.pw)
         .then(response => {
           this.workshops = response.data;
         })
@@ -61,7 +61,7 @@ export default {
         });
     },
     deleteWorkshop() {
-      DataService.deleteWorkshopTeacher(this.currentID)
+      DataService.deleteWorkshopTeacher(this.currentID, this.$parent.username, this.$parent.pw)
         .catch(e => {
           console.log(e);
         });
@@ -69,7 +69,12 @@ export default {
     }
   },
   mounted() {
-    this.getWorkshops();
+    if(!this.$parent.authenticated) {
+      // this.$router.replace({ name: "Login" });
+      window.location.href = "/login"
+    }else {
+      this.getWorkshops();
+    }
   }
 }
 </script>

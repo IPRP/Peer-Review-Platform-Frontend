@@ -1,9 +1,36 @@
 <template>
   <div id="app">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons">
-    <router-view />
+    <router-view @authenticated="setAuthenticated" @username="setUser" @pw="setPw"/>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'App',
+  data() {
+    return {
+      authenticated: false,
+      username: "",
+      pw: ""
+    }
+  },
+  methods: {
+    setAuthenticated(status) {
+      this.authenticated = status;
+    },
+    setUser(username){
+      this.username = username;
+    },
+    setPw(pw){
+      this.pw = pw;
+    },
+    logout() {
+      this.authenticated = false;
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 #app {

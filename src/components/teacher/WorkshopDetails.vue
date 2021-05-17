@@ -79,7 +79,7 @@ export default {
   methods: {
 
     getWorkshop() {
-      DataService.getWorkshopDetailsTeacher(this.getIdFromUrl())
+      DataService.getWorkshopDetailsTeacher(this.getIdFromUrl(), this.$parent.username, this.$parent.pw)
           .then(response => {
             this.workshop = response.data;
             console.log(this.workshop);
@@ -96,6 +96,12 @@ export default {
 
   created() {
     this.getWorkshop();
+  },
+  mounted() {
+    if(!this.$parent.authenticated) {
+      // this.$router.replace({ name: "Login" });
+      window.location.href = "/login"
+    }
   }
 }
 </script>

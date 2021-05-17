@@ -25,7 +25,13 @@
 
 <script>
 export default {
-name: "ReviewOverview"
+name: "ReviewOverview",
+  mounted() {
+    if(!this.$parent.authenticated) {
+      // this.$router.replace({ name: "Login" });
+      window.location.href = "/login"
+    }
+  }
 }
 </script>
 

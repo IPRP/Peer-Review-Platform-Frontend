@@ -387,7 +387,7 @@ export default {
     },
 
     searchStudentsByName() {
-        DataService.searchStudentsByName(this.searchBox.firstname, this.searchBox.lastname)
+        DataService.searchStudentsByName(this.searchBox.firstname, this.searchBox.lastname, this.$parent.username, this.$parent.pw)
           .then(response => {
             console.log(response.data);
             this.searchBox.students = response.data;
@@ -425,7 +425,7 @@ export default {
 
     
     searchStudentsByGroup() {
-        DataService.searchStudentsByGroup(this.searchBox.group)
+        DataService.searchStudentsByGroup(this.searchBox.group, this.$parent.username, this.$parent.pw)
           .then(response => {
             console.log(response.data);
             this.searchBox.students = response.data;
@@ -450,10 +450,10 @@ export default {
 
     createWorkshop() {
 
-      DataService.editWorkshopTeacher(this.form.id, this.form.title, this.form.description, this.form.deadline, this.form.anonymous, this.form.members, this.form.criteria)
+      DataService.editWorkshopTeacher(this.form.id, this.form.title, this.form.description, this.form.deadline, this.form.anonymous, this.form.members, this.form.criteria, this.$parent.username, this.$parent.pw)
           .then(response => {
             console.log(response.data);
-            window.location.href = 'http://localhost:8081/teacherdashboard';
+            this.$router.push('/teacherdashboard');
           })
           .catch(e => {
             console.log(e);
@@ -485,7 +485,7 @@ export default {
     },
 
     loadWorkshop(){
-          DataService.getWorkshopDetailsTeacher(this.getIdFromUrl())
+          DataService.getWorkshopDetailsTeacher(this.getIdFromUrl(), this.$parent.username, this.$parent.pw)
           .then(response => {
             let workshop = response.data;
             this.form.id = workshop.id;
@@ -508,7 +508,7 @@ export default {
 
       for(let item of students) {
 
-        DataService.searchStudentByID(item)
+        DataService.searchStudentByID(item, this.$parent.username, this.$parent.pw)
           .then(response => {
               std.push(response.data[0]);
               console.log(response.data[0]);
@@ -527,6 +527,12 @@ export default {
     this.is_anonym = true;
 
     this.loadWorkshop();
+  },
+  mounted() {
+    if(!this.$parent.authenticated) {
+      // this.$router.replace({ name: "Login" });
+      window.location.href = "/login"
+    }
   }
 }
 </script>

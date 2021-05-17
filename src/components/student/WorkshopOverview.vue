@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     getWorkshop(id) {
-      this.workshop = DataService.getStudentWorkshops().then(response => {
+      this.workshop = DataService.getStudentWorkshops(this.$parent.username, this.$parent.pw).then(response => {
         var res = response.data;
         res.forEach(r => {
           console.log("res " + r.id + " id " + id);
@@ -107,7 +107,12 @@ export default {
     }
   },
   mounted() {
-    this.getWorkshop(this.$route.params.id);
+    if(!this.$parent.authenticated) {
+      // this.$router.replace({ name: "Login" });
+      window.location.href = "/login"
+    }else{
+      this.getWorkshop(this.$route.params.id);
+    }
   }
 };
 </script>

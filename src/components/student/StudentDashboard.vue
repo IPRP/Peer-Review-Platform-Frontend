@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     getStudentWorkshops() {
-      DataService.getStudentWorkshops()
+      DataService.getStudentWorkshops(this.$parent.username, this.$parent.pw)
         .then(response => {
           this.workshops = response.data;
           console.log(this.workshops);
@@ -87,7 +87,7 @@ export default {
         });
     },
     getStudentTodo() {
-      DataService.getStudentTodo().then(response => {
+      DataService.getStudentTodo(this.$parent.username, this.$parent.pw).then(response => {
         this.reviewstodo = response.data.reviews;
         this.submissionstodo = response.data.submissions;
         console.log(this.reviewstodo);
@@ -99,17 +99,13 @@ export default {
     }
   },
   mounted() {
-    this.getStudentWorkshops();
-    this.getStudentTodo();
-    // axios
-    //     .get('http://localhost:8080/student/workshops', {
-    //         auth: {
-    //           username: 's1',
-    //           password: 'admin'
-    //         }
-    //     })
-    //     //.then(response => console.log(response.data.workshops))
-    //     .then(response => (this.workshops = response.data.workshops))
+    if(!this.$parent.authenticated) {
+      // this.$router.replace({ name: "Login" });
+      window.location.href = "/login"
+    }else {
+      this.getStudentWorkshops();
+      this.getStudentTodo();
+    }
   }
 };
 </script>

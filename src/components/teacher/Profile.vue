@@ -18,7 +18,13 @@
 <script>
 
 export default {
-  name: "Profile"
+  name: "Profile",
+  mounted() {
+    if(!this.$parent.authenticated) {
+      // this.$router.replace({ name: "Login" });
+      window.location.href = "/login"
+    }
+  }
 }
 </script>
 
