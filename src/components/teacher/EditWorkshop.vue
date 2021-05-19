@@ -487,8 +487,8 @@ export default {
     loadWorkshop(){
           DataService.getWorkshopDetailsTeacher(this.getIdFromUrl(), this.$parent.username, this.$parent.pw)
           .then(response => {
-            let workshop = response.data;
-            this.form.id = workshop.id;
+            let workshop = response.data.workshop;
+            this.form.id = this.getIdFromUrl();
             this.form.title = workshop.title;
             this.form.description = workshop.content;
             this.form.file = workshop.file,
@@ -496,9 +496,9 @@ export default {
             this.form.criteria = workshop.criteria;
             this.form.deadline = workshop.end;
             this.form.anonymous = workshop.anonymous;
-
           })
           .catch(e => {
+            
             console.log(e);
           });
     },
