@@ -18,6 +18,11 @@
         <md-table-cell v-if="item.reviewsDone == true">
           {{item.title}} ({{item.points}}/{{item.maxPoints}} Punkte)
         </md-table-cell>
+        <md-table-cell v-if="item.reviewsDone == true">
+            <md-button class="md-icon-button" @click="showReviews(item.id)" :to="{ path: '/teacherdashboard/workshopdetails/reviews/' + item.id }">
+              <md-icon>send</md-icon>
+            </md-button>
+        </md-table-cell>
       </md-table-row>
 
     </md-table>
@@ -77,6 +82,10 @@ export default {
     }
   },
   methods: {
+
+    showReviews(id) {
+      alert("TEST" + id);
+    },
 
     getWorkshop() {
       DataService.getWorkshopDetailsTeacher(this.getIdFromUrl(), this.$parent.username, this.$parent.pw)
