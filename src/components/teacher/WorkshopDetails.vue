@@ -6,8 +6,6 @@
 
     <md-switch v-model="showOutstandingSubmissions" class="md-primary">Offene Workshop Abgaben</md-switch>
     <md-switch v-model="showLatedSubmissions" class="md-primary">Verspätete Workshop Abgaben</md-switch>
-    <md-switch v-model="showOutstandingReviews" class="md-primary">Offene Review Abgaben</md-switch>
-    <md-switch v-model="showLatedReviews" class="md-primary">Verspätete Reviews anzeigen</md-switch>
 
 <md-table v-model="workshop.workshop.submissions" v-show="showOutstandingSubmissions">
       <md-table-row>
@@ -40,27 +38,6 @@
 
     </md-table>
 
-    <md-table v-model="workshop.workshop.members" v-show="showOutstandingReviews">
-      <md-table-row>
-        <md-table-head>Offene Reviews</md-table-head>
-      </md-table-row>
-
-      <md-table-row v-for="item in this.workshop.workshop.members" :key="item">
-        <md-table-cell>{{item}}</md-table-cell>
-      </md-table-row>
-
-    </md-table>
-
-        <md-table v-model="workshop.workshop.members" v-show="showLatedReviews">
-      <md-table-row>
-        <md-table-head>Verspätete Reviews</md-table-head>
-      </md-table-row>
-
-      <md-table-row v-for="item in this.workshop.workshop.members" :key="item">
-        <md-table-cell>{{item}}</md-table-cell>
-      </md-table-row>
-
-    </md-table>
     </div>
 
   </div>
@@ -76,15 +53,13 @@ export default {
     return {
       workshop: {},
       showOutstandingSubmissions: true,
-      showLatedSubmissions: true,
-      showOutstandingReviews: true,
-      showLatedReviews: true
+      showLatedSubmissions: true
     }
   },
   methods: {
 
     showReviews(id) {
-      alert("TEST" + id);
+      console.log("Ok"+ id);
     },
 
     getWorkshop() {
