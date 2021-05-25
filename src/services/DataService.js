@@ -189,6 +189,24 @@ class DataService {
             });
     }
 
+    getSubmissionTeacher(username, pw, submission_id) {
+        return axios
+            .create({
+                baseURL: "http://localhost:3000", //mocked backend
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            .request({
+                method: "GET",
+                url: `/submission/${submission_id}`
+            });
+    }
+
     //Student
 
     getStudentWorkshops(username, pw) {

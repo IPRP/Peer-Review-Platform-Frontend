@@ -53,6 +53,9 @@
 </template>
 
 <script>
+
+import DataService from "../../services/DataService";
+
 export default {
   name: 'Reviews',
   data() {
@@ -61,6 +64,22 @@ export default {
     }
   },
   methods: {
+      getSubmission() {
+        DataService.getSubmissionTeacher(this.$parent.username, this.$parent.pw, this.getIdFromUrl())
+          .then(response => {
+            this.submission= response.data;
+            console.log("WOWO ");
+            console.log(response.data)
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      },
+
+    getIdFromUrl() {
+      return window.location.pathname.split('/')[4];
+    },
+
       mockWorkshop() {
           this.submission = {
             ok: true,
@@ -120,7 +139,8 @@ export default {
       }
   },
   mounted() {
-      this.mockWorkshop();
+      //this.mockWorkshop();
+      this.getSubmission();
   }
 }
 </script>
