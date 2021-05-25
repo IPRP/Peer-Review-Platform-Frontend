@@ -207,6 +207,29 @@ class DataService {
             });
     }
 
+    fileupload(username, pw, file) {
+        var bodyFormData = new FormData();
+        bodyFormData.append('upload', file);
+
+        return axios.post('http://localhost:3000/upload',
+                bodyFormData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    auth: {
+                        username: username,
+                        password: pw
+                    }
+                }
+            ).then(function() {
+                console.log('SUCCESS!!');
+            })
+            .catch(function() {
+                console.log('FAILURE!!');
+            });
+
+    }
+
     //Student
 
     getStudentWorkshops(username, pw) {

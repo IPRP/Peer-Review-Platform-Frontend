@@ -18,7 +18,7 @@
 
         <md-field>
           <label>Datei auswählen</label>
-          <md-file v-model="form.file"/>
+          <md-file v-model="file" type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
         </md-field>
 
         <h2 class="pt-3">Personen</h2>
@@ -339,6 +339,7 @@ export default {
   mixins: [validationMixin],
   data() {
     return {
+      file: null,
       showDialog: false,
       showDialog1: false,
       cid_counter: 1,
@@ -444,8 +445,25 @@ export default {
       this.cid_counter++;
     },
 
+    fileupload() {
+      alert("FILE: " + this.file);
+      DataService.fileupload(this.$parent.username, this.$parent.pw, this.file)
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+            alert("Fehler");
+          });
+    },
+
+    handleFileUpload(){
+      this.file = this.$refs.file.files[0];
+    },
+
     createWorkshop() {
 
+      this.fileupload();
       DataService.addWorkshopTeacher(this.form.title, this.form.description, this.form.deadline, this.form.anonymous, this.form.members, this.form.criteria, this.$parent.username, this.$parent.pw)
           .then(response => {
             console.log(response.data);
