@@ -1,15 +1,12 @@
 <template>
   <div class="p-1 p-md-5">
-    <h1 class="pl-1 pl-md-5">Workshop {{ workshop.title}} Übersicht</h1>
+    <h1 class="pl-1 pl-md-5">Workshop {{ workshop.title }} Übersicht</h1>
     <h3 class="pl-1 pl-md-5">Workshop: {{ $route.params.id }}</h3>
     <div class="px-1 px-md-5">
       <div>
         <h3 class="d-flex justify-content-start">Angabe:</h3>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque
-          dignissimos dolorem doloribus earum fuga iste iure nostrum quibusdam
-          sapiente voluptatibus? Ab asperiores distinctio id, magni molestiae
-          quia ratione sequi totam!
+          {{ workshop.content }}
         </p>
         <md-button>
           <span>Angabe.pdf</span>
@@ -24,20 +21,20 @@
           <md-list-item md-expand>
             <span class="md-list-item-text ">Bisherige Abgaben</span>
             <md-list slot="md-expand">
-              <md-list-item>
+              <md-list-item v-for="submission in workshop.submissions" :key="submission.id">
                 <div class="d-flex">
                   <div class="pr-4">
-                    <span class="md-text">Abgabe vom {{ dateAbgabe1 }}</span>
+                    <span class="md-text">Abgabe vom DATUM FEHLT</span>
                   </div>
                 </div>
                 <md-button
                   class="md-icon-button md-list-action"
-                  to="/reviewoverview"
+                  :to="{path: '/reviewoverview/' + submission[0].id}"
                 >
                   <md-icon>info</md-icon>
                 </md-button>
               </md-list-item>
-              <md-list-item>
+<!--          <md-list-item>
                 <div class="d-flex">
                   <div class="pr-4">
                     <span class="md-text">Abgabe vom {{ dateAbgabe2 }}</span>
@@ -49,7 +46,7 @@
                 >
                   <md-icon>info</md-icon>
                 </md-button>
-              </md-list-item>
+              </md-list-item>-->
             </md-list>
           </md-list-item>
         </md-list>
@@ -76,41 +73,32 @@
 
 <script>
 import DataService from "../../services/DataService";
+
 export default {
   name: "WorkshopOverview",
-  data: function() {
+  data() {
     return {
-      dateAbgabe1: "8.1.2021",
-      dateAbgabe2: "19.1.2021",
-      deadline: "20.2.2021",
-      workshop: {}
+      workshop: {},
+      submissions: {}
     };
   },
   methods: {
-    getWorkshop(id) {
-      this.workshop = DataService.getStudentWorkshops(this.$parent.username, this.$parent.pw).then(response => {
-        var res = response.data;
-        res.forEach(r => {
-          console.log("res " + r.id + " id " + id);
-          if (r.id == id) {
-            console.log("found r " + r.title)
-            this.workshop = r;
-            console.log("Workshop: ")
-            console.log(this.workshop)
-          }
-        });
-      })
+    getWorkshop() {
+      this.workshop = DataService.getStudentWorkshop(this.$parent.username, this.$parent.pw, this.$route.params.id)
+        .then(response => {
+          this.workshop = response.data.workshop;
+          this.submissions = this.workshop.submissions;
+        })
         .catch(e => {
           console.error(e);
-        });;
-
+        });
     }
   },
   mounted() {
-    if(!this.$parent.authenticated) {
+    if (!this.$parent.authenticated) {
       // this.$router.replace({ name: "Login" });
-      window.location.href = "/login"
-    }else{
+      window.location.href = "/login";
+    } else {
       this.getWorkshop(this.$route.params.id);
     }
   }

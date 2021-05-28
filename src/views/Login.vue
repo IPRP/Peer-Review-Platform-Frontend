@@ -38,7 +38,7 @@ export default {
             const username = this.input.username
             if(username != 'georgreisinger' && username != 'lukasnowy'){
               this.$router.push('studentdashboard') ;
-            }else{
+            }else {
               this.$router.push('/teacherdashboard');
             }
           }else {
