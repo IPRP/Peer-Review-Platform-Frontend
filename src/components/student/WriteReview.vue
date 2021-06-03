@@ -1,8 +1,8 @@
 <template>
   <div class="p-1 p-md-5">
-    <h1 class="pl-1 pl-md-5">Workshop {{ $route.params.workshopid }} verfassen</h1>
+    <h1 class="pl-1 pl-md-5">Review {{ workshop.title }} schreiben</h1>
     <h2 class="pl-1 pl-md-5">Review ID: {{ $route.params.reviewid }}</h2>
-   <h3 class="pl-1 pl-md-5">Abgabe ID: {{ $route.params.submissionid }} <!--, Abgabe: Lukas Nowy--></h3>
+    <h3 class="pl-1 pl-md-5">Abgabe ID: {{ $route.params.submissionid }} <!--, Abgabe: Lukas Nowy--></h3>
     <div class="pl-1 pl-md-5">
       <md-button>
         <span>Abgabe_Nowy.pdf</span>
@@ -43,12 +43,12 @@
                   <div class="pr-md-2 flex-grow-1">
                     <md-field class="prp-feedback">
                       <label>Feedback</label>
-                      <md-textarea v-model="autogrow" md-autogrow></md-textarea>
+                      <md-textarea md-autogrow></md-textarea>
                     </md-field>
                   </div>
 
                   <div>
-                    <md-switch class="align-self-center" v-model="criteria1">Erfüllt</md-switch>
+                    <md-switch class="align-self-center">Erfüllt</md-switch>
                   </div>
                 </div>
               </md-card-expand-content>
@@ -77,19 +77,41 @@
 </template>
 
 <script>
+
+import DataService from "@/services/DataService";
+
 export default {
   name: "WriteReview",
-  data: () => ({
-    criteria1: false,
-    criteria2: false
-  }),
+  data() {
+    return {
+      workshop: {}
+    };
+  },
+  methods: {
+    getSubmission() {
+      DataService.getStudentSubmission(
+        this.$parent.username,
+        this.$parent.pw,
+        this.$route.params.submissionid
+      )
+        .then(response => {
+          this.workshop = response.data;
+        })
+        .catch(e => {
+          console.error(e);
+        });
+    }
+  },
   mounted() {
-    if(!this.$parent.authenticated) {
+    if (!this.$parent.authenticated) {
       // this.$router.replace({ name: "Login" });
-      window.location.href = "/login"
+      window.location.href = "/login";
+    } else {
+      console.log("test");
+      this.getSubmission();
     }
   }
-}
+};
 </script>
 
 <style scoped lang="scss">

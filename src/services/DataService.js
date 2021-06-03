@@ -2,282 +2,333 @@
 import axios from "axios";
 
 class DataService {
-    getAllWorkshopsTeacher(username, pw) {
-        return axios
-            .create({
-                baseURL: "http://localhost:3000", //mocked backend
-                auth: {
-                    username: username,
-                    password: pw
-                },
-                headers: {
-                    "Content-type": "application/json"
-                }
-            })
-            .get("/teacher/workshops");
-    }
-
-    getWorkshopDetailsTeacher(id, username, pw) {
-        return axios
-            .create({
-                baseURL: "http://localhost:3000", //mocked backend
-                auth: {
-                    username: username,
-                    password: pw
-                },
-                headers: {
-                    "Content-type": "application/json"
-                }
-            })
-            .get(`/teacher/workshop/${id}`);
-    }
-
-    deleteWorkshopTeacher(id, username, pw) {
-        return axios
-            .create({
-                baseURL: "http://localhost:3000", //mocked backend
-                auth: {
-                    username: username,
-                    password: pw
-                },
-                headers: {
-                    "Content-type": "application/json"
-                }
-            })
-            .delete(`/teacher/workshop/${id}`);
-    }
-
-    searchStudentsByName(firstname, lastname, username, pw) {
-        return axios
-            .create({
-                baseURL: "http://localhost:3000", //mocked backend
-                auth: {
-                    username: username,
-                    password: pw
-                },
-                headers: {
-                    "Content-type": "application/json"
-                }
-            })
-            .request({
-                method: "GET",
-                url: `/teacher/search/student`,
-                params: {
-                    firstname: firstname,
-                    lastname: lastname
-                }
-            });
-    }
-
-    searchStudentsByGroup(group, username, pw) {
-        return axios
-            .create({
-                baseURL: "http://localhost:3000", //mocked backend
-                auth: {
-                    username: username,
-                    password: pw
-                },
-                headers: {
-                    "Content-type": "application/json"
-                }
-            })
-            .request({
-                method: "GET",
-                url: `/teacher/search/student`,
-                params: {
-                    group: group
-                }
-            });
-    }
-
-    searchStudentByID(id, username, pw) {
-        return axios
-            .create({
-                baseURL: "http://localhost:3000", //mocked backend
-                auth: {
-                    username: username,
-                    password: pw
-                },
-                headers: {
-                    "Content-type": "application/json"
-                }
-            })
-            .request({
-                method: "GET",
-                url: `/teacher/search/student`,
-                params: {
-                    id: id
-                }
-            });
-    }
-
-    addWorkshopTeacher(
-        title,
-        description,
-        deadline,
-        is_anonym,
-        students,
-        criteria,
-        username,
-        pw
-    ) {
-        var std = [];
-
-        for (let item of students) {
-            std.push(item.id);
+  getAllWorkshopsTeacher(username, pw) {
+    return axios
+      .create({
+        baseURL: "http://localhost:3000", //mocked backend
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "application/json"
         }
+      })
+      .get("/teacher/workshops");
+  }
 
-        return axios
-            .create({
-                baseURL: "http://localhost:3000", //mocked backend
-                auth: {
-                    username: username,
-                    password: pw
-                },
-                headers: {
-                    "Content-type": "application/json"
-                }
-            })
-            .post(`/teacher/workshop`, {
-                id: "99",
-                title: title,
-                content: description,
-                end: deadline,
-                anonymous: is_anonym,
-                teachers: [1],
-                students: std,
-                criteria: criteria
-            });
-    }
-
-    editWorkshopTeacher(
-        id,
-        title,
-        description,
-        deadline,
-        is_anonym,
-        students,
-        criteria,
-        username,
-        pw
-    ) {
-        var std = [];
-
-        for (let item of students) {
-            std.push(item.id);
+  getWorkshopDetailsTeacher(id, username, pw) {
+    return axios
+      .create({
+        baseURL: "http://localhost:3000", //mocked backend
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "application/json"
         }
+      })
+      .get(`/teacher/workshop/${id}`);
+  }
 
-        return axios
-            .create({
-                baseURL: "http://localhost:3000", //mocked backend
-                auth: {
-                    username: username,
-                    password: pw
-                },
-                headers: {
-                    "Content-type": "application/json"
-                }
-            })
-            .put(`/teacher/workshop/${id}`, {
-                title: title,
-                content: description,
-                end: deadline,
-                anonymous: is_anonym,
-                teachers: [1],
-                students: std,
-                criteria: criteria
-            });
+  deleteWorkshopTeacher(id, username, pw) {
+    return axios
+      .create({
+        baseURL: "http://localhost:3000", //mocked backend
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .delete(`/teacher/workshop/${id}`);
+  }
+
+  searchStudentsByName(firstname, lastname, username, pw) {
+    return axios
+      .create({
+        baseURL: "http://localhost:3000", //mocked backend
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .request({
+        method: "GET",
+        url: `/teacher/search/student`,
+        params: {
+          firstname: firstname,
+          lastname: lastname
+        }
+      });
+  }
+
+  searchStudentsByGroup(group, username, pw) {
+    return axios
+      .create({
+        baseURL: "http://localhost:3000", //mocked backend
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .request({
+        method: "GET",
+        url: `/teacher/search/student`,
+        params: {
+          group: group
+        }
+      });
+  }
+
+  searchStudentByID(id, username, pw) {
+    return axios
+      .create({
+        baseURL: "http://localhost:3000", //mocked backend
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .request({
+        method: "GET",
+        url: `/teacher/search/student`,
+        params: {
+          id: id
+        }
+      });
+  }
+
+  addWorkshopTeacher(
+    title,
+    description,
+    deadline,
+    is_anonym,
+    students,
+    criteria,
+    username,
+    pw
+  ) {
+    var std = [];
+
+    for (let item of students) {
+      std.push(item.id);
     }
 
-    getSubmissionTeacher(username, pw, submission_id) {
-        return axios
-            .create({
-                baseURL: "http://localhost:3000", //mocked backend
-                auth: {
-                    username: username,
-                    password: pw
-                },
-                headers: {
-                    "Content-type": "application/json"
-                }
-            })
-            .request({
-                method: "GET",
-                url: `/submission/${submission_id}`
-            });
+    return axios
+      .create({
+        baseURL: "http://localhost:3000", //mocked backend
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .post(`/teacher/workshop`, {
+        id: "99",
+        title: title,
+        content: description,
+        end: deadline,
+        anonymous: is_anonym,
+        teachers: [1],
+        students: std,
+        criteria: criteria
+      });
+  }
+
+  editWorkshopTeacher(
+    id,
+    title,
+    description,
+    deadline,
+    is_anonym,
+    students,
+    criteria,
+    username,
+    pw
+  ) {
+    var std = [];
+
+    for (let item of students) {
+      std.push(item.id);
     }
 
-    fileupload(username, pw, file) {
-        var bodyFormData = new FormData();
-        bodyFormData.append('upload', file);
+    return axios
+      .create({
+        baseURL: "http://localhost:3000", //mocked backend
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .put(`/teacher/workshop/${id}`, {
+        title: title,
+        content: description,
+        end: deadline,
+        anonymous: is_anonym,
+        teachers: [1],
+        students: std,
+        criteria: criteria
+      });
+  }
 
-        return axios.post('http://localhost:3000/upload',
-                bodyFormData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    },
-                    auth: {
-                        username: username,
-                        password: pw
-                    }
-                }
-            ).then(function() {
-                console.log('SUCCESS!!');
-            })
-            .catch(function() {
-                console.log('FAILURE!!');
-            });
+  getSubmissionTeacher(username, pw, submission_id) {
+    return axios
+      .create({
+        baseURL: "http://localhost:3000", //mocked backend
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .request({
+        method: "GET",
+        url: `/submission/${submission_id}`
+      });
+  }
 
-    }
+  fileupload(username, pw, file) {
+    var bodyFormData = new FormData();
+    bodyFormData.append("upload", file);
 
-    //Student
+    return axios
+      .post("http://localhost:3000/upload", bodyFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        },
+        auth: {
+          username: username,
+          password: pw
+        }
+      })
+      .then(function() {
+        console.log("SUCCESS!!");
+      })
+      .catch(function() {
+        console.log("FAILURE!!");
+      });
+  }
 
-    getStudentWorkshops(username, pw) {
-        return axios
-            .create({
-                baseURL: "http://localhost:3000", //mocked backend
-                auth: {
-                    username: username,
-                    password: pw
-                },
-                headers: {
-                    "Content-type": "application/json"
-                }
-            })
-            .get(`/student/workshops`, {});
-    }
+  //Student
 
-    getStudentTodo(username, pw) {
-        return axios
-            .create({
-                baseURL: "http://localhost:3000", //mocked backend
-                auth: {
-                    username: username,
-                    password: pw
-                },
-                headers: {
-                    "Content-type": "application/json"
-                }
-            })
-            .get(`/student/todos`, {});
-    }
+  getStudentWorkshops(username, pw) {
+    return axios
+      .create({
+        baseURL: "http://localhost:3000", //mocked backend
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .get(`/student/workshops`, {});
+  }
 
-    //Login
+  getStudentSubmission(username, pw, id) {
+    return axios
+      .create({
+        baseURL: "http://localhost:3000",
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .get(`/submission/${id}`);
+  }
 
-    loginUser(username, pw) {
-        return axios
-            .create({
-                baseURL: "http://localhost:3000", //mocked backend
-                auth: {
-                    username: username,
-                    password: pw
-                },
-                headers: {
-                    "Content-type": "application/json"
-                }
-            })
-            .get(`/login`, {});
-    }
+  getStudentTodo(username, pw) {
+    return axios
+      .create({
+        baseURL: "http://localhost:3000", //mocked backend
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .get(`/student/todos`, {});
+  }
+
+  getStudentWorkshop(username, pw, id) {
+    return axios
+      .create({
+        baseURL: "http://localhost:3000",
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .get(`/student/workshop/${id}`);
+  }
+
+  postSubmissionFile(username, pw, file) {
+    let submission = new FormData();
+    submission.append("submission", file);
+
+    return axios
+      .post("http://localhost:3000/submission/upload", submission, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        },
+        auth: {
+          username: username,
+          password: pw
+        }
+      })
+      .then(function() {
+        console.log("SUCCESS!!");
+      })
+      .catch(function() {
+        console.log("FAILURE SUBMISSION UPLOAD!!");
+      });
+  }
+
+  //Login
+
+  loginUser(username, pw) {
+    return axios
+      .create({
+        baseURL: "http://localhost:3000", //mocked backend
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .get(`/login`, {});
+  }
 }
 
 export default new DataService();

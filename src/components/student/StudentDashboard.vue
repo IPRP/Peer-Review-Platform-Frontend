@@ -10,7 +10,8 @@
               <h1 class="md-title">Laufende Reviews</h1>
             </md-table-toolbar>
             <md-table-row v-for="(item, i) in this.reviewstodo" :key="i">
-              <md-table-cell>Review {{item.workshopName}} (Review fehlt)</md-table-cell>  <!--  //item.workshopName ist die review id siehe https://docs.google.com/spreadsheets/d/1X2nMEH33EQm5FCdruBNx2x0NtEMzxlOo/edit#gid=136308832  !-->
+              <md-table-cell>Review {{ item.workshopName }} (Review fehlt)</md-table-cell>
+              <!--  //item.workshopName ist die review id siehe https://docs.google.com/spreadsheets/d/1X2nMEH33EQm5FCdruBNx2x0NtEMzxlOo/edit#gid=136308832  !-->
               <md-table-cell class="prp-table-action-cell">
                 <md-button
                   class="md-icon-button md-list-action"
@@ -48,8 +49,7 @@
           <md-table-row v-for="(workshop, w) in this.workshops" :key="w">
             <md-table-cell>{{ workshop.title }}</md-table-cell>
             <md-table-cell class="prp-table-action-cell">
-              <md-button
-                class="md-icon-button md-list-action"
+              <md-button class="md-icon-button md-list-action"
                 :to="{ name: 'workshopoverview', params: { id: workshop.id } }"
               >
                 <md-icon>info</md-icon>
@@ -93,16 +93,16 @@ export default {
         console.log(this.reviewstodo);
         console.log(this.submissionstodo);
       })
-      .catch(e => {
-        console.error(e)
-      });
+        .catch(e => {
+          console.error(e);
+        });
     }
   },
   mounted() {
-    if(!this.$parent.authenticated) {
+    if (!this.$parent.authenticated) {
       // this.$router.replace({ name: "Login" });
-      window.location.href = "/login"
-    }else {
+      window.location.href = "/login";
+    } else {
       this.getStudentWorkshops();
       this.getStudentTodo();
     }

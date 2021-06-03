@@ -6,7 +6,9 @@
       <h3>Angabe:</h3>
       <md-card>
         <md-card-content>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta eum harum laudantium perferendis sapiente totam velit voluptatibus? A consequatur, dicta expedita ipsam possimus quisquam sint unde veniam veritatis vero. Est!
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta eum harum laudantium perferendis sapiente
+          totam velit voluptatibus? A consequatur, dicta expedita ipsam possimus quisquam sint unde veniam veritatis
+          vero. Est!
         </md-card-content>
       </md-card>
       <md-button class="md-raised">
@@ -25,14 +27,20 @@
 
 <script>
 export default {
-name: "ReviewOverview",
+  name: "ReviewOverview",
+  data() {
+    return {
+      review: {}
+    };
+  },
+  methods: {},
   mounted() {
-    if(!this.$parent.authenticated) {
+    if (!this.$parent.authenticated) {
       // this.$router.replace({ name: "Login" });
-      window.location.href = "/login"
+      window.location.href = "/login";
     }
   }
-}
+};
 </script>
 
 <style scoped>
