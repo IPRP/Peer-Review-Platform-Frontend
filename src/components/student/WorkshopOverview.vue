@@ -21,7 +21,7 @@
           <md-list-item md-expand>
             <span class="md-list-item-text ">Bisherige Abgaben</span>
             <md-list slot="md-expand">
-              <md-list-item v-for="submission in workshop.submissions" :key="submission.id">
+              <md-list-item v-for="(submission, s) in workshop.submissions" :key="s">
                 <div class="d-flex">
                   <div class="pr-4">
                     <span class="md-text">Abgabe vom DATUM FEHLT</span>
@@ -29,7 +29,7 @@
                 </div>
                 <md-button
                   class="md-icon-button md-list-action"
-                  :to="{path: '/reviewoverview/' + submission[0].id}"
+                  :to="{path: '/reviewoverview/' + submission.id}"
                 >
                   <md-icon>info</md-icon>
                 </md-button>
