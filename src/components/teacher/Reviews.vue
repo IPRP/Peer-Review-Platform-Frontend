@@ -4,6 +4,7 @@
         <h1>{{submission.title}} - Reviews</h1>
         <p>Comment: {{submission.comment}}</p>
         <p>Date: {{submission.date}}</p>
+        <p>Gesamtpunkte: {{submission.points}}/{{submission.maxPoints}}</p>
 <!--v-for="item in submission.reviews" :key="item.id" -->
         <h3>Reviews</h3>
         <md-card class="card" v-for="item in submission.reviews" :key="item.id">
@@ -67,7 +68,7 @@ export default {
       getSubmission() {
         DataService.getSubmissionTeacher(this.$parent.username, this.$parent.pw, this.getIdFromUrl())
           .then(response => {
-            this.submission= response.data;
+            this.submission = response.data;
             console.log("WOWO ");
             console.log(response.data)
           })
