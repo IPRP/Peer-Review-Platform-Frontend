@@ -463,7 +463,7 @@ export default {
 
     createWorkshop() {
 
-      this.fileupload();
+      //this.fileupload();
       DataService.addWorkshopTeacher(this.form.title, this.form.description, this.form.deadline, this.form.anonymous, this.form.members, this.form.criteria, this.$parent.username, this.$parent.pw)
           .then(response => {
             console.log(response.data);
