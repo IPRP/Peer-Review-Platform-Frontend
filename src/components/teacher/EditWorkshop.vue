@@ -403,9 +403,9 @@ export default {
       });
     },
 
-    removeCriteria(id) {
+    removeCriteria(title) {
       this.form.criteria = this.form.criteria.filter(function (obj) {
-        return obj.id !== id;
+        return obj.title !== title;
       });
     },
 
