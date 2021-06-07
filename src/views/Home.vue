@@ -1,7 +1,27 @@
 <template>
   <div class="prp-home">
     <md-toolbar class="md-primary prp-toolbar">
-      <img src="logo.png" width="50" height="50">
+    <router-link
+        v-if="
+          username == 'georgreisinger' ||
+            (username == 'lukasnowy' && authenticated)
+        "
+        to="/teacherdashboard"
+      >
+            <img src="logo.png" width="50" height="50" to="/teacherdashboard">
+      </router-link>
+
+      <router-link
+        v-if="
+          username != 'georgreisinger' &&
+            username != 'lukasnowy' &&
+            authenticated
+        "
+        to="/studentdashboard"
+      >
+            <img src="logo.png" width="50" height="50" to="/teacherdashboard">
+      </router-link>
+
       <!--      Login Navbar-->
       <h3 v-if="!authenticated" class="md-title">Peer Review</h3>
       <!--      Teacher Navbar-->
