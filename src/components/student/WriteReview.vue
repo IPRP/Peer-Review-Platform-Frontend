@@ -1,15 +1,13 @@
 <template>
   <div class="p-1 p-md-5">
-    <h1 class="pl-1 pl-md-5">Review {{ workshop.title }} schreiben</h1>
-    <h2 class="pl-1 pl-md-5">Review ID: {{ $route.params.reviewid }}</h2>
-    <h3 class="pl-1 pl-md-5">Abgabe ID: {{ $route.params.submissionid }} <!--, Abgabe: Lukas Nowy--></h3>
-    <div class="pl-1 pl-md-5">
-      <md-button>
+    <h1 class="pl-1 pl-md-5">Review für {{ workshop.title }} schreiben</h1>
+    <div class="pl-1 pl-md-5 pt-3">
+      <md-button class="md-raised md-primary">
         <span>Abgabe_Nowy.pdf</span>
         <md-icon>get_app</md-icon>
       </md-button>
     </div>
-    <form>
+    <form class="pt-3">
       <div class="px-1 px-md-5">
         <h3 class="d-flex justify-content-start">Kriterien:</h3>
         <div class="mb-3">
@@ -48,11 +46,10 @@
                   </div>
 
                   <div>
-                    <md-switch class="align-self-center">Erfüllt</md-switch>
+                    <md-switch v-model="fulfilled" class="align-self-center">Erfüllt</md-switch>
                   </div>
                 </div>
               </md-card-expand-content>
-
             </md-card-expand>
           </md-card>
         </div>
@@ -84,7 +81,8 @@ export default {
   name: "WriteReview",
   data() {
     return {
-      workshop: {}
+      workshop: {},
+      fulfilled: []
     };
   },
   methods: {

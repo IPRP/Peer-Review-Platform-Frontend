@@ -2,6 +2,9 @@
 import axios from "axios";
 
 class DataService {
+
+  static baseURL = "http://localhost:3000";
+
   getAllWorkshopsTeacher(username, pw) {
     return axios
       .create({
@@ -311,6 +314,21 @@ class DataService {
       .catch(function() {
         console.log("FAILURE SUBMISSION UPLOAD!!");
       });
+  }
+
+  getReview(username, pw, id) {
+    return axios
+      .create({
+        baseURL: DataService.baseURL,
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .get(`/review/${id}`);
   }
 
   //Login

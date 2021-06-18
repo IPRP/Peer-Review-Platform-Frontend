@@ -1,21 +1,19 @@
 <template>
   <div class="p-1 p-md-5">
-    <h1 class="pl-1 pl-md-5">Workshop {{ $route.params.workshopname }} Abgabe</h1>
-    <h3 class="pl-1 pl-md-5">Workshop ID: {{ $route.params.id }}</h3>
+    <h1 class="pl-1 pl-md-5">Abgabe für Worksohp {{ $route.params.workshopname }}</h1>
     <div class="px-1 px-md-5">
-      <div>
+      <div class="pt-3">
         <h3 class="d-flex justify-content-start">Angabe:</h3>
         <p>{{ workshop.content }}</p>
-        <md-button>
+        <md-button class="md-raised md-primary">
           <span>Angabe.pdf</span>
           <md-icon>get_app</md-icon>
         </md-button>
       </div>
-      <div>
-        <h4>Deadline:</h4>
-        <p>{{ workshop.end }}</p>
+      <div class="pt-3">
+        <h3>Deadline: {{ workshop.end }}</h3>
       </div>
-      <div>
+      <div class="pt-3">
         <h3 class="d-flex justify-content-start">Abgabe Datei</h3>
         <form @submit.prevent="validateForm">
           <md-field>
@@ -47,8 +45,7 @@ export default {
   name: "WorkshopSubmission",
   data() {
     return {
-      workshop: {},
-      file: null
+      workshop: {}
     };
   },
   methods: {
@@ -56,30 +53,6 @@ export default {
       DataService.getStudentWorkshop(this.$parent.username, this.$parent.pw, this.$route.params.id)
         .then(response => {
           this.workshop = response.data.workshop;
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    onFileChange() {
-      this.file = this.$refs.file.files[0];
-    },
-
-    submitSubmission() {
-      let formData = new FormData();
-      formData.append("file", this.file);
-
-      DataService.postSubmission(this.$parent.username, this.$parent.pw, this.$route.params.id, formData)
-        .catch(e => {
-          console.log(e);
-        });
-    },
-
-    validateForm() {
-      DataService.postSubmissionFile(this.$parent.username, this.$parent.pw, this.file)
-        .then(response => {
-          //this.submission = response.data;
-          console.log(response);
         })
         .catch(e => {
           console.log(e);
