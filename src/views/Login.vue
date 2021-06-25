@@ -37,6 +37,13 @@
           v-model="input.autologin"
         /><label for="auto30">Auto login für 30 minuten</label>
         <br />
+        <input
+          type="radio"
+          id="auto0"
+          value="0"
+          v-model="input.autologin"
+        /><label for="auto0">Kein Auto Login</label>
+        <br />
         <div class="d-flex justify-content-center">
           <md-button class="md-raised md-primary" v-on:click="login()"
             >Login</md-button
@@ -126,9 +133,9 @@ export default {
                 var da = CryptoJS.AES.encrypt(
                   this.input.password,
                   heute.getFullYear().toString() +
-                    heute.getMonth().toString() +
-                    heute.getDate().toString() +
-                    heute.getHours().toString()
+                  heute.getMonth().toString() +
+                  heute.getDate().toString() +
+                  heute.getHours().toString()
                 );
 
                 this.$cookies.set("token", da.toString(), "30min");
