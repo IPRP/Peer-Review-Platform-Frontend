@@ -44,7 +44,8 @@ export default {
           if (token != null) {
             this.$emit("authenticated", true);
             this.$emit("username", username);
-            var dat = CryptoJS.AES.decrypt(token, "asdlkjfgh23izhfg4iu23f4i7zt6rfcg324f23");
+            const heute = new Date();
+            var dat = CryptoJS.AES.decrypt(token, heute.getFullYear().toString() + heute.getMonth().toString()+ heute.getDate().toString() + heute.getHours().toString());
             var originalText = dat.toString(CryptoJS.enc.Utf8);
             if(originalText == ""){
               this.logout()
@@ -72,7 +73,8 @@ export default {
             const username = this.input.username;
             this.$cookies.set("auth", "true", "10min");
             this.$cookies.set("user", username, "10min");
-            var dat = CryptoJS.AES.encrypt(this.input.password, "asdlkjfgh23izhfg4iu23f4i7zt6rfcg324f23");
+            const heute = new Date();
+            var dat = CryptoJS.AES.encrypt(this.input.password, heute.getFullYear().toString() + heute.getMonth().toString()+ heute.getDate().toString() + heute.getHours().toString());
 
             this.$cookies.set("token", dat.toString(), "2min");
             if (username != "georgreisinger" && username != "lukasnowy") {
