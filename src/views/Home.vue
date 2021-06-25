@@ -1,14 +1,14 @@
 <template>
   <div class="prp-home">
     <md-toolbar class="md-primary prp-toolbar">
-    <router-link
+      <router-link
         v-if="
           username == 'georgreisinger' ||
             (username == 'lukasnowy' && authenticated)
         "
         to="/teacherdashboard"
       >
-            <img src="logo.png" width="50" height="50" to="/teacherdashboard">
+        <img src="logo.png" width="50" height="50" to="/teacherdashboard" />
       </router-link>
 
       <router-link
@@ -19,7 +19,7 @@
         "
         to="/studentdashboard"
       >
-            <img src="logo.png" width="50" height="50" to="/teacherdashboard">
+        <img src="logo.png" width="50" height="50" to="/teacherdashboard" />
       </router-link>
 
       <!--      Login Navbar-->
@@ -32,8 +32,7 @@
         "
         to="/teacherdashboard"
       >
-
-<!--        <h3 class="md-title">Peer Review</h3>-->
+        <!--        <h3 class="md-title">Peer Review</h3>-->
       </router-link>
       <md-button
         v-if="
@@ -60,7 +59,7 @@
         "
         to="/studentdashboard"
       >
-<!--        <h3 class="md-title">Peer Review</h3>-->
+        <!--        <h3 class="md-title">Peer Review</h3>-->
       </router-link>
       <md-button
         v-if="
@@ -104,9 +103,9 @@ export default {
     },
     logout() {
       this.authenticated = false;
-      this.$cookies.remove("auth")
-      this.$cookies.remove("user")
-      this.$cookies.remove("token")
+      this.$cookies.remove("auth");
+      this.$cookies.remove("user");
+      this.$cookies.remove("token");
       window.location.href = "/";
     }
   }
