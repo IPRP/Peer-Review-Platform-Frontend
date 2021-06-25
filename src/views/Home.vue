@@ -104,6 +104,9 @@ export default {
     },
     logout() {
       this.authenticated = false;
+      this.$cookies.remove("auth")
+      this.$cookies.remove("user")
+      this.$cookies.remove("token")
       window.location.href = "/";
     }
   }

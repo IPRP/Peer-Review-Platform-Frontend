@@ -23,6 +23,7 @@
 
 <script>
 import DataService from "../services/DataService";
+var CryptoJS = require("crypto-js");
 
 export default {
   name: "Login",
@@ -30,9 +31,34 @@ export default {
     return {
       input: {
         username: "",
-        password: ""
+        password: "",
+        secret: "asdlkjfgh23izhfg4iu23f4i7zt6rfcg324f234"
       }
     };
+  },beforeMount() {
+    if(this.$cookies.isKey("auth")){
+      if(this.$cookies.get("auth") == "true") {
+        const username = this.$cookies.get("user");
+        if (username != null) {
+          const token = this.$cookies.get("token");
+          if (token != null) {
+            this.$emit("authenticated", true);
+            this.$emit("username", username);
+            var dat = CryptoJS.AES.decrypt(token, "asdlkjfgh23izhfg4iu23f4i7zt6rfcg324f23");
+            var originalText = dat.toString(CryptoJS.enc.Utf8);
+            if(originalText == ""){
+              this.logout()
+            }
+            this.$emit("pw", originalText);
+            if (username != "georgreisinger" && username != "lukasnowy") {
+              this.$router.push("studentdashboard");
+            } else {
+              this.$router.push("/teacherdashboard");
+            }
+          }
+        }
+      }
+    }
   },
   methods: {
     login() {
@@ -44,6 +70,11 @@ export default {
             this.$emit("username", this.input.username);
             this.$emit("pw", this.input.password);
             const username = this.input.username;
+            this.$cookies.set("auth", "true", "10min");
+            this.$cookies.set("user", username, "10min");
+            var dat = CryptoJS.AES.encrypt(this.input.password, "asdlkjfgh23izhfg4iu23f4i7zt6rfcg324f23");
+
+            this.$cookies.set("token", dat.toString(), "2min");
             if (username != "georgreisinger" && username != "lukasnowy") {
               this.$router.push("studentdashboard");
             } else {
@@ -62,6 +93,13 @@ export default {
       } else {
         alert("A username and password must be present");
       }
+    },
+    logout() {
+      this.authenticated = false;
+      this.$cookies.remove("auth")
+      this.$cookies.remove("user")
+      this.$cookies.remove("token")
+      window.location.href = "/";
     }
   }
 };
