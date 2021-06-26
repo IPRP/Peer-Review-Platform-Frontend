@@ -2,13 +2,35 @@
 import axios from "axios";
 
 class DataService {
-
   static baseURL = "http://localhost:3000";
+
+  uploadFile(username, pw, formData) {
+    return axios.post(DataService.baseURL + "/upload", formData, {
+      auth: {
+        username: username,
+        password: pw
+      }
+    });
+  }
+
+  addSubmission(username, pw, attachment, title, comment, id) {
+    var data = {
+      title: title,
+      comment: comment,
+      attachments: attachment
+    };
+    return axios.post(DataService.baseURL + "/submission/" + id, data, {
+        auth: {
+          username: username,
+          password: pw
+        }
+      });
+  }
 
   getAllWorkshopsTeacher(username, pw) {
     return axios
       .create({
-        baseURL: "http://localhost:3000", //mocked backend
+        baseURL: DataService.baseURL, //mocked backend
         auth: {
           username: username,
           password: pw
@@ -23,7 +45,7 @@ class DataService {
   getWorkshopDetailsTeacher(id, username, pw) {
     return axios
       .create({
-        baseURL: "http://localhost:3000", //mocked backend
+        baseURL: DataService.baseURL, //mocked backend
         auth: {
           username: username,
           password: pw
@@ -38,7 +60,7 @@ class DataService {
   deleteWorkshopTeacher(id, username, pw) {
     return axios
       .create({
-        baseURL: "http://localhost:3000", //mocked backend
+        baseURL: DataService.baseURL, //mocked backend
         auth: {
           username: username,
           password: pw
@@ -53,7 +75,7 @@ class DataService {
   searchStudentsByName(firstname, lastname, username, pw) {
     return axios
       .create({
-        baseURL: "http://localhost:3000", //mocked backend
+        baseURL: DataService.baseURL, //mocked backend
         auth: {
           username: username,
           password: pw
@@ -75,7 +97,7 @@ class DataService {
   searchStudentsByGroup(group, username, pw) {
     return axios
       .create({
-        baseURL: "http://localhost:3000", //mocked backend
+        baseURL: DataService.baseURL, //mocked backend
         auth: {
           username: username,
           password: pw
@@ -96,7 +118,7 @@ class DataService {
   searchStudentByID(id, username, pw) {
     return axios
       .create({
-        baseURL: "http://localhost:3000", //mocked backend
+        baseURL: DataService.baseURL, //mocked backend
         auth: {
           username: username,
           password: pw
@@ -132,7 +154,7 @@ class DataService {
 
     return axios
       .create({
-        baseURL: "http://localhost:3000", //mocked backend
+        baseURL: DataService.baseURL, //mocked backend
         auth: {
           username: username,
           password: pw
@@ -172,7 +194,7 @@ class DataService {
 
     return axios
       .create({
-        baseURL: "http://localhost:3000", //mocked backend
+        baseURL: DataService.baseURL, //mocked backend
         auth: {
           username: username,
           password: pw
@@ -195,7 +217,7 @@ class DataService {
   getSubmissionTeacher(username, pw, submission_id) {
     return axios
       .create({
-        baseURL: "http://localhost:3000", //mocked backend
+        baseURL: DataService.baseURL, //mocked backend
         auth: {
           username: username,
           password: pw
@@ -237,7 +259,7 @@ class DataService {
   getStudentWorkshops(username, pw) {
     return axios
       .create({
-        baseURL: "http://localhost:3000", //mocked backend
+        baseURL: DataService.baseURL, //mocked backend
         auth: {
           username: username,
           password: pw
@@ -252,7 +274,7 @@ class DataService {
   getStudentSubmission(username, pw, id) {
     return axios
       .create({
-        baseURL: "http://localhost:3000",
+        baseURL: DataService.baseURL,
         auth: {
           username: username,
           password: pw
@@ -267,7 +289,7 @@ class DataService {
   getStudentTodo(username, pw) {
     return axios
       .create({
-        baseURL: "http://localhost:3000", //mocked backend
+        baseURL: DataService.baseURL, //mocked backend
         auth: {
           username: username,
           password: pw
@@ -282,7 +304,7 @@ class DataService {
   getStudentWorkshop(username, pw, id) {
     return axios
       .create({
-        baseURL: "http://localhost:3000",
+        baseURL: DataService.baseURL,
         auth: {
           username: username,
           password: pw
@@ -336,7 +358,7 @@ class DataService {
   loginUser(username, pw) {
     return axios
       .create({
-        baseURL: "http://localhost:3000", //mocked backend
+        baseURL: DataService.baseURL, //mocked backend
         auth: {
           username: username,
           password: pw
