@@ -484,6 +484,18 @@ export default {
       return window.location.pathname.split('/')[3];
     },
 
+    initSearch() {
+        DataService.searchStudentsByName("", "", this.$parent.username, this.$parent.pw)
+          .then(response => {
+            console.log(response.data);
+            this.searchBox.students = response.data;
+          })
+          .catch(e => {
+            console.log(e);
+            alert("Fehler");
+          });
+      },
+
     loadWorkshop(){
           DataService.getWorkshopDetailsTeacher(this.getIdFromUrl(), this.$parent.username, this.$parent.pw)
           .then(response => {
@@ -527,6 +539,8 @@ export default {
     this.is_anonym = true;
 
     this.loadWorkshop();
+
+    this.initSearch();
   },
   mounted() {
     if(!this.$parent.authenticated) {

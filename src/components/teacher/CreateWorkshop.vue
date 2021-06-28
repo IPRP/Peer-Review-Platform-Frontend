@@ -486,6 +486,18 @@ export default {
         }
       },
 
+      initSearch() {
+        DataService.searchStudentsByName("", "", this.$parent.username, this.$parent.pw)
+          .then(response => {
+            console.log(response.data);
+            this.searchBox.students = response.data;
+          })
+          .catch(e => {
+            console.log(e);
+            alert("Fehler");
+          });
+      },
+
       validateWorkshop () {
         this.$v.$touch()
 
@@ -498,6 +510,7 @@ export default {
   created() {
     //this.criteria = [{id: 1, name: "Kriterium", beschreibung: "Beschreibung", janein: true, prozent: -1, punkte: -1}];
     this.is_anonym = true;
+    this.initSearch();
   },
   mounted() {
     if(!this.$parent.authenticated) {
