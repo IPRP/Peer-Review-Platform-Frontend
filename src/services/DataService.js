@@ -174,7 +174,7 @@ class DataService {
                 content: description,
                 end: new_date,
                 anonymous: is_anonym,
-                teachers: [1, 2],
+                teachers: [1, 2, 3],
                 students: std,
                 criteria: criteria
             });

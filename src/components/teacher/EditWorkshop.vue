@@ -390,7 +390,42 @@ export default {
         DataService.searchStudentsByName(this.searchBox.firstname, this.searchBox.lastname, this.$parent.username, this.$parent.pw)
           .then(response => {
             console.log(response.data);
-            this.searchBox.students = response.data;
+            let s = [];
+
+            s.push({
+              id: response.data.id,
+              firstname: this.searchBox.firstname,
+              lastname: this.searchBox.lastname,
+
+            })
+
+
+            this.searchBox.students = s;
+          })
+          .catch(e => {
+            console.log(e);
+            alert("Fehler");
+          });
+    },
+
+    searchStudentsByGroup() {
+        DataService.searchStudentsByGroup(this.searchBox.group, this.$parent.username, this.$parent.pw)
+          .then(response => {
+            console.log(response.data);
+            let s = [];
+
+            for(let item of response.data.ids) {
+              console.log(item);
+              DataService.searchStudentByID(item, this.$parent.username, this.$parent.pw).then(response => {
+                console.log(response.data);
+                s.push({
+                  id: item,
+                  firstname: response.data.firstname,
+                  lastname: response.data.lastname});
+              })
+            }
+
+            this.searchBox.students = s;
           })
           .catch(e => {
             console.log(e);
@@ -421,19 +456,6 @@ export default {
 
     addEntireGroup() {
       this.form.members = this.form.members.concat(this.searchBox.students);
-    },
-
-    
-    searchStudentsByGroup() {
-        DataService.searchStudentsByGroup(this.searchBox.group, this.$parent.username, this.$parent.pw)
-          .then(response => {
-            console.log(response.data);
-            this.searchBox.students = response.data;
-          })
-          .catch(e => {
-            console.log(e);
-            alert("Fehler");
-          });
     },
 
     addCriteria() {
@@ -506,7 +528,7 @@ export default {
             this.form.file = workshop.file,
             this.form.members = this.getStudentsFromID(workshop.students);
             this.form.criteria = workshop.criteria;
-            this.form.deadline = workshop.end;
+            this.form.deadline = workshop.end.substring(0, 9);
             this.form.anonymous = workshop.anonymous;
           })
           .catch(e => {
@@ -519,11 +541,11 @@ export default {
       var std = [];
 
       for(let item of students) {
-
-        DataService.searchStudentByID(item, this.$parent.username, this.$parent.pw)
+        console.log("ITEM:" + item.id);
+        DataService.searchStudentByID(item.id, this.$parent.username, this.$parent.pw)
           .then(response => {
-              std.push(response.data[0]);
-              console.log(response.data[0]);
+              std.push(response.data);
+              console.log(response.data);
           })
           .catch(e => {
             console.log(e);
@@ -540,7 +562,7 @@ export default {
 
     this.loadWorkshop();
 
-    this.initSearch();
+    //this.initSearch();
   },
   mounted() {
     if(!this.$parent.authenticated) {
