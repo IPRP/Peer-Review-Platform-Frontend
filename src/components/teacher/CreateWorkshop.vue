@@ -394,7 +394,17 @@ export default {
         DataService.searchStudentsByName(this.searchBox.firstname, this.searchBox.lastname, this.$parent.username, this.$parent.pw)
           .then(response => {
             console.log(response.data);
-            this.searchBox.students = response.data;
+            let s = [];
+
+            s.push({
+              id: response.data.id,
+              firstname: this.searchBox.firstname,
+              lastname: this.searchBox.lastname,
+
+            })
+
+
+            this.searchBox.students = s;
           })
           .catch(e => {
             console.log(e);
