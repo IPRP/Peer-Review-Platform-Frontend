@@ -153,8 +153,11 @@ class DataService {
         for (let item of students) {
             std.push(item.id);
         }
-
+        var new_date = new Date(deadline);
+        new_date = new_date.toISOString().split(".")[0];
+        console.log("Data: " + new_date);
         return axios
+
             .create({
                 baseURL: DataService.baseURL, //mocked backend
                 auth: {
@@ -169,9 +172,9 @@ class DataService {
                 id: "99",
                 title: title,
                 content: description,
-                end: deadline,
+                end: new_date,
                 anonymous: is_anonym,
-                teachers: [1],
+                teachers: [1, 2],
                 students: std,
                 criteria: criteria
             });

@@ -54,7 +54,7 @@ export default {
     getWorkshops() {
       DataService.getAllWorkshopsTeacher(this.$parent.username, this.$parent.pw)
         .then(response => {
-          this.workshops = response.data;
+          this.workshops = response.data.workshops;
         })
         .catch(e => {
           console.log(e);
