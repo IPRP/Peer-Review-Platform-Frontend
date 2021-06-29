@@ -2,373 +2,375 @@
 import axios from "axios";
 
 class DataService {
-  static baseURL = "http://localhost:3000";
+    static baseURL = "http://localhost:8000";
 
-  uploadFile(username, pw, formData) {
-    return axios.post(DataService.baseURL + "/upload", formData, {
-      auth: {
-        username: username,
-        password: pw
-      }
-    });
-  }
-
-  addSubmission(username, pw, attachment, title, comment, id) {
-    var data = {
-      title: title,
-      comment: comment,
-      attachments: attachment
-    };
-    return axios.post(DataService.baseURL + "/submission/" + id, data, {
-        auth: {
-          username: username,
-          password: pw
-        }
-      });
-  }
-
-  getAllWorkshopsTeacher(username, pw) {
-    return axios
-      .create({
-        baseURL: DataService.baseURL, //mocked backend
-        auth: {
-          username: username,
-          password: pw
-        },
-        headers: {
-          "Content-type": "application/json"
-        }
-      })
-      .get("/teacher/workshops");
-  }
-
-  getWorkshopDetailsTeacher(id, username, pw) {
-    return axios
-      .create({
-        baseURL: DataService.baseURL, //mocked backend
-        auth: {
-          username: username,
-          password: pw
-        },
-        headers: {
-          "Content-type": "application/json"
-        }
-      })
-      .get(`/teacher/workshop/${id}`);
-  }
-
-  deleteWorkshopTeacher(id, username, pw) {
-    return axios
-      .create({
-        baseURL: DataService.baseURL, //mocked backend
-        auth: {
-          username: username,
-          password: pw
-        },
-        headers: {
-          "Content-type": "application/json"
-        }
-      })
-      .delete(`/teacher/workshop/${id}`);
-  }
-
-  searchStudentsByName(firstname, lastname, username, pw) {
-    return axios
-      .create({
-        baseURL: DataService.baseURL, //mocked backend
-        auth: {
-          username: username,
-          password: pw
-        },
-        headers: {
-          "Content-type": "application/json"
-        }
-      })
-      .request({
-        method: "GET",
-        url: `/teacher/search/student`,
-        params: {
-          firstname: firstname,
-          lastname: lastname
-        }
-      });
-  }
-
-  searchStudentsByGroup(group, username, pw) {
-    return axios
-      .create({
-        baseURL: DataService.baseURL, //mocked backend
-        auth: {
-          username: username,
-          password: pw
-        },
-        headers: {
-          "Content-type": "application/json"
-        }
-      })
-      .request({
-        method: "GET",
-        url: `/teacher/search/student`,
-        params: {
-          group: group
-        }
-      });
-  }
-
-  searchStudentByID(id, username, pw) {
-    return axios
-      .create({
-        baseURL: DataService.baseURL, //mocked backend
-        auth: {
-          username: username,
-          password: pw
-        },
-        headers: {
-          "Content-type": "application/json"
-        }
-      })
-      .request({
-        method: "GET",
-        url: `/teacher/search/student`,
-        params: {
-          id: id
-        }
-      });
-  }
-
-  addWorkshopTeacher(
-    title,
-    description,
-    deadline,
-    is_anonym,
-    students,
-    criteria,
-    username,
-    pw
-  ) {
-    var std = [];
-
-    for (let item of students) {
-      std.push(item.id);
+    uploadFile(username, pw, formData) {
+        return axios.post(DataService.baseURL + "/upload", formData, {
+            auth: {
+                username: username,
+                password: pw
+            }
+        });
     }
 
-    return axios
-      .create({
-        baseURL: DataService.baseURL, //mocked backend
-        auth: {
-          username: username,
-          password: pw
-        },
-        headers: {
-          "Content-type": "application/json"
-        }
-      })
-      .post(`/teacher/workshop`, {
-        id: "99",
-        title: title,
-        content: description,
-        end: deadline,
-        anonymous: is_anonym,
-        teachers: [1],
-        students: std,
-        criteria: criteria
-      });
-  }
-
-  editWorkshopTeacher(
-    id,
-    title,
-    description,
-    deadline,
-    is_anonym,
-    students,
-    criteria,
-    username,
-    pw
-  ) {
-    var std = [];
-
-    for (let item of students) {
-      std.push(item.id);
+    addSubmission(username, pw, attachment, title, comment, id) {
+        var data = {
+            title: title,
+            comment: comment,
+            attachments: attachment
+        };
+        return axios.post(DataService.baseURL + "/submission/" + id, data, {
+            auth: {
+                username: username,
+                password: pw
+            }
+        });
     }
 
-    return axios
-      .create({
-        baseURL: DataService.baseURL, //mocked backend
-        auth: {
-          username: username,
-          password: pw
-        },
-        headers: {
-          "Content-type": "application/json"
+    getAllWorkshopsTeacher(username, pw) {
+        return axios
+            .create({
+                baseURL: DataService.baseURL, //mocked backend
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            .get("/teacher/workshops");
+    }
+
+    getWorkshopDetailsTeacher(id, username, pw) {
+        return axios
+            .create({
+                baseURL: DataService.baseURL, //mocked backend
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            .get(`/teacher/workshop/${id}`);
+    }
+
+    deleteWorkshopTeacher(id, username, pw) {
+        return axios
+            .create({
+                baseURL: DataService.baseURL, //mocked backend
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            .delete(`/teacher/workshop/${id}`);
+    }
+
+    searchStudentsByName(firstname, lastname, username, pw) {
+        return axios
+            .create({
+                baseURL: DataService.baseURL, //mocked backend
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            .request({
+                method: "GET",
+                url: `/teacher/search/student`,
+                params: {
+                    firstname: firstname,
+                    lastname: lastname
+                }
+            });
+    }
+
+    searchStudentsByGroup(group, username, pw) {
+        return axios
+            .create({
+                baseURL: DataService.baseURL, //mocked backend
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            .request({
+                method: "GET",
+                url: `/teacher/search/student`,
+                params: {
+                    group: group
+                }
+            });
+    }
+
+    searchStudentByID(id, username, pw) {
+        return axios
+            .create({
+                baseURL: DataService.baseURL, //mocked backend
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            .request({
+                method: "GET",
+                url: `/teacher/search/student`,
+                params: {
+                    id: id
+                }
+            });
+    }
+
+    addWorkshopTeacher(
+        title,
+        description,
+        deadline,
+        is_anonym,
+        students,
+        criteria,
+        username,
+        pw
+    ) {
+        var std = [];
+
+        for (let item of students) {
+            std.push(item.id);
         }
-      })
-      .put(`/teacher/workshop/${id}`, {
-        title: title,
-        content: description,
-        end: deadline,
-        anonymous: is_anonym,
-        teachers: [1],
-        students: std,
-        criteria: criteria
-      });
-  }
 
-  getSubmissionTeacher(username, pw, submission_id) {
-    return axios
-      .create({
-        baseURL: DataService.baseURL, //mocked backend
-        auth: {
-          username: username,
-          password: pw
-        },
-        headers: {
-          "Content-type": "application/json"
+        return axios
+            .create({
+                baseURL: DataService.baseURL, //mocked backend
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            .post(`/teacher/workshop`, {
+                id: "99",
+                title: title,
+                content: description,
+                end: deadline,
+                anonymous: is_anonym,
+                teachers: [1],
+                students: std,
+                criteria: criteria
+            });
+    }
+
+    editWorkshopTeacher(
+        id,
+        title,
+        description,
+        deadline,
+        is_anonym,
+        students,
+        criteria,
+        username,
+        pw
+    ) {
+        var std = [];
+
+        for (let item of students) {
+            std.push(item.id);
         }
-      })
-      .request({
-        method: "GET",
-        url: `/submission/${submission_id}`
-      });
-  }
 
-  fileupload(username, pw, file) {
-    var bodyFormData = new FormData();
-    bodyFormData.append("upload", file);
+        return axios
+            .create({
+                baseURL: DataService.baseURL, //mocked backend
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            .put(`/teacher/workshop/${id}`, {
+                title: title,
+                content: description,
+                end: deadline,
+                anonymous: is_anonym,
+                teachers: [1],
+                students: std,
+                criteria: criteria
+            });
+    }
 
-    return axios
-      .post("http://localhost:3000/upload", bodyFormData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
-        auth: {
-          username: username,
-          password: pw
-        }
-      })
-      .then(function() {
-        console.log("SUCCESS!!");
-      })
-      .catch(function() {
-        console.log("FAILURE!!");
-      });
-  }
+    getSubmissionTeacher(username, pw, submission_id) {
+        return axios
+            .create({
+                baseURL: DataService.baseURL, //mocked backend
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            .request({
+                method: "GET",
+                url: `/submission/${submission_id}`
+            });
+    }
 
-  //Student
+    fileupload(username, pw, file) {
+        var bodyFormData = new FormData();
+        bodyFormData.append("upload", file);
 
-  getStudentWorkshops(username, pw) {
-    return axios
-      .create({
-        baseURL: DataService.baseURL, //mocked backend
-        auth: {
-          username: username,
-          password: pw
-        },
-        headers: {
-          "Content-type": "application/json"
-        }
-      })
-      .get(`/student/workshops`, {});
-  }
+        return axios
+            .post("http://localhost:3000/upload", bodyFormData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                },
+                auth: {
+                    username: username,
+                    password: pw
+                }
+            })
+            .then(function() {
+                console.log("SUCCESS!!");
+            })
+            .catch(function() {
+                console.log("FAILURE!!");
+            });
+    }
 
-  getStudentSubmission(username, pw, id) {
-    return axios
-      .create({
-        baseURL: DataService.baseURL,
-        auth: {
-          username: username,
-          password: pw
-        },
-        headers: {
-          "Content-type": "application/json"
-        }
-      })
-      .get(`/submission/${id}`);
-  }
+    //Student
 
-  getStudentTodo(username, pw) {
-    return axios
-      .create({
-        baseURL: DataService.baseURL, //mocked backend
-        auth: {
-          username: username,
-          password: pw
-        },
-        headers: {
-          "Content-type": "application/json"
-        }
-      })
-      .get(`/student/todos`, {});
-  }
+    getStudentWorkshops(username, pw) {
+        return axios
+            .create({
+                baseURL: DataService.baseURL, //mocked backend
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            .get(`/student/workshops`, {});
+    }
 
-  getStudentWorkshop(username, pw, id) {
-    return axios
-      .create({
-        baseURL: DataService.baseURL,
-        auth: {
-          username: username,
-          password: pw
-        },
-        headers: {
-          "Content-type": "application/json"
-        }
-      })
-      .get(`/student/workshop/${id}`);
-  }
+    getStudentSubmission(username, pw, id) {
+        return axios
+            .create({
+                baseURL: DataService.baseURL,
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            .get(`/submission/${id}`);
+    }
 
-  postSubmissionFile(username, pw, file) {
-    let submission = new FormData();
-    submission.append("submission", file);
+    getStudentTodo(username, pw) {
+        return axios
+            .create({
+                baseURL: DataService.baseURL, //mocked backend
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            .get(`/student/todos`, {});
+    }
 
-    return axios
-      .post("http://localhost:3000/submission/upload", submission, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
-        auth: {
-          username: username,
-          password: pw
-        }
-      })
-      .then(function() {
-        console.log("SUCCESS!!");
-      })
-      .catch(function() {
-        console.log("FAILURE SUBMISSION UPLOAD!!");
-      });
-  }
+    getStudentWorkshop(username, pw, id) {
+        return axios
+            .create({
+                baseURL: DataService.baseURL,
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            .get(`/student/workshop/${id}`);
+    }
 
-  getReview(username, pw, id) {
-    return axios
-      .create({
-        baseURL: DataService.baseURL,
-        auth: {
-          username: username,
-          password: pw
-        },
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      .get(`/review/${id}`);
-  }
+    postSubmissionFile(username, pw, file) {
+        let submission = new FormData();
+        submission.append("submission", file);
 
-  //Login
+        return axios
+            .post("http://localhost:3000/submission/upload", submission, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                },
+                auth: {
+                    username: username,
+                    password: pw
+                }
+            })
+            .then(function() {
+                console.log("SUCCESS!!");
+            })
+            .catch(function() {
+                console.log("FAILURE SUBMISSION UPLOAD!!");
+            });
+    }
 
-  loginUser(username, pw) {
-    return axios
-      .create({
-        baseURL: DataService.baseURL, //mocked backend
-        auth: {
-          username: username,
-          password: pw
-        },
-        headers: {
-          "Content-type": "application/json"
-        }
-      })
-      .get(`/login`, {});
-  }
+    getReview(username, pw, id) {
+        return axios
+            .create({
+                baseURL: DataService.baseURL,
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .get(`/review/${id}`);
+    }
+
+    //Login
+
+    loginUser(username, pw) {
+        console.log("LOGIN: " + username + " " + pw);
+
+        return axios
+            .create({
+                baseURL: DataService.baseURL,
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).post("/login", {})
+
+    }
 }
 
 export default new DataService();

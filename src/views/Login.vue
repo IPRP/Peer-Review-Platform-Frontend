@@ -144,7 +144,7 @@ export default {
                 this.$cookies.remove("user");
                 this.$cookies.remove("token");
               }
-              if (username != "georgreisinger" && username != "lukasnowy") {
+              if (response.data.role == "student") {
                 this.$router.push("studentdashboard");
               } else {
                 this.$router.push("/teacherdashboard");
