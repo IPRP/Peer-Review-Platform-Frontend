@@ -95,6 +95,7 @@ class DataService {
     }
 
     searchStudentsByGroup(group, username, pw) {
+        console.log(username, pw);
         return axios
             .create({
                 baseURL: DataService.baseURL, //mocked backend
@@ -116,6 +117,7 @@ class DataService {
     }
 
     searchStudentByID(id, username, pw) {
+        console.log(username, pw);
         return axios
             .create({
                 baseURL: DataService.baseURL, //mocked backend
@@ -124,7 +126,7 @@ class DataService {
                     password: pw
                 },
                 headers: {
-                    "Content-type": "application/json"
+                    "Content-Type": "application/json"
                 }
             })
             .request({

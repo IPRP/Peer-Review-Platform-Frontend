@@ -73,12 +73,14 @@ export default {
     if (this.$cookies.isKey("auth")) {
       if (this.$cookies.get("auth") == "true") {
         const username = this.$cookies.get("user");
+        const role = this.$cookies.get("role");
         if (username != null) {
           const token = this.$cookies.get("token");
           if (token != null) {
             this.$emit("authenticated", true);
             this.$emit("username", username);
-
+            this.$emit("role", role);
+            console.log("ROLE: " + role);
             const heute = new Date();
             var dat = CryptoJS.AES.decrypt(
               token,
@@ -92,7 +94,7 @@ export default {
               this.logout();
             }
             this.$emit("pw", originalText);
-            if (username != "georgreisinger" && username != "lukasnowy") {
+            if (role == "student") {
               this.$router.push("studentdashboard");
             } else {
               this.$router.push("/teacherdashboard");
@@ -112,10 +114,12 @@ export default {
               this.$emit("authenticated", true);
               this.$emit("username", this.input.username);
               this.$emit("pw", this.input.password);
+              this.$emit("role", response.data.role);
               const username = this.input.username;
               if (this.input.autologin == "10") {
                 this.$cookies.set("auth", "true", "10min");
                 this.$cookies.set("user", username, "10min");
+                this.$cookies.set("role", response.data.role, "10min");
                 const heute = new Date();
                 var dat = CryptoJS.AES.encrypt(
                   this.input.password,
@@ -129,6 +133,7 @@ export default {
               } else if (this.input.autologin == "30") {
                 this.$cookies.set("auth", "true", "30min");
                 this.$cookies.set("user", username, "30min");
+                this.$cookies.set("role", response.data.role, "30min");
                 const heute = new Date();
                 var da = CryptoJS.AES.encrypt(
                   this.input.password,
@@ -143,6 +148,7 @@ export default {
                 this.$cookies.remove("auth");
                 this.$cookies.remove("user");
                 this.$cookies.remove("token");
+                this.$cookies.remove("role");
               }
               if (response.data.role == "student") {
                 this.$router.push("studentdashboard");

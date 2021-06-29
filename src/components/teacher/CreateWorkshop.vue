@@ -406,13 +406,27 @@ export default {
         DataService.searchStudentsByGroup(this.searchBox.group, this.$parent.username, this.$parent.pw)
           .then(response => {
             console.log(response.data);
-            this.searchBox.students = response.data;
+            let s = [];
+
+            for(let item of response.data.ids) {
+              console.log(item);
+              DataService.searchStudentByID(item, this.$parent.username, this.$parent.pw).then(response => {
+                console.log(response.data);
+                s.push({
+                  id: item,
+                  firstname: response.data.firstname,
+                  lastname: response.data.lastname});
+              })
+            }
+
+            this.searchBox.students = s;
           })
           .catch(e => {
             console.log(e);
             alert("Fehler");
           });
     },
+
     removeMember(id) {
       this.form.members = this.form.members.filter(function (obj) {
         return obj !== id;
@@ -508,9 +522,10 @@ export default {
 
   },
   created() {
+    console.log("User: " + this.$parent.username + " " + this.$parent.pw);
     //this.criteria = [{id: 1, name: "Kriterium", beschreibung: "Beschreibung", janein: true, prozent: -1, punkte: -1}];
     this.is_anonym = true;
-    this.initSearch();
+    //this.initSearch();
   },
   mounted() {
     if(!this.$parent.authenticated) {
