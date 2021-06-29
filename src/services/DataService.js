@@ -353,6 +353,46 @@ class DataService {
       .get(`/review/${id}`);
   }
 
+  postReview(
+    criteria,
+    overallFeedfback,
+    username,
+    pw,
+    id
+  ) {
+
+    return axios
+      .create({
+        baseURL: "http://localhost:3000", //mocked backend
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .post(`/review/${id}`, {
+        criteria: criteria,
+        overallFeedback: overallFeedfback
+      });
+  }
+
+  downloadSubmission(username, pw, fileName) {
+    return axios
+      .create({
+        baseURL: "http://localhost:3000",
+        auth: {
+          username: username,
+          password: pw
+        },
+        headers: {
+          "Content-type": "blob"
+        }
+      })
+      .get(`/${fileName}`);
+  }
+
   //Login
 
   loginUser(username, pw) {

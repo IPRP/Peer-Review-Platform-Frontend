@@ -19,15 +19,23 @@
         <h3 class="d-flex justify-content-start">Abgabe Datei</h3>
         <form @submit.prevent="onSubmit" enctype="multipart/form-data">
           <md-field>
+            <label>Titel</label>
+            <md-input v-model="title"></md-input>
+          </md-field>
+          <md-field>
+            <label>Kommentar</label>
+            <md-textarea v-model="comment"></md-textarea>
+          </md-field>
+          <md-field>
             <!--            <label>Abgabe</label>-->
             <!--            <md-file type="file" acccept=".pdf" ref="file" @change="onFileChange"></md-file>-->
             <!--          <label>Upload File</label><br/>-->
-            <input type="file" ref="file" @change="onSelect" />
+            <input type="file" ref="file" @change="onSelect"/>
           </md-field>
           <div
             class="pt-3 d-flex justify-content-center justify-content-md-end"
           >
-            <md-button class="md-raised prp-danger">
+            <md-button class="md-raised prp-danger" to="/studentdashboard">
               <span class="p-1">Abbrechen</span>
               <md-icon class="prp-danger">delete</md-icon>
             </md-button>
@@ -47,6 +55,7 @@
 
 <script>
 import DataService from "@/services/DataService";
+
 export default {
   name: "WorkshopSubmission",
   data() {
@@ -54,7 +63,9 @@ export default {
       workshop: {},
       file: "",
       message: "",
-      attachment: {}
+      attachment: {},
+      title: "",
+      comment: ""
     };
   },
   methods: {
@@ -89,7 +100,7 @@ export default {
     },
     async addSubmission() {
       try {
-        await DataService.addSubmission( this.$parent.username, this.$parent.pw, this.attachment, "Gibt keinen Input dafür", "Gibt keinen Input dafür", this.$route.params.id)
+        await DataService.addSubmission(this.$parent.username, this.$parent.pw, this.attachment, this.title, this.comment, this.$route.params.id)
           .then(res => {
             console.log(res.data.ok);
             this.$router.push("/studentdashboard");
@@ -113,6 +124,23 @@ export default {
         })
         .catch(e => {
           console.log(e);
+        });
+    },
+    downloadSubmission() {
+      DataService.downloadSubmission(
+        this.$parent.username,
+        this.$parent.pw,
+        this.submission.attachments[0].title
+      )
+        .then((response) => {
+          var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+          var fURL = document.createElement("a");
+
+          fURL.href = fileURL;
+          fURL.setAttribute("download", "file.pdf");
+          document.body.appendChild(fURL);
+
+          fURL.click();
         });
     }
   },
