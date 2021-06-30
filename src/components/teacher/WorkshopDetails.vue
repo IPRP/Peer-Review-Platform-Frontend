@@ -11,10 +11,10 @@
 
       <md-table-row v-for="item in this.workshop.workshop.students" :key="item" >
         <md-table-cell v-if="item.submissions.length > 0">
-          {{item.submissions[0].title}} ({{item.submissions[0].date}})
+          {{item.submissions[0].title}} von {{item.firstname}} {{item.lastname}} ({{item.submissions[0].date}})
         </md-table-cell>
         <md-table-cell v-if="item.submissions.length > 0">
-            <md-button class="md-icon-button" @click="showReviews(item.id)" :to="{ path: '/teacherdashboard/workshopdetails/reviews/' + item.id }">
+            <md-button class="md-icon-button" @click="showReviews(item.submissions[0].id)" :to="{ path: '/teacherdashboard/workshopdetails/reviews/' + item.submissions[0].id }">
               <md-icon>send</md-icon>
             </md-button>
         </md-table-cell>
