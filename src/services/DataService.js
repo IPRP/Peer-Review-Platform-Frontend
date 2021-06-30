@@ -193,6 +193,11 @@ class DataService {
     ) {
         var std = [];
 
+        var new_date = new Date(deadline);
+        new_date = new_date.toISOString().split(".")[0];
+        console.log("Data: " + new_date);
+        console.log("STD: ");
+        console.log(students);
         for (let item of students) {
             std.push(item.id);
         }
@@ -211,9 +216,9 @@ class DataService {
             .put(`/teacher/workshop/${id}`, {
                 title: title,
                 content: description,
-                end: deadline,
+                end: new_date,
                 anonymous: is_anonym,
-                teachers: [1],
+                teachers: [1, 2, 3],
                 students: std,
                 criteria: criteria
             });

@@ -544,7 +544,11 @@ export default {
         console.log("ITEM:" + item.id);
         DataService.searchStudentByID(item.id, this.$parent.username, this.$parent.pw)
           .then(response => {
-              std.push(response.data);
+              std.push({
+                id: item.id,
+                firstname: response.data.firstname,
+                lastname: response.data.lastname
+              });
               console.log(response.data);
           })
           .catch(e => {
