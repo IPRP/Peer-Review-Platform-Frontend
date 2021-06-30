@@ -19,6 +19,14 @@
         <h3 class="d-flex justify-content-start">Abgabe Datei</h3>
         <form @submit.prevent="onSubmit" enctype="multipart/form-data">
           <md-field>
+            <label>Titel</label>
+            <md-input v-model="title"></md-input>
+          </md-field>
+          <md-field>
+            <label>Kommentar</label>
+            <md-textarea v-model="comment"></md-textarea>
+          </md-field>
+          <md-field>
             <!--            <label>Abgabe</label>-->
             <!--            <md-file type="file" acccept=".pdf" ref="file" @change="onFileChange"></md-file>-->
             <!--          <label>Upload File</label><br/>-->
@@ -54,7 +62,9 @@ export default {
       workshop: {},
       file: "",
       message: "",
-      attachment: {}
+      attachment: {},
+      title: "",
+      comment: ""
     };
   },
   methods: {
@@ -73,7 +83,7 @@ export default {
       const formData = new FormData();
       formData.append("file", this.file);
       try {
-        await DataService.uploadFile(this.$parent.username, this.$parent.pw, formData)
+        await DataService.postSubmissionFile(this.$parent.username, this.$parent.pw, formData)
           .then(res => {
             this.attachment = res.data.attachment;
             this.addSubmission();
@@ -89,7 +99,7 @@ export default {
     },
     async addSubmission() {
       try {
-        await DataService.addSubmission( this.$parent.username, this.$parent.pw, this.attachment, "Gibt keinen Input dafür", "Gibt keinen Input dafür", this.$route.params.id)
+        await DataService.addSubmission( this.$parent.username, this.$parent.pw, this.attachment, this.title, this.comment, this.$route.params.id)
           .then(res => {
             console.log(res.data.ok);
             this.$router.push("/studentdashboard");
@@ -113,6 +123,21 @@ export default {
         })
         .catch(e => {
           console.log(e);
+        });
+    },
+    downloadSubmission() {
+      DataService.downloadSubmission(
+        this.$parent.username,
+        this.$parent.pw,
+        this.submission.attachments[0].id
+      )
+        .then((response) => {
+          var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+          var fURL = document.createElement("a");
+          fURL.href = fileURL;
+          fURL.setAttribute("download", "file.pdf");
+          document.body.appendChild(fURL);
+          fURL.click();
         });
     }
   },

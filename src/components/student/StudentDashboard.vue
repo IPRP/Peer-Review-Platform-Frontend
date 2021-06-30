@@ -50,7 +50,7 @@
             <md-table-cell>{{ workshop.title }}</md-table-cell>
             <md-table-cell class="prp-table-action-cell">
               <md-button class="md-icon-button md-list-action"
-                :to="{ name: 'workshopoverview', params: { id: workshop.id } }"
+                         :to="{ name: 'workshopoverview', params: { id: workshop.id } }"
               >
                 <md-icon>info</md-icon>
               </md-button>
@@ -79,20 +79,18 @@ export default {
     getStudentWorkshops() {
       DataService.getStudentWorkshops(this.$parent.username, this.$parent.pw)
         .then(response => {
-          this.workshops = response.data;
-          console.log(this.workshops);
+          this.workshops = response.data.workshops;
         })
         .catch(e => {
           console.error(e);
         });
     },
     getStudentTodo() {
-      DataService.getStudentTodo(this.$parent.username, this.$parent.pw).then(response => {
-        this.reviewstodo = response.data.reviews;
-        this.submissionstodo = response.data.submissions;
-        console.log(this.reviewstodo);
-        console.log(this.submissionstodo);
-      })
+      DataService.getStudentTodo(this.$parent.username, this.$parent.pw)
+        .then(response => {
+          this.reviewstodo = response.data.reviews;
+          this.submissionstodo = response.data.submissions;
+        })
         .catch(e => {
           console.error(e);
         });
