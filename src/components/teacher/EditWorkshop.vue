@@ -507,10 +507,10 @@ export default {
     },
 
     initSearch() {
-        DataService.searchStudentsByName("", "", this.$parent.username, this.$parent.pw)
+        DataService.searchStudentALL(this.$parent.username, this.$parent.pw)
           .then(response => {
             console.log(response.data);
-            this.searchBox.students = response.data;
+            this.searchBox.students = response.data.students;
           })
           .catch(e => {
             console.log(e);
@@ -566,7 +566,7 @@ export default {
 
     this.loadWorkshop();
 
-    //this.initSearch();
+    this.initSearch();
   },
   mounted() {
     if(!this.$parent.authenticated) {

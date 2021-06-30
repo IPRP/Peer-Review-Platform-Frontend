@@ -138,6 +138,27 @@ class DataService {
             });
     }
 
+    searchStudentALL(username, pw) {
+        return axios
+            .create({
+                baseURL: DataService.baseURL, //mocked backend
+                auth: {
+                    username: username,
+                    password: pw
+                },
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .request({
+                method: "GET",
+                url: `/teacher/search/student`,
+                params: {
+                    all: true
+                }
+            });
+    }
+
     addWorkshopTeacher(
         title,
         description,

@@ -511,10 +511,10 @@ export default {
       },
 
       initSearch() {
-        DataService.searchStudentsByName("", "", this.$parent.username, this.$parent.pw)
+        DataService.searchStudentALL(this.$parent.username, this.$parent.pw)
           .then(response => {
             console.log(response.data);
-            this.searchBox.students = response.data;
+            this.searchBox.students = response.data.students;
           })
           .catch(e => {
             console.log(e);
@@ -535,7 +535,7 @@ export default {
     console.log("User: " + this.$parent.username + " " + this.$parent.pw);
     //this.criteria = [{id: 1, name: "Kriterium", beschreibung: "Beschreibung", janein: true, prozent: -1, punkte: -1}];
     this.is_anonym = true;
-    //this.initSearch();
+    this.initSearch();
   },
   mounted() {
     if(!this.$parent.authenticated) {
