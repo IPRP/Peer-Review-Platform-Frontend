@@ -4,19 +4,16 @@
     <h1>Workshop: {{ this.workshop.workshop.title }}</h1>
     <p>{{this.workshop.workshop.content}}</p>
 
-    <md-switch v-model="showOutstandingSubmissions" class="md-primary">Offene Workshop Abgaben</md-switch>
-    <md-switch v-model="showLatedSubmissions" class="md-primary">Verspätete Workshop Abgaben</md-switch>
-
 <md-table v-model="workshop.workshop.submissions" v-show="showOutstandingSubmissions">
       <md-table-row>
-        <md-table-head>Workshop Abgaben</md-table-head>
+        <md-table-head>Submissions</md-table-head>
       </md-table-row>
 
-      <md-table-row v-for="item in this.workshop.workshop.submissions" :key="item">
-        <md-table-cell v-if="item.reviewsDone == true">
-          {{item.title}} ({{item.points}}/{{item.maxPoints}} Punkte)
+      <md-table-row v-for="item in this.workshop.workshop.students" :key="item" >
+        <md-table-cell v-if="item.submissions.length > 0">
+          {{item.submissions[0].title}} ({{item.submissions[0].date}})
         </md-table-cell>
-        <md-table-cell v-if="item.reviewsDone == true">
+        <md-table-cell v-if="item.submissions.length > 0">
             <md-button class="md-icon-button" @click="showReviews(item.id)" :to="{ path: '/teacherdashboard/workshopdetails/reviews/' + item.id }">
               <md-icon>send</md-icon>
             </md-button>
@@ -25,14 +22,14 @@
 
     </md-table>
 
-    <md-table v-model="workshop.workshop.submissions" v-show="showLatedSubmissions" >
+    <md-table v-model="workshop.workshop.students" v-show="showLatedSubmissions" >
       <md-table-row>
-        <md-table-head>Offene/Verspätete Workshop Abgaben</md-table-head>
+        <md-table-head>Fehlende Submissions</md-table-head>
       </md-table-row>
 
-      <md-table-row v-for="item in this.workshop.workshop.submissions" :key="item">
-        <md-table-cell v-if="item.reviewsDone == false">
-           {{item.title}}
+      <md-table-row v-for="item in this.workshop.workshop.students" :key="item">
+        <md-table-cell v-if="item.submissions.length == 0">
+           {{item.firstname}} {{item.lastname}}
         </md-table-cell>
       </md-table-row>
 
