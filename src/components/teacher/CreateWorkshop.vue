@@ -16,10 +16,10 @@
           <md-textarea v-model="form.description"></md-textarea>
         </md-field>
 
-        <md-field>
+        <!--<md-field>
           <label>Datei auswählen</label>
           <md-file v-model="file" type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-        </md-field>
+        </md-field>-->
 
         <h2 class="pt-3">Personen</h2>
         <div class="md-layout-item md-size-100">
