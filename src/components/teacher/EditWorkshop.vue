@@ -349,7 +349,7 @@ export default {
         file: null,
         members: [],
         criteria: [],
-        deadline: null,
+        deadline: "2022-01-01",
         anonymous: true
       },
       sending: false,
@@ -519,16 +519,19 @@ export default {
       },
 
     loadWorkshop(){
+
           DataService.getWorkshopDetailsTeacher(this.getIdFromUrl(), this.$parent.username, this.$parent.pw)
           .then(response => {
+    
             let workshop = response.data.workshop;
+                    console.log("DATE: " + response.data.workshop.end + " NEW: " + workshop.end.substring(0, 10));
             this.form.id = this.getIdFromUrl();
             this.form.title = workshop.title;
             this.form.description = workshop.content;
             this.form.file = workshop.file,
             this.form.members = this.getStudentsFromID(workshop.students);
             this.form.criteria = workshop.criteria;
-            this.form.deadline = workshop.end.substring(0, 9);
+            this.form.deadline = workshop.end.substring(0, 10);
             this.form.anonymous = workshop.anonymous;
           })
           .catch(e => {
