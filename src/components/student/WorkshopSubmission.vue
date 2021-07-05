@@ -35,7 +35,7 @@
           <div
             class="pt-3 d-flex justify-content-center justify-content-md-end"
           >
-            <md-button class="md-raised prp-danger">
+            <md-button class="md-raised prp-danger" to="/studentdashboard">
               <span class="p-1">Abbrechen</span>
               <md-icon class="prp-danger">delete</md-icon>
             </md-button>
@@ -89,12 +89,12 @@ export default {
             this.addSubmission();
           })
           .catch(err => {
-            this.message = err.response.data.error;
+            this.message = err;
           });
-        this.message = "Uploaded!!";
+        this.message = "Uploaded!";
       } catch (err) {
         console.error(err);
-        this.message = err.response.data.error;
+        this.message = err;
       }
     },
     async addSubmission() {
@@ -105,11 +105,11 @@ export default {
             this.$router.push("/studentdashboard");
           })
           .catch(err => {
-            this.message = err.response.data.error;
+            this.message = err;
           });
       } catch (e) {
         alert(e);
-        this.message = e.response.data.error;
+        this.message = e;
       }
     },
     getWorkshop() {
