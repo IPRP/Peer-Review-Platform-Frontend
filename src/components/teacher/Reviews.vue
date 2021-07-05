@@ -5,13 +5,18 @@
         <p>Comment: {{submission.comment}}</p>
         <p>Date: {{submission.date}}</p>
         <p>Gesamtpunkte: {{submission.points}}/{{submission.maxPoints}}</p>
+        <h3 class="pl-1 pt-3">Abgabe:</h3>
+           <md-button class="md-raised md-primary">
+              <span>{{ submission.attachments[0].title }}</span>
+              <md-icon>get_app</md-icon>
+            </md-button>
 <!--v-for="item in submission.reviews" :key="item.id" -->
         <h3>Reviews</h3>
         <md-card class="card" v-for="item in submission.reviews" :key="item.id">
 
       <md-card-header>
-        <div class="md-title">ID {{item.id}}</div>
-        <div class="md-subhead">Author: {{item.firstname}} {{item.lastname}}</div>
+        <div class="md-title">Review von: {{item.firstname}} {{item.lastname}}</div>
+        <div class="md-subhead">Feedback: {{item.feedback}}</div>
       </md-card-header>
 
       <md-card-expand>
@@ -26,7 +31,6 @@
 
         <md-card-expand-content>
           <md-card-content>
-            <p>Feedback: {{item.feedback}}</p>
             <p>Criterias: </p>
     <md-table>
       <md-table-row>
