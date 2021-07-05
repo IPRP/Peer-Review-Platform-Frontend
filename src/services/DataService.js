@@ -169,7 +169,7 @@ class DataService {
         content: description,
         end: deadline,
         anonymous: is_anonym,
-        teachers: [1],
+        teachers: [1, 3],
         students: std,
         criteria: criteria
       });
@@ -208,7 +208,7 @@ class DataService {
         content: description,
         end: deadline,
         anonymous: is_anonym,
-        teachers: [1],
+        teachers: [1, 3],
         students: std,
         criteria: criteria
       });

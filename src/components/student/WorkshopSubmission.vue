@@ -1,7 +1,7 @@
 <template>
   <div class="p-1 p-md-5">
     <h1 class="pl-1 pl-md-5">
-      Abgabe für Worksohp {{ $route.params.workshopname }}
+      Abgabe für Workshop {{ $route.params.workshopname }}
     </h1>
     <div class="px-1 px-md-5">
       <div class="pt-3">
