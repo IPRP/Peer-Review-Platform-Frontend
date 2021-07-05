@@ -89,7 +89,7 @@
                     <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
                       <md-field>
                         <label></label>
-                        <md-textarea v-model="item.content"></md-textarea>
+                        <md-textarea placeholder="Beschreibung" v-model="item.content"></md-textarea>
                       </md-field>
                     </div>
                     <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
@@ -437,8 +437,8 @@ export default {
 
     addCriteria() {
       this.form.criteria.push({
-        title: "Kriterium",
-        content: "Beschreibung",
+        title: "",
+        content: "",
         type: "point",
         weight: 1.0
       });
