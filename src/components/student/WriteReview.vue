@@ -5,14 +5,14 @@
       <div class="pl-1 pl-md-5 pt-1">
         <h3 class="pl-1 pt-1">Abgabe:</h3>
         <h4 class="pl-1 pt-1">{{ comment }}</h4>
-        <md-button
-          v-if="attachments[0] !== null"
-          class="md-raised md-primary"
-          @click="downloadSubmission"
+        <div
+          v-if="attachments.length > 0 && attachments[0].title !== undefined"
         >
-          <span>{{ attachments[0].title }}</span>
-          <md-icon>get_app</md-icon>
-        </md-button>
+          <md-button class="md-raised md-primary" @click="downloadSubmission">
+            <span>{{ attachments[0].title }}</span>
+            <md-icon>get_app</md-icon>
+          </md-button>
+        </div>
       </div>
       <form class="pt-3" @submit.prevent="onSubmit">
         <div class="px-1 px-md-5">
@@ -119,6 +119,12 @@ import { required } from "vuelidate/lib/validators";
 
 export default {
   name: "WriteReview",
+  props: {
+    done: {
+      default: "false",
+      type: String
+    }
+  },
   data() {
     return {
       loaded: false,
@@ -144,6 +150,11 @@ export default {
   },
   methods: {
     getSubmission() {
+      // TODO: prefill values if review was already done
+      // console.log(this.done);
+      // console.log(this.$route.params);
+      // console.log(this.$parent);
+
       DataService.getStudentSubmission(
         this.$parent.username,
         this.$parent.pw,
@@ -165,7 +176,7 @@ export default {
           this.comment = submission.comment;
           this.attachments = submission.attachments;
           this.loaded = true;
-          console.log(this.form.criteria);
+          console.log(this.form.criteria, this.title, this.attachments);
         })
         .catch(e => {
           console.error(e);
@@ -177,12 +188,21 @@ export default {
     createReview() {
       const points = [];
       for (const criterion of this.form.criteria) {
+        let criterionPoints =
+          typeof criterion.points === "boolean"
+            ? criterion.points === true
+              ? 1
+              : 0
+            : parseInt(criterion.points);
         points.push({
           id: criterion.id,
-          points: parseInt(criterion.points)
+          points: criterionPoints
         });
       }
-      const feedback = this.form.feedback;
+      const feedback =
+        this.form.feedback !== null && this.form.feedback !== undefined
+          ? this.form.feedback
+          : "";
 
       DataService.postReview(
         this.$parent.username,

@@ -21,7 +21,8 @@ const routes = [
       },
       //in the future: path: 'reviewverfassen/:id', same for similar children
       {
-        path: "writereview/:workshopid/:submissionid/:reviewid",
+        path: "writereview/:workshopid/:submissionid/:reviewid/:done?",
+        props: true,
         component: () =>
           import(
             /* webpackChunkName: "ReviewVerfassen" */

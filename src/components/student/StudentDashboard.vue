@@ -9,9 +9,15 @@
               <h1 class="md-title">Laufende Reviews</h1>
             </md-table-toolbar>
             <md-table-row v-for="(item, i) in this.reviewstodo" :key="i">
-              <md-table-cell
-                >Review {{ item.workshopName }} (Review fehlt)</md-table-cell
-              >
+              <md-table-cell>
+                <div v-if="!item.done">
+                  Review {{ item.workshopName }} (Review fehlt)
+                </div>
+                <div v-else>
+                  Review {{ item.workshopName }} <br />(Review kann noch
+                  aktualisiert werden)
+                </div>
+              </md-table-cell>
               <!--  //item.workshopName ist die review id siehe https://docs.google.com/spreadsheets/d/1X2nMEH33EQm5FCdruBNx2x0NtEMzxlOo/edit#gid=136308832  !-->
               <md-table-cell class="prp-table-action-cell">
                 <md-button
@@ -23,7 +29,9 @@
                       '/' +
                       item.submission +
                       '/' +
-                      item.id
+                      item.id +
+                      '/' +
+                      item.done
                   }"
                 >
                   <md-icon>forward</md-icon>
