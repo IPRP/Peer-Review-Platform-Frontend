@@ -1,7 +1,7 @@
 <template>
   <div class="p-1 p-md-5">
     <h1 class="pl-1 pl-md-5">
-      Abgabe für Worksohp {{ $route.params.workshopname }}
+      Abgabe für Workshop {{ $route.params.workshopname }}
     </h1>
     <div class="px-1 px-md-5">
       <div class="pt-3">
@@ -55,14 +55,15 @@
 
 <script>
 import DataService from "@/services/DataService";
+
 export default {
   name: "WorkshopSubmission",
   data() {
     return {
       workshop: {},
-      file: "",
+      file: undefined,
       message: "",
-      attachment: {},
+      attachment: [],
       title: "",
       comment: ""
     };
@@ -70,7 +71,9 @@ export default {
   methods: {
     onSelect() {
       const file = this.$refs.file.files[0];
-      this.file = file;
+      if (file) {
+        this.file = file;
+      }
       // const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
       // if(!allowedTypes.includes(file.type)){
       //   this.message = "Filetype is wrong!!"
@@ -80,26 +83,46 @@ export default {
       // }
     },
     async onSubmit() {
-      const formData = new FormData();
-      formData.append("file", this.file);
-      try {
-        await DataService.postSubmissionFile(this.$parent.username, this.$parent.pw, formData)
-          .then(res => {
-            this.attachment = res.data.attachment;
-            this.addSubmission();
-          })
-          .catch(err => {
-            this.message = err;
-          });
-        this.message = "Uploaded!";
-      } catch (err) {
-        console.error(err);
-        this.message = err;
+      if (this.file) {
+        const formData = new FormData();
+        console.log(this.file);
+        formData.append("file", this.file);
+        try {
+          await DataService.postSubmissionFile(
+            this.$parent.username,
+            this.$parent.pw,
+            formData
+          )
+            .then(res => {
+              this.attachment = [res.data.attachment.id];
+              this.addSubmission();
+            })
+            .catch(err => {
+              this.message = err;
+            });
+          this.message = "Uploaded!";
+        } catch (err) {
+          console.error(err);
+          this.message = err;
+        }
+      } else {
+        await this.addSubmission();
       }
     },
     async addSubmission() {
+      // Convert object back
+      // See: https://github.com/vuejs/Discussion/issues/292
+      const attachment = { ...this.attachment };
+      console.log(attachment);
       try {
-        await DataService.addSubmission( this.$parent.username, this.$parent.pw, this.attachment, this.title, this.comment, this.$route.params.id)
+        await DataService.addSubmission(
+          this.$parent.username,
+          this.$parent.pw,
+          attachment,
+          this.title,
+          this.comment,
+          this.$route.params.id
+        )
           .then(res => {
             console.log(res.data.ok);
             this.$router.push("/studentdashboard");
@@ -130,15 +153,14 @@ export default {
         this.$parent.username,
         this.$parent.pw,
         this.submission.attachments[0].id
-      )
-        .then((response) => {
-          var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-          var fURL = document.createElement("a");
-          fURL.href = fileURL;
-          fURL.setAttribute("download", "file.pdf");
-          document.body.appendChild(fURL);
-          fURL.click();
-        });
+      ).then(response => {
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        var fURL = document.createElement("a");
+        fURL.href = fileURL;
+        fURL.setAttribute("download", "file.pdf");
+        document.body.appendChild(fURL);
+        fURL.click();
+      });
     }
   },
   mounted() {

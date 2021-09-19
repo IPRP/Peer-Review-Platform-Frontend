@@ -383,7 +383,7 @@ class DataService {
   }
 
   addSubmission(username, pw, attachment, title, comment, id) {
-    var data = {
+    const data = {
       title: title,
       comment: comment,
       attachments: attachment
@@ -411,8 +411,8 @@ class DataService {
         headers: {
           "Content-Type": "application/json"
         }
-      }).post("/login", {});
-
+      })
+      .post("/login", {});
   }
 }
 
