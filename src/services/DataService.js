@@ -361,6 +361,8 @@ class DataService {
   }
 
   downloadSubmission(username, pw, id) {
+    // Set correct headers
+    // See: https://github.com/axios/axios/issues/2548#issuecomment-553434729
     return axios
       .create({
         baseURL: DataService.baseURL,
@@ -369,10 +371,20 @@ class DataService {
           password: pw
         },
         headers: {
-          "Content-type": "blob"
-        }
+          "Content-Type": "application/json; application/octet-stream"
+        },
+        responseType: "blob"
       })
       .get(`submission/download/${id}`);
+  }
+
+  writeFile(response, filename) {
+    const fileURL = window.URL.createObjectURL(new Blob([response.data]));
+    const fURL = document.createElement("a");
+    fURL.href = fileURL;
+    fURL.setAttribute("download", filename);
+    document.body.appendChild(fURL);
+    fURL.click();
   }
 
   addSubmission(username, pw, attachment, title, comment, id) {
@@ -407,6 +419,9 @@ class DataService {
       })
       .post("/login", {});
   }
+
+  // eslint-disable-next-line no-unused-vars
+  postReview(criteria, overallFeedback, username, pw, id) {}
 }
 
 export default new DataService();

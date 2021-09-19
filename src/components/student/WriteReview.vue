@@ -12,7 +12,11 @@
       <div class="px-1 px-md-5">
         <h3 class="d-flex justify-content-start">Kriterien:</h3>
         <div class="mb-3">
-          <md-card class="d-flex mt-3" v-for="criterion in this.form.criteria" :key="criterion.title">
+          <md-card
+            class="d-flex mt-3"
+            v-for="criterion in this.form.criteria"
+            :key="criterion.title"
+          >
             <md-card-expand class="align-items-center">
               <md-card-actions md-alignment="space-between">
                 <h3>{{ criterion.title }}</h3>
@@ -33,35 +37,56 @@
                   <div class="pr-md-2 flex-grow-1">
                     <md-field class="prp-feedback">
                       <label>Feedback</label>
-                      <md-textarea md-autogrow
-                                   v-model="form.criteria[form.criteria.indexOf(criterion)].feedback"></md-textarea>
+                      <md-textarea
+                        md-autogrow
+                        v-model="
+                          form.criteria[form.criteria.indexOf(criterion)]
+                            .feedback
+                        "
+                      ></md-textarea>
                     </md-field>
                   </div>
 
                   <div v-if="criterion.type === 'truefalse'">
-                    <md-switch v-model="form.criteria[form.criteria.indexOf(criterion)].rating"
-                               class="align-self-center">Erfüllt
+                    <md-switch
+                      v-model="
+                        form.criteria[form.criteria.indexOf(criterion)].rating
+                      "
+                      class="align-self-center"
+                      >Erfüllt
                     </md-switch>
                   </div>
                   <div v-if="criterion.type === 'point'">
                     <md-field>
                       <label>Punkte</label>
-                      <md-input v-model="form.criteria[form.criteria.indexOf(criterion)].rating"
-                                type="number"></md-input>
+                      <md-input
+                        v-model="
+                          form.criteria[form.criteria.indexOf(criterion)].rating
+                        "
+                        type="number"
+                      ></md-input>
                     </md-field>
                   </div>
                   <div v-if="criterion.type === 'percentage'">
                     <md-field>
                       <label>Prozent</label>
-                      <md-input v-model="form.criteria[form.criteria.indexOf(criterion)].rating"
-                                type="number"></md-input>
+                      <md-input
+                        v-model="
+                          form.criteria[form.criteria.indexOf(criterion)].rating
+                        "
+                        type="number"
+                      ></md-input>
                     </md-field>
                   </div>
                   <div v-if="criterion.type === 'grade'">
                     <md-field>
                       <label>Note</label>
-                      <md-input v-model="form.criteria[form.criteria.indexOf(criterion)].rating"
-                                type="number"></md-input>
+                      <md-input
+                        v-model="
+                          form.criteria[form.criteria.indexOf(criterion)].rating
+                        "
+                        type="number"
+                      ></md-input>
                     </md-field>
                   </div>
                 </div>
@@ -166,16 +191,10 @@ export default {
       DataService.downloadSubmission(
         this.$parent.username,
         this.$parent.pw,
-        this.submission.attachments[0].title
-      )
-        .then((response) => {
-          var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-          var fURL = document.createElement("a");
-          fURL.href = fileURL;
-          fURL.setAttribute("download", "file.pdf");
-          document.body.appendChild(fURL);
-          fURL.click();
-        });
+        this.submission.attachments[0].id
+      ).then(response => {
+        DataService.writeFile(response, this.submission.attachments[0].title);
+      });
     }
   },
   mounted() {

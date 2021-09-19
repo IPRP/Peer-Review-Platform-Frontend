@@ -12,9 +12,15 @@
       <div>
         <md-table v-model="reviews" md-card>
           <md-table-row slot="md-table-row" slot-scope="{ item }">
-            <md-table-cell md-label="Students" md-sort-by="firstname">{{ item.firstname }} {{item.lastname}}</md-table-cell>
-            <md-table-cell md-label="Feedback" md-sort-by="feedback">{{ item.feedback }}</md-table-cell>
-            <md-table-cell md-label="Punkte" md-sort-by="points">{{ item.points[0].points}}</md-table-cell>
+            <md-table-cell md-label="Students" md-sort-by="firstname"
+              >{{ item.firstname }} {{ item.lastname }}</md-table-cell
+            >
+            <md-table-cell md-label="Feedback" md-sort-by="feedback">{{
+              item.feedback
+            }}</md-table-cell>
+            <md-table-cell md-label="Punkte" md-sort-by="points">{{
+              item.points[0].points
+            }}</md-table-cell>
           </md-table-row>
         </md-table>
       </div>
@@ -52,15 +58,14 @@ export default {
         this.$parent.username,
         this.$parent.pw,
         this.submission.attachments[0].title
-      )
-        .then((response) => {
-          var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-          var fURL = document.createElement('a');
-          fURL.href = fileURL;
-          fURL.setAttribute('download', 'file.pdf');
-          document.body.appendChild(fURL);
-          fURL.click();
-        });
+      ).then(response => {
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        var fURL = document.createElement("a");
+        fURL.href = fileURL;
+        fURL.setAttribute("download", "file.pdf");
+        document.body.appendChild(fURL);
+        fURL.click();
+      });
     }
   },
   mounted() {
@@ -74,5 +79,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
