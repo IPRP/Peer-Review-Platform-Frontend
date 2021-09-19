@@ -334,22 +334,15 @@ class DataService {
   }
 
   postSubmissionFile(username, pw, file) {
-    return axios
-      .post(DataService.baseURL + "/submission/upload", file, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
-        auth: {
-          username: username,
-          password: pw
-        }
-      })
-      .then(function() {
-        console.log("SUCCESS!!");
-      })
-      .catch(function() {
-        console.log("FAILURE SUBMISSION UPLOAD!!");
-      });
+    return axios.post(DataService.baseURL + "/submission/upload", file, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      },
+      auth: {
+        username: username,
+        password: pw
+      }
+    });
   }
 
   getReview(username, pw, id) {

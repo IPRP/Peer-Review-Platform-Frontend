@@ -112,8 +112,7 @@ export default {
     async addSubmission() {
       // Convert object back
       // See: https://github.com/vuejs/Discussion/issues/292
-      const attachment = { ...this.attachment };
-      console.log(attachment);
+      const attachment = JSON.parse(JSON.stringify(this.attachment));
       try {
         await DataService.addSubmission(
           this.$parent.username,
@@ -123,8 +122,8 @@ export default {
           this.comment,
           this.$route.params.id
         )
-          .then(res => {
-            console.log(res.data.ok);
+          .then(() => {
+            // console.log(res.data.ok);
             this.$router.push("/studentdashboard");
           })
           .catch(err => {
