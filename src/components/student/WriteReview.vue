@@ -14,7 +14,7 @@
           <md-icon>get_app</md-icon>
         </md-button>
       </div>
-      <form class="pt-3" @submit.prevent="createReview">
+      <form class="pt-3" @submit.prevent="onSubmit">
         <div class="px-1 px-md-5">
           <h3 class="d-flex justify-content-start">Kriterien:</h3>
           <div class="mb-3">
@@ -40,27 +40,18 @@
                       <p class="md-list-item-text">{{ criterion.content }}</p>
                     </div>
 
-                    <!--
-                  <div class="pr-md-2 flex-grow-1">
-                    <md-field class="prp-feedback">
-                      <label>Feedback</label>
-                      <md-textarea
-                        md-autogrow
-                        v-model="
-                          form.criteria[form.criteria.indexOf(criterion)]
-                            .feedback
-                        "
-                      ></md-textarea>
-                    </md-field>
-                  </div>
-                  -->
-
                     <div v-if="criterion.type === 'truefalse'">
                       <md-switch
                         v-model="criterion.points"
                         class="align-self-center"
                         type="number"
-                        >Erfüllt
+                      >
+                        <div v-if="criterion.points">
+                          Erfüllt
+                        </div>
+                        <div v-else>
+                          Nicht Erfüllt
+                        </div>
                       </md-switch>
                     </div>
                     <div v-if="criterion.type === 'point'">
@@ -69,6 +60,7 @@
                         <md-input
                           v-model="criterion.points"
                           type="number"
+                          @change="validate($event, criterion)"
                         ></md-input>
                       </md-field>
                     </div>
@@ -76,11 +68,9 @@
                       <md-field>
                         <label>Prozent</label>
                         <md-input
-                          v-model="
-                            form.criteria[form.criteria.indexOf(criterion)]
-                              .points
-                          "
+                          v-model="criterion.points"
                           type="number"
+                          @change="validate($event, criterion)"
                         ></md-input>
                       </md-field>
                     </div>
@@ -88,11 +78,9 @@
                       <md-field>
                         <label>Note</label>
                         <md-input
-                          v-model="
-                            form.criteria[form.criteria.indexOf(criterion)]
-                              .points
-                          "
+                          v-model="criterion.points"
                           type="number"
+                          @change="validate($event, criterion)"
                         ></md-input>
                       </md-field>
                     </div>
@@ -170,30 +158,34 @@ export default {
           const submission = response.data;
           const criteria = submission.criteria;
           this.form.criteria = criteria.map(criterion => {
-            /*let newCriteria;
-            /newCriteria = Object.assign(
-              criteria,
-              { points: 0 },
-              { feedback: "" }
-            );*
-            newCriteria.points
-            return newCriteria;*/
-            criterion.points = 0;
+            if (criterion.type === "grade") {
+              criterion.points = 5;
+            } else {
+              criterion.points = 0;
+            }
             criterion.feedback = "";
             return criterion;
           });
           this.title = submission.title;
           this.comment = submission.comment;
           this.attachments = submission.attachments;
-          console.log(this.form.criteria);
-
           this.loaded = true;
+          console.log(this.form.criteria);
         })
         .catch(e => {
           console.error(e);
         });
     },
+    onSubmit() {
+      this.createReview();
+    },
     createReview() {
+      const form = JSON.parse(JSON.stringify(this.form));
+      for (const criterion of form.criteria) {
+        criterion.points = parseInt(criterion.points);
+      }
+
+      console.log(this.form.criteria);
       DataService.postReview(
         this.form.criteria,
         this.form.overallFeedback,
@@ -219,19 +211,35 @@ export default {
         DataService.writeFile(response, this.submission.attachments[0].title);
       });
     },
-    converter(value) {
-      return {
-        set: function(newVal) {
-          if (newVal) {
-            value.points = 1;
-          } else {
-            value.points = 0;
+    // eslint-disable-next-line no-unused-vars
+    validate(event, param) {
+      const value = parseInt(param.points);
+      if (value < 1 && param.type === "grade") {
+        param.points = 1;
+        return;
+      } else if (value < 0) {
+        param.points = 0;
+        return;
+      }
+
+      switch (param.type) {
+        case "percentage":
+          if (value > 100) {
+            param.points = 100;
           }
-        },
-        get: function() {
-          return Boolean(value.points);
-        }
-      };
+          break;
+        case "point":
+          if (value > 10) {
+            param.points = 10;
+          }
+          break;
+        case "grade":
+          if (value > 5) {
+            param.points = 5;
+          }
+          break;
+      }
+      console.log("baum", event, param);
     }
   },
   mounted() {
