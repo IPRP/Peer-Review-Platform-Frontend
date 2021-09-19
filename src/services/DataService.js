@@ -421,7 +421,19 @@ class DataService {
   }
 
   // eslint-disable-next-line no-unused-vars
-  postReview(criteria, overallFeedback, username, pw, id) {}
+  postReview(username, pw, points, feedback, id) {
+    const data = {
+      feedback: feedback,
+      points: points
+    };
+    console.log(data);
+    return axios.put(DataService.baseURL + "/review/" + id, data, {
+      auth: {
+        username: username,
+        password: pw
+      }
+    });
+  }
 }
 
 export default new DataService();

@@ -4,18 +4,28 @@
     <div class="d-flex flex-wrap flex-md-nowrap">
       <div class="px-1 px-md-5 flex-grow-1">
         <div class="pb-5">
-
           <md-table md-card>
             <md-table-toolbar>
               <h1 class="md-title">Laufende Reviews</h1>
             </md-table-toolbar>
             <md-table-row v-for="(item, i) in this.reviewstodo" :key="i">
-              <md-table-cell>Review {{ item.workshopName }} (Review fehlt)</md-table-cell>
+              <md-table-cell
+                >Review {{ item.workshopName }} (Review fehlt)</md-table-cell
+              >
               <!--  //item.workshopName ist die review id siehe https://docs.google.com/spreadsheets/d/1X2nMEH33EQm5FCdruBNx2x0NtEMzxlOo/edit#gid=136308832  !-->
               <md-table-cell class="prp-table-action-cell">
                 <md-button
                   class="md-icon-button md-list-action"
-                  :to="{path: '/writereview/' + item.workshopName + '/' + item.submission + '/' + item.id}">
+                  :to="{
+                    path:
+                      '/writereview/' +
+                      item.workshopName +
+                      '/' +
+                      item.submission +
+                      '/' +
+                      item.id
+                  }"
+                >
                   <md-icon>forward</md-icon>
                 </md-button>
               </md-table-cell>
@@ -28,11 +38,17 @@
               <h1 class="md-title">Laufende Abgaben</h1>
             </md-table-toolbar>
             <md-table-row v-for="(item, i) in this.submissionstodo" :key="i">
-              <md-table-cell> {{ item.workshopName }} (Abgabe fehlt)</md-table-cell>
+              <md-table-cell>
+                {{ item.workshopName }} (Abgabe fehlt)</md-table-cell
+              >
               <md-table-cell class="prp-table-action-cell">
                 <md-button
                   class="md-icon-button md-list-action"
-                  :to="{path: '/workshopsubmission/' + item.id + '/' + item.workshopName}">
+                  :to="{
+                    path:
+                      '/workshopsubmission/' + item.id + '/' + item.workshopName
+                  }"
+                >
                   <md-icon>forward</md-icon>
                 </md-button>
               </md-table-cell>
@@ -49,8 +65,9 @@
           <md-table-row v-for="(workshop, w) in this.workshops" :key="w">
             <md-table-cell>{{ workshop.title }}</md-table-cell>
             <md-table-cell class="prp-table-action-cell">
-              <md-button class="md-icon-button md-list-action"
-                         :to="{ name: 'workshopoverview', params: { id: workshop.id } }"
+              <md-button
+                class="md-icon-button md-list-action"
+                :to="{ name: 'workshopoverview', params: { id: workshop.id } }"
               >
                 <md-icon>info</md-icon>
               </md-button>
@@ -90,6 +107,7 @@ export default {
         .then(response => {
           this.reviewstodo = response.data.reviews;
           this.submissionstodo = response.data.submissions;
+          console.log(this.reviewstodo);
         })
         .catch(e => {
           console.error(e);

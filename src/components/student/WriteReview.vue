@@ -92,7 +92,7 @@
 
           <md-field>
             <label>Gesamtfeedback</label>
-            <md-textarea v-model="form.overallFeedback"></md-textarea>
+            <md-textarea v-model="form.feedback"></md-textarea>
           </md-field>
           <div
             class="pt-3 d-flex justify-content-center justify-content-md-end"
@@ -127,13 +127,8 @@ export default {
       attachments: null,
       fulfilled: [],
       form: {
-        criteria: [
-          {
-            rating: null,
-            feedback: null
-          }
-        ],
-        overallFeedback: null
+        criteria: [],
+        feedback: null
       }
     };
   },
@@ -142,7 +137,7 @@ export default {
       criteria: {
         required
       },
-      overallFeedback: {
+      feedback: {
         required
       }
     }
@@ -180,18 +175,21 @@ export default {
       this.createReview();
     },
     createReview() {
-      const form = JSON.parse(JSON.stringify(this.form));
-      for (const criterion of form.criteria) {
-        criterion.points = parseInt(criterion.points);
+      const points = [];
+      for (const criterion of this.form.criteria) {
+        points.push({
+          id: criterion.id,
+          points: parseInt(criterion.points)
+        });
       }
+      const feedback = this.form.feedback;
 
-      console.log(this.form.criteria);
       DataService.postReview(
-        this.form.criteria,
-        this.form.overallFeedback,
         this.$parent.username,
         this.$parent.pw,
-        this.submission.attachments[0].id
+        points,
+        feedback,
+        this.$route.params.reviewid
       )
         .then(response => {
           console.log(response.data);
@@ -211,7 +209,6 @@ export default {
         DataService.writeFile(response, this.submission.attachments[0].title);
       });
     },
-    // eslint-disable-next-line no-unused-vars
     validate(event, param) {
       const value = parseInt(param.points);
       if (value < 1 && param.type === "grade") {
@@ -239,7 +236,6 @@ export default {
           }
           break;
       }
-      console.log("baum", event, param);
     }
   },
   mounted() {
