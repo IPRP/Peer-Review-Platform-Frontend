@@ -1,28 +1,38 @@
-<template @review-overview="getSubmission">
-  <div class="p-1 p-md-5">
-    <div class="pl-1 pl-md-5">
-      <h1>Review Overview</h1>
-      <h3>Abgabe-Titel: {{ this.submission.title }}</h3>
-      <h3>Meine Abgabe</h3>
-      <md-button class="md-raised md-primary" @click="downloadSubmission">
-        <span>{{ submission.attachments[0].title }}</span>
-        <md-icon>get_app</md-icon>
-      </md-button>
-      <h3>Abgegeben am: {{ this.submission.date }}</h3>
-      <div>
-        <md-table v-model="reviews" md-card>
-          <md-table-row slot="md-table-row" slot-scope="{ item }">
-            <md-table-cell md-label="Students" md-sort-by="firstname"
-              >{{ item.firstname }} {{ item.lastname }}</md-table-cell
-            >
-            <md-table-cell md-label="Feedback" md-sort-by="feedback">{{
-              item.feedback
-            }}</md-table-cell>
-            <md-table-cell md-label="Punkte" md-sort-by="points">{{
-              item.points[0].points
-            }}</md-table-cell>
-          </md-table-row>
-        </md-table>
+<template>
+  <div v-if="loaded">
+    <div class="p-1 p-md-5">
+      <div class="pl-1 pl-md-5">
+        <h1>Review Overview</h1>
+        <h3>Abgabe-Titel: {{ submission.title }}</h3>
+        <h3>Meine Abgabe</h3>
+        <h4 class="pl-1 pt-1">{{ submission.comment }}</h4>
+        <div
+          v-if="
+            submission.attachments.length > 0 &&
+              submission.attachments[0].title !== undefined
+          "
+        >
+          <md-button class="md-raised md-primary" @click="downloadSubmission">
+            <span>{{ submission.attachments[0].title }}</span>
+            <md-icon>get_app</md-icon>
+          </md-button>
+        </div>
+        <h3>Abgegeben am: {{ submission.date }}</h3>
+        <div>
+          <md-table v-model="reviews" md-card>
+            <md-table-row slot="md-table-row" slot-scope="{ item }">
+              <md-table-cell md-label="Students" md-sort-by="firstname"
+                >{{ item.firstname }} {{ item.lastname }}</md-table-cell
+              >
+              <md-table-cell md-label="Feedback" md-sort-by="feedback">{{
+                item.feedback
+              }}</md-table-cell>
+              <md-table-cell md-label="Punkte" md-sort-by="points">{{
+                item.points[0].points
+              }}</md-table-cell>
+            </md-table-row>
+          </md-table>
+        </div>
       </div>
     </div>
   </div>
@@ -35,7 +45,8 @@ export default {
   data() {
     return {
       reviews: [],
-      submission: {}
+      submission: {},
+      loaded: false
     };
   },
   methods: {
@@ -48,6 +59,8 @@ export default {
         .then(response => {
           this.submission = response.data;
           this.reviews = response.data.reviews;
+          // console.log(this.submission, this.reviews);
+          this.loaded = true;
         })
         .catch(e => {
           console.log(e);
@@ -57,14 +70,9 @@ export default {
       DataService.downloadSubmission(
         this.$parent.username,
         this.$parent.pw,
-        this.submission.attachments[0].title
+        this.submission.attachments[0].id
       ).then(response => {
-        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-        var fURL = document.createElement("a");
-        fURL.href = fileURL;
-        fURL.setAttribute("download", "file.pdf");
-        document.body.appendChild(fURL);
-        fURL.click();
+        DataService.writeFile(response, this.submission.attachments[0].title);
       });
     }
   },

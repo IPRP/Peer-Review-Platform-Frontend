@@ -176,7 +176,7 @@ export default {
           this.comment = submission.comment;
           this.attachments = submission.attachments;
           this.loaded = true;
-          console.log(this.form.criteria, this.title, this.attachments);
+          // console.log(this.form.criteria, this.title, this.attachments);
         })
         .catch(e => {
           console.error(e);
