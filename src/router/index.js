@@ -106,7 +106,7 @@ const routes = [
           )
       },
       {
-        path: "teacherdashboard/workshopdetails/reviews/:id",
+        path: "teacherdashboard/workshopdetails/:workshopId/reviews/:id",
         component: () =>
           import(
             /* webpackChunkName: "StudentDashboard" */

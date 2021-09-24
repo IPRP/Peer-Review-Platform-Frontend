@@ -92,7 +92,7 @@ export default {
       DataService.getSubmissionTeacher(
         this.$parent.username,
         this.$parent.pw,
-        this.getIdFromUrl()
+        this.$route.params.id
       )
         .then(response => {
           this.submission = response.data;
@@ -102,10 +102,6 @@ export default {
         .catch(e => {
           console.log(e);
         });
-    },
-
-    getIdFromUrl() {
-      return window.location.pathname.split("/")[4];
     },
 
     mockWorkshop() {

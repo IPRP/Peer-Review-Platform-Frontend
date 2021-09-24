@@ -10,46 +10,64 @@
 
         <md-table v-model="workshops" md-card>
           <md-table-row slot="md-table-row" slot-scope="{ item }">
-            <md-table-cell md-label="ID" md-sort-by="id">{{ item.id }}</md-table-cell>
-            <md-table-cell md-label="Titel" md-sort-by="id" md-numeric>{{ item.title }}</md-table-cell>
+            <md-table-cell md-label="ID" md-sort-by="id">{{
+              item.id
+            }}</md-table-cell>
+            <md-table-cell md-label="Titel" md-sort-by="id" md-numeric>{{
+              item.title
+            }}</md-table-cell>
             <md-table-cell md-label="Actions">
-              <md-button class="md-flat"  :to="{ path: '/teacherdashboard/workshopdetails/' + item.id }"><md-icon>info</md-icon></md-button>
-              <md-button class="md-flat"  :to="{ path: '/teacherdashboard/editworkshop/' + item.id }"><md-icon>edit</md-icon></md-button>
-              <md-button class="md-flat" @click="currentID = item.id, deleteDialog = true"><md-icon>delete</md-icon></md-button>
+              <md-button
+                class="md-flat"
+                :to="{ path: '/teacherdashboard/workshopdetails/' + item.id }"
+              >
+                <md-icon>info</md-icon>
+              </md-button>
+              <md-button
+                class="md-flat"
+                :to="{ path: '/teacherdashboard/editworkshop/' + item.id }"
+              >
+                <md-icon>edit</md-icon>
+              </md-button>
+              <md-button
+                class="md-flat"
+                @click="(currentID = item.id), (deleteDialog = true)"
+              >
+                <md-icon>delete</md-icon>
+              </md-button>
             </md-table-cell>
           </md-table-row>
         </md-table>
-
-    <md-dialog-confirm
-      :md-active.sync="deleteDialog"
-      md-title="Delete this Workshop?"
-      md-content="This action cannot be undone!"
-      md-confirm-text="Confirm"
-      md-cancel-text="Cancel"
-      @md-cancel="onCancel"
-      @md-confirm="onConfirm" />
-</div>
+        <!--@md-cancel="onCancel"-->
+        <md-dialog-confirm
+          :md-active.sync="deleteDialog"
+          md-title="Delete this Workshop?"
+          md-content="This action cannot be undone!"
+          md-confirm-text="Confirm"
+          md-cancel-text="Cancel"
+          @md-confirm="onConfirm"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-
 import DataService from "../../services/DataService";
 
 export default {
-  name: 'TeacherDashboard',
+  name: "TeacherDashboard",
   data() {
     return {
       workshops: [],
       deleteDialog: false,
       currentID: null
-    }
+    };
   },
   methods: {
-      onConfirm (id) {
-        this.deleteWorkshop(id)
-      },
+    onConfirm(id) {
+      this.deleteWorkshop(id);
+    },
 
     getWorkshops() {
       DataService.getAllWorkshopsTeacher(this.$parent.username, this.$parent.pw)
@@ -61,25 +79,28 @@ export default {
         });
     },
     deleteWorkshop() {
-      DataService.deleteWorkshopTeacher(this.currentID, this.$parent.username, this.$parent.pw)
-        .catch(e => {
-          console.log(e);
-        });
-      this.workshops = this.workshops.filter(obj => {return obj.id != this.currentID});
+      DataService.deleteWorkshopTeacher(
+        this.currentID,
+        this.$parent.username,
+        this.$parent.pw
+      ).catch(e => {
+        console.log(e);
+      });
+      this.workshops = this.workshops.filter(obj => {
+        return obj.id != this.currentID;
+      });
     }
   },
   mounted() {
-    if(!this.$parent.authenticated) {
+    if (!this.$parent.authenticated) {
       // this.$router.replace({ name: "Login" });
-      window.location.href = "/login"
-    }else {
+      window.location.href = "/login";
+    } else {
       this.getWorkshops();
     }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-</style>
+<style scoped></style>
