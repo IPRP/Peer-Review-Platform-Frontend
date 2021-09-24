@@ -116,6 +116,7 @@ export default {
           this.reviewstodo = response.data.reviews;
           this.submissionstodo = response.data.submissions;
           // console.log(this.reviewstodo);
+          console.log("Submissionstodo", this.submissionstodo);
         })
         .catch(e => {
           console.error(e);
