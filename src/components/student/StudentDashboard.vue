@@ -90,6 +90,7 @@
 <script>
 // import axios from "axios";
 import DataService from "../../services/DataService";
+import AuthHelper from "@/utils/AuthHelper";
 
 export default {
   name: "StudentDashboard",
@@ -124,12 +125,11 @@ export default {
     }
   },
   mounted() {
-    if (!this.$parent.authenticated) {
-      // this.$router.replace({ name: "Login" });
-      window.location.href = "/login";
-    } else {
+    if (AuthHelper.Authenticated(this)) {
       this.getStudentWorkshops();
       this.getStudentTodo();
+    } else {
+      AuthHelper.Login(this);
     }
   }
 };

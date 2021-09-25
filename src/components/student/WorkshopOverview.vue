@@ -18,14 +18,18 @@
       <div v-if="this.submissions.length > 0" class="pt-3">
         <h3>Bisherige Abgaben</h3>
         <md-table class="d-flex">
-          <md-table-row v-for="(submission, s) in workshop.submissions" :key="s">
+          <md-table-row
+            v-for="(submission, s) in workshop.submissions"
+            :key="s"
+          >
             <md-table-cell>
               <span class="md-text">Abgabe vom {{ submission.date }}</span>
             </md-table-cell>
             <md-table-cell>
               <md-button
                 class="md-icon-button md-list-action"
-                :to="{path: '/reviewoverview/' + submission.id}">
+                :to="{ path: '/reviewoverview/' + submission.id }"
+              >
                 <md-icon>info</md-icon>
               </md-button>
             </md-table-cell>
@@ -41,6 +45,7 @@
 
 <script>
 import DataService from "../../services/DataService";
+import AuthHelper from "@/utils/AuthHelper";
 
 export default {
   name: "WorkshopOverview",
@@ -52,7 +57,11 @@ export default {
   },
   methods: {
     getWorkshop() {
-      this.workshop = DataService.getStudentWorkshop(this.$parent.username, this.$parent.pw, this.$route.params.id)
+      this.workshop = DataService.getStudentWorkshop(
+        this.$parent.username,
+        this.$parent.pw,
+        this.$route.params.id
+      )
         .then(response => {
           this.workshop = response.data.workshop;
           this.submissions = this.workshop.submissions;
@@ -63,11 +72,10 @@ export default {
     }
   },
   mounted() {
-    if (!this.$parent.authenticated) {
-      // this.$router.replace({ name: "Login" });
-      window.location.href = "/login";
-    } else {
+    if (AuthHelper.Authenticated(this)) {
       this.getWorkshop(this.$route.params.id);
+    } else {
+      AuthHelper.Login(this);
     }
   }
 };

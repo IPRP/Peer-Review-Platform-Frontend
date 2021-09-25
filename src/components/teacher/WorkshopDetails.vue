@@ -65,6 +65,7 @@
 
 <script>
 import DataService from "../../services/DataService";
+import AuthHelper from "@/utils/AuthHelper";
 
 export default {
   name: "WorkshopDetails",
@@ -100,14 +101,12 @@ export default {
     }
   },
 
-  created() {
-    this.getWorkshop();
-  },
+  created() {},
   mounted() {
-    console.log(this.$router.currentRoute);
-    if (!this.$parent.authenticated) {
-      // this.$router.replace({ name: "Login" });
-      window.location.href = "/login";
+    if (AuthHelper.Authenticated(this)) {
+      this.getWorkshop();
+    } else {
+      AuthHelper.Login(this);
     }
   }
 };

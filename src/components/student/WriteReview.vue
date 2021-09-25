@@ -116,6 +116,7 @@
 <script>
 import DataService from "@/services/DataService";
 import { required } from "vuelidate/lib/validators";
+import AuthHelper from "@/utils/AuthHelper";
 
 export default {
   name: "WriteReview",
@@ -259,11 +260,10 @@ export default {
     }
   },
   mounted() {
-    if (!this.$parent.authenticated) {
-      // this.$router.replace({ name: "Login" });
-      window.location.href = "/login";
-    } else {
+    if (AuthHelper.Authenticated(this)) {
       this.getSubmission();
+    } else {
+      AuthHelper.Login(this);
     }
   }
 };

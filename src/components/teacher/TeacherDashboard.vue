@@ -10,12 +10,12 @@
 
         <md-table v-model="workshops" md-card>
           <md-table-row slot="md-table-row" slot-scope="{ item }">
-            <md-table-cell md-label="ID" md-sort-by="id">{{
-              item.id
-            }}</md-table-cell>
-            <md-table-cell md-label="Titel" md-sort-by="id" md-numeric>{{
-              item.title
-            }}</md-table-cell>
+            <md-table-cell md-label="ID" md-sort-by="id"
+              >{{ item.id }}
+            </md-table-cell>
+            <md-table-cell md-label="Titel" md-sort-by="id" md-numeric
+              >{{ item.title }}
+            </md-table-cell>
             <md-table-cell md-label="Actions">
               <md-button
                 class="md-flat"
@@ -54,6 +54,7 @@
 
 <script>
 import DataService from "../../services/DataService";
+import AuthHelper from "@/utils/AuthHelper";
 
 export default {
   name: "TeacherDashboard",
@@ -92,14 +93,10 @@ export default {
     }
   },
   mounted() {
-    console.log("store", this.$store.getters.account);
-    console.log(this.$router.currentRoute);
-
-    if (!this.$parent.authenticated) {
-      // this.$router.replace({ name: "Login" });
-      window.location.href = "/login";
-    } else {
+    if (AuthHelper.Authenticated(this)) {
       this.getWorkshops();
+    } else {
+      AuthHelper.Login(this);
     }
   }
 };

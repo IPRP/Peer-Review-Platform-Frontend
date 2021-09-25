@@ -95,6 +95,7 @@
 
 <script>
 import DataService from "@/services/DataService";
+import AuthHelper from "@/utils/AuthHelper";
 export default {
   name: "ReviewOverview",
   data() {
@@ -134,11 +135,10 @@ export default {
     }
   },
   mounted() {
-    if (!this.$parent.authenticated) {
-      // this.$router.replace({ name: "Login" });
-      window.location.href = "/login";
-    } else {
+    if (AuthHelper.Authenticated(this)) {
       this.getSubmission(this.$route.params.id);
+    } else {
+      AuthHelper.Login(this);
     }
   }
 };
