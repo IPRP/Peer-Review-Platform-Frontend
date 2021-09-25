@@ -2,11 +2,21 @@
   <div class="prp-home">
     <md-toolbar class="md-primary prp-toolbar">
       <router-link v-if="role === 'teacher'" to="/teacherdashboard">
-        <img src="logo.png" width="50" height="50" to="/teacherdashboard" />
+        <img
+          :src="require('@/assets/logo.png')"
+          width="50"
+          height="50"
+          to="/teacherdashboard"
+        />
       </router-link>
 
       <router-link v-if="role === 'student'" to="/studentdashboard">
-        <img src="logo.png" width="50" height="50" to="/teacherdashboard" />
+        <img
+          :src="require('@/assets/logo.png')"
+          width="50"
+          height="50"
+          to="/studentdashboard"
+        />
       </router-link>
 
       <!--      Login Navbar-->

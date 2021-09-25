@@ -87,11 +87,14 @@ export default {
         console.log(e);
       });
       this.workshops = this.workshops.filter(obj => {
-        return obj.id != this.currentID;
+        return obj.id !== this.currentID;
       });
     }
   },
   mounted() {
+    console.log("store", this.$store.getters.account);
+    console.log(this.$router.currentRoute);
+
     if (!this.$parent.authenticated) {
       // this.$router.replace({ name: "Login" });
       window.location.href = "/login";

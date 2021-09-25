@@ -46,8 +46,8 @@
         <br />
         <div class="d-flex justify-content-center">
           <md-button class="md-raised md-primary" v-on:click="login()"
-            >Login</md-button
-          >
+            >Login
+          </md-button>
         </div>
       </md-card-content>
     </md-card>
@@ -56,7 +56,8 @@
 
 <script>
 import DataService from "../services/DataService";
-var CryptoJS = require("crypto-js");
+
+const CryptoJS = require("crypto-js");
 
 export default {
   name: "Login",
@@ -71,7 +72,7 @@ export default {
   },
   beforeMount() {
     if (this.$cookies.isKey("auth")) {
-      if (this.$cookies.get("auth") == "true") {
+      if (this.$cookies.get("auth") === "true") {
         const username = this.$cookies.get("user");
         const role = this.$cookies.get("role");
         if (username != null) {
@@ -82,19 +83,30 @@ export default {
             this.$emit("role", role);
             console.log("ROLE: " + role);
             const heute = new Date();
-            var dat = CryptoJS.AES.decrypt(
+            const dat = CryptoJS.AES.decrypt(
               token,
               heute.getFullYear().toString() +
                 heute.getMonth().toString() +
                 heute.getDate().toString() +
                 heute.getHours().toString()
             );
-            var originalText = dat.toString(CryptoJS.enc.Utf8);
-            if (originalText == "") {
+            const originalText = dat.toString(CryptoJS.enc.Utf8);
+            if (originalText === "") {
               this.logout();
             }
             this.$emit("pw", originalText);
-            if (role == "student") {
+
+            this.$store.commit("setAccount", {
+              username: username,
+              password: originalText,
+              role: role
+            });
+
+            if (this.$store.getters.isReturnRoute) {
+              const route = this.$store.getters.returnRoute;
+              this.$store.commit("setReturnRoute", undefined);
+              this.$router.push(route);
+            } else if (role === "student") {
               this.$router.push("studentdashboard");
             } else {
               this.$router.push("/teacherdashboard");
@@ -106,7 +118,7 @@ export default {
   },
   methods: {
     login() {
-      if (this.input.username != "" && this.input.password != "") {
+      if (this.input.username !== "" && this.input.password !== "") {
         // This should actually be an api call not a check against this.$parent.mockAccount
         DataService.loginUser(this.input.username, this.input.password)
           .then(response => {
@@ -115,13 +127,20 @@ export default {
               this.$emit("username", this.input.username);
               this.$emit("pw", this.input.password);
               this.$emit("role", response.data.role);
+
+              this.$store.commit("setAccount", {
+                username: this.input.username,
+                password: this.input.password,
+                role: response.data.role
+              });
+
               const username = this.input.username;
-              if (this.input.autologin == "10") {
+              if (this.input.autologin === "10") {
                 this.$cookies.set("auth", "true", "10min");
                 this.$cookies.set("user", username, "10min");
                 this.$cookies.set("role", response.data.role, "10min");
                 const heute = new Date();
-                var dat = CryptoJS.AES.encrypt(
+                const dat = CryptoJS.AES.encrypt(
                   this.input.password,
                   heute.getFullYear().toString() +
                     heute.getMonth().toString() +
@@ -130,17 +149,17 @@ export default {
                 );
 
                 this.$cookies.set("token", dat.toString(), "10min");
-              } else if (this.input.autologin == "30") {
+              } else if (this.input.autologin === "30") {
                 this.$cookies.set("auth", "true", "30min");
                 this.$cookies.set("user", username, "30min");
                 this.$cookies.set("role", response.data.role, "30min");
                 const heute = new Date();
-                var da = CryptoJS.AES.encrypt(
+                const da = CryptoJS.AES.encrypt(
                   this.input.password,
                   heute.getFullYear().toString() +
-                  heute.getMonth().toString() +
-                  heute.getDate().toString() +
-                  heute.getHours().toString()
+                    heute.getMonth().toString() +
+                    heute.getDate().toString() +
+                    heute.getHours().toString()
                 );
 
                 this.$cookies.set("token", da.toString(), "30min");
@@ -150,7 +169,11 @@ export default {
                 this.$cookies.remove("token");
                 this.$cookies.remove("role");
               }
-              if (response.data.role == "student") {
+              if (this.$store.getters.isReturnRoute) {
+                const route = this.$store.getters.returnRoute;
+                this.$store.commit("setReturnRoute", undefined);
+                this.$router.push(route);
+              } else if (response.data.role === "student") {
                 this.$router.push("studentdashboard");
               } else {
                 this.$router.push("/teacherdashboard");
@@ -172,6 +195,7 @@ export default {
     },
     logout() {
       this.authenticated = false;
+
       this.$cookies.remove("auth");
       this.$cookies.remove("user");
       this.$cookies.remove("token");

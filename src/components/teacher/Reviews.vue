@@ -79,6 +79,7 @@
 
 <script>
 import DataService from "../../services/DataService";
+import AuthHelper from "@/utils/AuthHelper";
 
 export default {
   name: "Reviews",
@@ -167,8 +168,12 @@ export default {
     }
   },
   mounted() {
-    //this.mockWorkshop();
-    this.getSubmission();
+    if (AuthHelper.Authenticated(this)) {
+      //this.mockWorkshop();
+      this.getSubmission();
+    } else {
+      AuthHelper.Login(this);
+    }
   }
 };
 </script>
