@@ -69,7 +69,7 @@ export default {
   mounted() {
     if (!this.$parent.authenticated) {
       // this.$router.replace({ name: "Login" });
-      window.location.href = "/login";
+      window.location.href = "/peer-Review-Platform-Frontend/login";
     } else {
       this.getSubmission(this.$route.params.id);
     }

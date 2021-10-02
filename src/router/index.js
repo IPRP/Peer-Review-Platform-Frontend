@@ -4,7 +4,7 @@ import Login from "../views/Login.vue";
 import Home from "../views/Home";
 
 Vue.use(VueRouter);
-
+//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
 const routes = [{
         path: "/",
         name: "Login",
@@ -14,7 +14,7 @@ const routes = [{
                 component: Login
             },
             {
-                path: "login",
+                path: "peer-Review-Platform-Frontend/login",
                 component: Login
             },
             //in the future: path: 'reviewverfassen/:id', same for similar children

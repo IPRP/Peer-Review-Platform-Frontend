@@ -106,7 +106,7 @@ export default {
       this.$cookies.remove("auth");
       this.$cookies.remove("user");
       this.$cookies.remove("token");
-      window.location.href = "/";
+      window.location.href = "/peer-Review-Platform-Frontend/";
     }
   }
 };

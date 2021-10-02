@@ -545,7 +545,7 @@ export default {
   mounted() {
     if(!this.$parent.authenticated) {
       // this.$router.replace({ name: "Login" });
-      window.location.href = "/login"
+      window.location.href = "/Peer-Review-Platform-Frontend/login"
     }
   }
 }

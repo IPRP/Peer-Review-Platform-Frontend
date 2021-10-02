@@ -2,7 +2,7 @@
 import axios from "axios";
 
 class DataService {
-  static baseURL = "http://localhost:3000";
+  static baseURL = "http://localhost:8000";
 
   uploadFile(username, pw, formData) {
     return axios.post(DataService.baseURL + "/upload", formData, {
