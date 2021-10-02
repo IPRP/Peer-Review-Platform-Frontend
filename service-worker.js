@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Peer-Review-Platform-Frontend/precache-manifest.1589f70b696fa1482f299a2e5021756b.js"
+  "/Peer-Review-Platform-Frontend/precache-manifest.c30d053fa021e4a1a00a5c8be134b886.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "peer-review"});
