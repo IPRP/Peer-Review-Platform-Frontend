@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Peer-Review-Platform-Frontend/css/StudentDashboard.9a0600d9.css"
   },
   {
-    "revision": "40e83e989387b83b3115",
+    "revision": "314cc0e83ee2d2ef5f4e",
     "url": "/Peer-Review-Platform-Frontend/css/app.b43d0024.css"
   },
   {
@@ -20,7 +20,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Peer-Review-Platform-Frontend/img/PICA.28c7adff.jpg"
   },
   {
-    "revision": "ccc59a1911ba0cdb8c7ed03d76ed824e",
+    "revision": "2b73aabd440d13dbfa54dd3f0c07abad",
     "url": "/Peer-Review-Platform-Frontend/index.html"
   },
   {
@@ -48,8 +48,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Peer-Review-Platform-Frontend/js/WorkshopAbgabe.bf61e4f0.js"
   },
   {
-    "revision": "40e83e989387b83b3115",
-    "url": "/Peer-Review-Platform-Frontend/js/app.f8ab9272.js"
+    "revision": "314cc0e83ee2d2ef5f4e",
+    "url": "/Peer-Review-Platform-Frontend/js/app.17635609.js"
   },
   {
     "revision": "9418eaf59213d9430afd",
