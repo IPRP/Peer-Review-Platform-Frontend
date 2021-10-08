@@ -3,11 +3,14 @@ from selenium import webdriver
 import time
 
 class PeerReviewTest(unittest.TestCase):
+
+    BASEURL = "http://localhost:8082/"
+
     def setUp(self):
         self.driver = webdriver.Firefox(executable_path="geckodriver.exe")
     
     def test_login_teacher(self):
-        self.driver.get("http://localhost:8082/")
+        self.driver.get(self.BASEURL)
         username_field = self.driver.find_element_by_name("username")
         password_field = self.driver.find_element_by_name("password")
         login_btn = self.driver.find_element_by_name("login")
@@ -19,7 +22,7 @@ class PeerReviewTest(unittest.TestCase):
         assert "Neuer Workshop" in self.driver.page_source
 
     def test_login_student(self):
-        self.driver.get("http://localhost:8082/")
+        self.driver.get(self.BASEURL)
         username_field = self.driver.find_element_by_name("username")
         password_field = self.driver.find_element_by_name("password")
         login_btn = self.driver.find_element_by_name("login")
@@ -33,15 +36,11 @@ class PeerReviewTest(unittest.TestCase):
         assert "Laufende Reviews" in self.driver.page_source
 
     def test_create_workshop(self):
-            #login
-        self.driver.get("http://localhost:8082/")
-        username_field = self.driver.find_element_by_name("username")
-        password_field = self.driver.find_element_by_name("password")
-        login_btn = self.driver.find_element_by_name("login")
 
-        username_field.send_keys("t1")
-        password_field.send_keys("1234")
-        login_btn.click()
+        self.driver.get(self.BASEURL)
+
+
+        self.test_login_teacher()
     
         #navigate to create workshop page
         newworkshop_btn = self.driver.find_element_by_name("newworkshop")
@@ -105,6 +104,24 @@ class PeerReviewTest(unittest.TestCase):
         time.sleep(2)
 
         assert "Testworkshop" in self.driver.page_source
+
+    def test_delete_workshop(self):
+        self.driver.get(self.BASEURL)
+
+        self.test_login_teacher()
+
+        rows = self.driver.find_elements_by_tag_name("tr")
+
+        for item in rows:
+            if "Testworkshop" in item.get_attribute('innerHTML'):
+                item.find_elements_by_tag_name("button")[0].click()
+                self.driver.find_element_by_class_name("md-dialog").find_elements_by_tag_name("button")[1].click()
+
+        assert "Testworkshop" not in self.driver.page_source
+        
+    time.sleep(5)
+
+        
 
     def tearDown(self):
         self.driver.close()

@@ -85,7 +85,38 @@ def create_workshop_test():
 
     time.sleep(5)
 
+def delete_test():
+
+    driver = webdriver.Firefox(executable_path="geckodriver.exe")
+
+    driver.get("http://localhost:8082/")
+
+    username_field = driver.find_element_by_name("username")
+    password_field = driver.find_element_by_name("password")
+    login_btn = driver.find_element_by_name("login")
+
+    username_field.send_keys("t1")
+    password_field.send_keys("1234")
+    login_btn.click()
+
+    time.sleep(5)
+
+    rows = driver.find_elements_by_tag_name("tr")
+
+    print(len(rows))
+
+    for item in rows:
+        if "Testworkshop" in item.get_attribute('innerHTML'):
+            item.find_elements_by_tag_name("button")[0].click()
+            driver.find_element_by_class_name("md-dialog").find_elements_by_tag_name("button")[1].click()
+            print("HERE")
+        
+    time.sleep(5)
+                
+        
+
 
 #login_test("lukasnowy", "1234")
 
-create_workshop_test()
+delete_test()
+
