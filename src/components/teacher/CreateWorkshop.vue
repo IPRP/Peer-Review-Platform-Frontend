@@ -13,7 +13,7 @@
 
         <md-field>
           <label>Beschreibung</label>
-          <md-textarea v-model="form.description"></md-textarea>
+          <md-textarea name="description" v-model="form.description"></md-textarea>
         </md-field>
 
         <!--<md-field>
@@ -43,7 +43,7 @@
 
           </md-field>
           <div class="d-flex ">
-            <md-button class="prp-success md-raised" @click="showDialog = true">
+            <md-button name="addpers" class="prp-success md-raised" @click="showDialog = true">
               <span class="p-1">Personen hinzufügen</span>
               <md-icon class="prp-success-icon">add</md-icon>
             </md-button>
@@ -77,7 +77,7 @@
             <md-card-expand>
               <md-card-actions md-alignment="space-between">
                 <md-card-expand-trigger>
-                  <md-button class="md-icon-button">
+                  <md-button name="expand_btn" class="md-icon-button">
                     <md-icon>expand_more</md-icon>
                   </md-button>
                 </md-card-expand-trigger>
@@ -89,7 +89,7 @@
                     <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
                       <md-field>
                         <label></label>
-                        <md-textarea v-model="item.content"></md-textarea>
+                        <md-textarea name="criteria_desc" v-model="item.content"></md-textarea>
                       </md-field>
                     </div>
                     <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
@@ -113,7 +113,7 @@
           </md-field>
 
                     <div class="d-flex">
-            <md-button class="prp-success md-raised" @click="addCriteria()">
+            <md-button name="addcriteriabtn" class="prp-success md-raised" @click="addCriteria()">
               <span class="p-1">Kriterium hinzugügen</span>
               <md-icon class="prp-success-icon">add</md-icon>
             </md-button>
@@ -139,7 +139,7 @@
             <span class="p-1">Abbrechen</span>
             <md-icon class="prp-danger">delete</md-icon>
           </md-button>
-          <md-button class="md-raised prp-success" type="submit" :disabled="sending">
+          <md-button name="submitbtn" class="md-raised prp-success" type="submit" :disabled="sending">
             <span class="p-1">Erstellen</span>
             <md-icon class="prp-success-icon">done_all</md-icon>
           </md-button>
@@ -212,17 +212,17 @@
           <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
             <md-field>
               <label>First Name</label>
-              <md-input v-model="searchBox.firstname"></md-input>
+              <md-input name="fn_search" v-model="searchBox.firstname"></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
             <md-field>
               <label>Last Name</label>
-              <md-input v-model="searchBox.lastname"></md-input>
+              <md-input name="ln_search" v-model="searchBox.lastname"></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
-            <md-button class="md-raised md-primary" @click="searchStudentsByName()">Search</md-button>
+            <md-button name="perssearchbtn" class="md-raised md-primary" @click="searchStudentsByName()">Search</md-button>
           </div>
         </div>
 
@@ -248,7 +248,7 @@
         <md-table-cell>{{item.lastname}}</md-table-cell>
         <md-table-cell>{{item.group}}</md-table-cell>
         <md-table-cell>
-          <md-button :disabled="form.members.find(obj => {return obj.id == item.id})" class="md-icon-button md-raised md-primary" @click="addStudent(item.id)">
+          <md-button name="addstudentbtn" :disabled="form.members.find(obj => {return obj.id == item.id})" class="md-icon-button md-raised md-primary" @click="addStudent(item.id)">
             <md-icon>add</md-icon>
           </md-button>
         </md-table-cell>
@@ -258,7 +258,7 @@
 
       <md-dialog-actions>
         <md-button class="md-primary" @click="showDialog = false">Close</md-button>
-        <md-button class="md-primary" @click="showDialog = false">OK</md-button>
+        <md-button name="okbtn" class="md-primary" @click="showDialog = false">OK</md-button>
       </md-dialog-actions>
     </md-dialog>
 
