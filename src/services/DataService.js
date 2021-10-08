@@ -2,7 +2,7 @@
 import axios from "axios";
 
 class DataService {
-  static baseURL = "http://localhost:8000";
+  static baseURL = "https://inno.dergeorg.at";
 
   uploadFile(username, pw, formData) {
     return axios.post(DataService.baseURL + "/upload", formData, {
@@ -237,7 +237,7 @@ class DataService {
     bodyFormData.append("upload", file);
 
     return axios
-      .post("http://localhost:3000/upload", bodyFormData, {
+      .post(DataService.baseURL + "/upload", bodyFormData, {
         headers: {
           "Content-Type": "multipart/form-data"
         },
@@ -321,7 +321,7 @@ class DataService {
     submission.append("submission", file);
 
     return axios
-      .post("http://localhost:3000/submission/upload", submission, {
+      .post(DataService.baseURL + "/submission/upload", submission, {
         headers: {
           "Content-Type": "multipart/form-data"
         },
@@ -363,7 +363,7 @@ class DataService {
 
     return axios
       .create({
-        baseURL: "http://localhost:3000", //mocked backend
+        baseURL: DataService.baseURL + "", //mocked backend
         auth: {
           username: username,
           password: pw
@@ -381,7 +381,7 @@ class DataService {
   downloadSubmission(username, pw, fileName) {
     return axios
       .create({
-        baseURL: "http://localhost:3000",
+        baseURL: DataService.baseURL + "",
         auth: {
           username: username,
           password: pw
@@ -407,7 +407,7 @@ class DataService {
           "Content-type": "application/json"
         }
       })
-      .get(`/login`, {});
+      .post(`/login`, {});
   }
 }
 

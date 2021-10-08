@@ -92,7 +92,7 @@ export default {
               this.logout();
             }
             this.$emit("pw", originalText);
-            if (username != "georgreisinger" && username != "lukasnowy") {
+            if (username != "t1" && username != "t2") {
               this.$router.push("studentdashboard");
             } else {
               this.$router.push("/teacherdashboard");

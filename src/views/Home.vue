@@ -3,8 +3,8 @@
     <md-toolbar class="md-primary prp-toolbar">
       <router-link
         v-if="
-          username == 'georgreisinger' ||
-            (username == 'lukasnowy' && authenticated)
+          username == 't1' ||
+            (username == 't2' && authenticated)
         "
         to="/teacherdashboard"
       >
@@ -13,8 +13,8 @@
 
       <router-link
         v-if="
-          username != 'georgreisinger' &&
-            username != 'lukasnowy' &&
+          username != 't1' &&
+            username != 't2' &&
             authenticated
         "
         to="/studentdashboard"
@@ -27,8 +27,8 @@
       <!--      Teacher Navbar-->
       <router-link
         v-if="
-          username == 'georgreisinger' ||
-            (username == 'lukasnowy' && authenticated)
+          username == 't1' ||
+            (username == 't2' && authenticated)
         "
         to="/teacherdashboard"
       >
@@ -36,16 +36,16 @@
       </router-link>
       <md-button
         v-if="
-          username == 'georgreisinger' ||
-            (username == 'lukasnowy' && authenticated)
+          username == 't1' ||
+            (username == 't2' && authenticated)
         "
         to="/teacherdashboard"
         >Home</md-button
       >
       <md-button
         v-if="
-          username == 'georgreisinger' ||
-            (username == 'lukasnowy' && authenticated)
+          username == 't1' ||
+            (username == 't2' && authenticated)
         "
         to="/teacherdashboard/profile"
         >Profile</md-button
@@ -53,8 +53,8 @@
       <!--      Student Navbar-->
       <router-link
         v-if="
-          username != 'georgreisinger' &&
-            username != 'lukasnowy' &&
+          username != 't1' &&
+            username != 't2' &&
             authenticated
         "
         to="/studentdashboard"
@@ -63,8 +63,8 @@
       </router-link>
       <md-button
         v-if="
-          username != 'georgreisinger' &&
-            username != 'lukasnowy' &&
+          username != 't1' &&
+            username != 't2' &&
             authenticated
         "
         to="/studentdashboard"
@@ -106,7 +106,7 @@ export default {
       this.$cookies.remove("auth");
       this.$cookies.remove("user");
       this.$cookies.remove("token");
-      window.location.href = "/peer-Review-Platform-Frontend/";
+      window.location.href = "/Peer-Review-Platform-Frontend/";
     }
   }
 };
