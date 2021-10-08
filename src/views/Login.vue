@@ -45,9 +45,9 @@
         /><label for="auto0">Kein Auto Login</label>
         <br />
         <div class="d-flex justify-content-center">
-          <md-button class="md-raised md-primary" v-on:click="login()"
-            >Login
-          </md-button>
+          <md-button name="login" class="md-raised md-primary" v-on:click="login()"
+            >Login</md-button
+          >
         </div>
       </md-card-content>
     </md-card>

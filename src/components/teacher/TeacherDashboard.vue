@@ -3,7 +3,7 @@
     <h1 class="pl-1 pl-md-5">Mein Dashboard</h1>
     <div class="d-flex">
       <div class="px-1 px-md-5 flex-grow-1">
-        <md-button class="md-raised" to="/teacherdashboard/createworkshop">
+        <md-button name="newworkshop" class="md-raised" to="/teacherdashboard/createworkshop">
           <span>Neuer Workshop</span>
           <md-icon>add</md-icon>
         </md-button>
