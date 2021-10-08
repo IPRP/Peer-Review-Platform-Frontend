@@ -7,7 +7,7 @@ class PeerReviewTest(unittest.TestCase):
         self.driver = webdriver.Firefox(executable_path="geckodriver.exe")
     
     def test_login_teacher(self):
-        self.driver.get("http://localhost:8081/")
+        self.driver.get("http://localhost:8082/")
         username_field = self.driver.find_element_by_name("username")
         password_field = self.driver.find_element_by_name("password")
         login_btn = self.driver.find_element_by_name("login")
@@ -19,7 +19,7 @@ class PeerReviewTest(unittest.TestCase):
         assert "Neuer Workshop" in self.driver.page_source
 
     def test_login_student(self):
-        self.driver.get("http://localhost:8081/")
+        self.driver.get("http://localhost:8082/")
         username_field = self.driver.find_element_by_name("username")
         password_field = self.driver.find_element_by_name("password")
         login_btn = self.driver.find_element_by_name("login")
@@ -28,11 +28,13 @@ class PeerReviewTest(unittest.TestCase):
         password_field.send_keys("1234")
         login_btn.click()
 
+        time.sleep(1)
+
         assert "Laufende Reviews" in self.driver.page_source
 
     def test_create_workshop(self):
             #login
-        self.driver.get("http://localhost:8081/")
+        self.driver.get("http://localhost:8082/")
         username_field = self.driver.find_element_by_name("username")
         password_field = self.driver.find_element_by_name("password")
         login_btn = self.driver.find_element_by_name("login")
@@ -65,6 +67,7 @@ class PeerReviewTest(unittest.TestCase):
         #ln_searchfield.send_keys("Beck")
         
         #perssearchbtn.click()
+
 
         addstudentbtn = self.driver.find_element_by_name("addstudentbtn")
         addstudentbtn.click()

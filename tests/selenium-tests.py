@@ -4,7 +4,7 @@ import time
 driver = webdriver.Firefox(executable_path="geckodriver.exe")
 
 def login_test(username, password):
-    driver.get("http://localhost:8081/")
+    driver.get("http://localhost:8082/")
     username_field = driver.find_element_by_name("username")
     password_field = driver.find_element_by_name("password")
     login_btn = driver.find_element_by_name("login")
@@ -15,7 +15,7 @@ def login_test(username, password):
 
 def create_workshop_test():
     #login
-    driver.get("http://localhost:8081/")
+    driver.get("http://localhost:8082/")
     username_field = driver.find_element_by_name("username")
     password_field = driver.find_element_by_name("password")
     login_btn = driver.find_element_by_name("login")
