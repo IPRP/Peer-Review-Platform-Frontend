@@ -28,7 +28,7 @@
 
           <md-field>
             <label>Beschreibung</label>
-            <md-textarea v-model="form.description"></md-textarea>
+            <md-textarea name="description" v-model="form.description"></md-textarea>
           </md-field>
 
           <!--<md-field>
@@ -72,6 +72,7 @@
             </md-field>
             <div class="d-flex ">
               <md-button
+              name="addpers"
                 class="prp-success md-raised"
                 @click="showDialog = true"
               >
@@ -110,7 +111,7 @@
                     >
                       <md-field>
                         <label>Kriteriumname</label>
-                        <md-input v-model="item.title"></md-input>
+                        <md-input name="criteria_name" v-model="item.title"></md-input>
                       </md-field>
                     </div>
                     <div
@@ -129,7 +130,7 @@
                 <md-card-expand>
                   <md-card-actions md-alignment="space-between">
                     <md-card-expand-trigger>
-                      <md-button class="md-icon-button">
+                      <md-button name="expand_btn" class="md-icon-button">
                         <md-icon>expand_more</md-icon>
                       </md-button>
                     </md-card-expand-trigger>
@@ -143,7 +144,7 @@
                         >
                           <md-field>
                             <label></label>
-                            <md-textarea v-model="item.content"></md-textarea>
+                            <md-textarea name="criteria_content" v-model="item.content"></md-textarea>
                           </md-field>
                         </div>
                         <div
@@ -197,7 +198,7 @@
 
           <h2>Anonym</h2>
           <div class="pb-3">
-            <md-switch v-model="form.anonymous">
+            <md-switch name="sw_an" v-model="form.anonymous">
               <td>{{ form.anonymous }}</td>
             </md-switch>
           </div>
@@ -210,6 +211,7 @@
               <md-icon class="prp-danger">delete</md-icon>
             </md-button>
             <md-button
+              name="submit_btn"
               class="md-raised prp-success"
               type="submit"
               :disabled="sending"
@@ -334,6 +336,7 @@
                   <md-table-cell>{{ item.group }}</md-table-cell>
                   <md-table-cell>
                     <md-button
+                      name="addstudentbtn"
                       :disabled="
                         form.members.find(obj => {
                           return obj.id == item.id;
@@ -353,7 +356,7 @@
               <md-button class="md-primary" @click="showDialog = false"
                 >Close</md-button
               >
-              <md-button class="md-primary" @click="showDialog = false"
+              <md-button name="okbtn" class="md-primary" @click="showDialog = false"
                 >OK</md-button
               >
             </md-dialog-actions>

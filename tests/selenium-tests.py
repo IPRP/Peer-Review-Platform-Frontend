@@ -4,7 +4,7 @@ import time
 driver = webdriver.Firefox(executable_path="geckodriver.exe")
 
 def login_test(username, password):
-    driver.get("http://localhost:8082/")
+    driver.get("http://localhost:8081/")
     username_field = driver.find_element_by_name("username")
     password_field = driver.find_element_by_name("password")
     login_btn = driver.find_element_by_name("login")
@@ -15,7 +15,7 @@ def login_test(username, password):
 
 def create_workshop_test():
     #login
-    driver.get("http://localhost:8082/")
+    driver.get("http://localhost:8081/")
     username_field = driver.find_element_by_name("username")
     password_field = driver.find_element_by_name("password")
     login_btn = driver.find_element_by_name("login")
@@ -89,7 +89,7 @@ def delete_test():
 
     driver = webdriver.Firefox(executable_path="geckodriver.exe")
 
-    driver.get("http://localhost:8082/")
+    driver.get("http://localhost:8081/")
 
     username_field = driver.find_element_by_name("username")
     password_field = driver.find_element_by_name("password")
@@ -112,11 +112,69 @@ def delete_test():
             print("HERE")
         
     time.sleep(5)
+
+def test_edit_workshop():
+    driver.get("http://localhost:8081/")
+    login_test("t1", "1234")
+    time.sleep(5)
+
+    rows = driver.find_elements_by_tag_name("tr")
+
+    print(len(rows))
+
+    for item in rows:
+        if "test" in item.get_attribute('innerHTML'):
+            item.find_elements_by_tag_name("a")[1].click()
+        
+    time.sleep(5)
+    driver.find_element_by_name("title").send_keys("EDIT")
+    driver.find_element_by_name("description").send_keys("EDIT")
+
+    #add students
+    addpers_btn = driver.find_element_by_name("addpers")
+    addpers_btn.click()
+
+    addstudentbtn = driver.find_elements_by_name("addstudentbtn")[2]
+    addstudentbtn.click()
+
+    okbtn = driver.find_element_by_name("okbtn")
+    okbtn.click()
+
+    #edit criteria
+
+
+    driver.find_element_by_name("criteria_name").send_keys("EDIT")
+
+    time.sleep(2)
+    expand_btn = driver.find_element_by_name("expand_btn")
+    expand_btn.click()
+
+    driver.find_element_by_name("criteria_content").send_keys("EDIT")
+
+    #set anonymous
+
+    driver.find_element_by_class_name("md-switch-container").click()
+
+    #submit
+
+    driver.find_element_by_name("submit_btn").click()
+
+    time.sleep(2)
+
+    rows = driver.find_elements_by_tag_name("tr")
+
+    for item in rows:
+        if "testEDIT" in item.get_attribute('innerHTML'):
+            item.find_elements_by_tag_name("a")[1].click()
+
+    time.sleep(10)
+
+
+
                 
         
 
 
 #login_test("lukasnowy", "1234")
 
-delete_test()
-
+test_edit_workshop()

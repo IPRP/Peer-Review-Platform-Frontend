@@ -4,7 +4,7 @@ import time
 
 class PeerReviewTest(unittest.TestCase):
 
-    BASEURL = "http://localhost:8082/"
+    BASEURL = "http://localhost:8081/"
 
     def setUp(self):
         self.driver = webdriver.Firefox(executable_path="geckodriver.exe")
@@ -121,10 +121,77 @@ class PeerReviewTest(unittest.TestCase):
         
     time.sleep(5)
 
+    def test_edit_workshop(self):
+        self.test_login_teacher()
+        time.sleep(5)
+
+        rows = self.driver.find_elements_by_tag_name("tr")
+
+        for item in rows:
+            if "Testworkshop" in item.get_attribute('innerHTML'):
+                item.find_elements_by_tag_name("a")[1].click()
         
+        time.sleep(5)
+        self.driver.find_element_by_name("title").send_keys("EDIT")
+        self.driver.find_element_by_name("description").send_keys("EDIT")
+
+        #add students
+        addpers_btn = self.driver.find_element_by_name("addpers")
+        addpers_btn.click()
+
+        addstudentbtn = self.driver.find_elements_by_name("addstudentbtn")[2]
+        addstudentbtn.click()
+
+        okbtn = self.driver.find_element_by_name("okbtn")
+        okbtn.click()
+
+        #edit criteria
+
+
+        self.driver.find_element_by_name("criteria_name").send_keys("EDIT")
+
+        time.sleep(2)
+        expand_btn = self.driver.find_element_by_name("expand_btn")
+        expand_btn.click()
+
+        self.driver.find_element_by_name("criteria_content").send_keys("EDIT")
+
+        #set anonymous
+
+        self.driver.find_element_by_class_name("md-switch-container").click()
+
+        #submit
+
+        self.driver.find_element_by_name("submit_btn").click()
+
+        time.sleep(2)
+
+        rows = self.driver.find_elements_by_tag_name("tr")
+
+        for item in rows:
+            if "TestworkshopEDIT" in item.get_attribute('innerHTML'):
+                item.find_elements_by_tag_name("a")[1].click()
+        
+        time.sleep(2)
+        title = self.driver.find_element_by_name("title").get_attribute('value')
+
+        self.assertEqual(title, "TestworkshopEDIT")
+
+
+    def suite(self):
+        suite = unittest.TestSuite()
+        suite.addTest(PeerReviewTest("test_login_teacher"))
+        suite.addTest(PeerReviewTest("test_login_student"))
+        suite.addTest(PeerReviewTest("test_create_workshop"))
+        suite.addTest(PeerReviewTest("test_edit_workshop"))
+        suite.addTest(PeerReviewTest("test_delete_workshop"))
+
+        return suite
 
     def tearDown(self):
         self.driver.close()
 
 if __name__ == "__main__":
-    unittest.main()
+    runner = unittest.TextTestRunner(failfast=True)
+    runner.run(PeerReviewTest.suite(PeerReviewTest))
+    #unittest.main()
