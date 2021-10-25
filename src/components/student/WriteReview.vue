@@ -225,9 +225,9 @@ export default {
       DataService.downloadSubmission(
         this.$parent.username,
         this.$parent.pw,
-        this.submission.attachments[0].id
+        this.attachments[0].id
       ).then(response => {
-        DataService.writeFile(response, this.submission.attachments[0].title);
+        DataService.writeFile(response, this.attachments[0].title);
       });
     },
     validate(event, param) {

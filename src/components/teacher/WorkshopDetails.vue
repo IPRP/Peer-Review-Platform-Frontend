@@ -17,7 +17,7 @@
 
           <md-table-row
             v-for="item in this.workshop.workshop.students"
-            :key="item.submissions[0].date"
+            :key="item.id"
           >
             <md-table-cell v-if="item.submissions.length > 0">
               {{ item.submissions[0].title }} von {{ item.firstname }}
