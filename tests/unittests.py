@@ -19,7 +19,9 @@ class PeerReviewTest(unittest.TestCase):
         password_field.send_keys("1234")
         login_btn.click()
 
-        assert "Neuer Workshop" in self.driver.page_source
+        time.sleep(2)
+
+        assert "/teacherdashboard" in self.driver.current_url
 
     def test_login_student(self):
         self.driver.get(self.BASEURL)
@@ -33,7 +35,7 @@ class PeerReviewTest(unittest.TestCase):
 
         time.sleep(1)
 
-        assert "Laufende Reviews" in self.driver.page_source
+        assert "/studentdashboard" in self.driver.current_url
 
     def test_create_workshop(self):
 
@@ -119,7 +121,6 @@ class PeerReviewTest(unittest.TestCase):
 
         assert "Testworkshop" not in self.driver.page_source
         
-    time.sleep(5)
 
     def test_edit_workshop(self):
         self.test_login_teacher()
@@ -174,8 +175,10 @@ class PeerReviewTest(unittest.TestCase):
         
         time.sleep(2)
         title = self.driver.find_element_by_name("title").get_attribute('value')
+        description = self.driver.find_element_by_name("description").get_attribute('value')
 
         self.assertEqual(title, "TestworkshopEDIT")
+        self.assertEqual(description, "Description of TestworkshopEDIT")
 
 
     def suite(self):
