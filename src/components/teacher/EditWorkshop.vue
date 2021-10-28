@@ -199,7 +199,7 @@
           <h2>Anonym</h2>
           <div class="pb-3">
             <md-switch name="sw_an" v-model="form.anonymous">
-              <td>{{ form.anonymous }}</td>
+              <td name="val_an">{{ form.anonymous }}</td>
             </md-switch>
           </div>
 

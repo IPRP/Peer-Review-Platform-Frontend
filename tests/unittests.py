@@ -176,9 +176,19 @@ class PeerReviewTest(unittest.TestCase):
         time.sleep(2)
         title = self.driver.find_element_by_name("title").get_attribute('value')
         description = self.driver.find_element_by_name("description").get_attribute('value')
+        members = self.driver.find_elements_by_tag_name("tbody")[0].get_attribute('innerHTML')
+        criteria = self.driver.find_element_by_name("criteria_name").get_attribute('value')
+        anonymous = self.driver.find_element_by_name("sw_an").get_attribute('value')
+
 
         self.assertEqual(title, "TestworkshopEDIT")
         self.assertEqual(description, "Description of TestworkshopEDIT")
+        self.assertIn("Max Mustermann", members)
+        self.assertIn("Gordon Freeman", members)
+        self.assertEqual("KriteriumCriteria 1 TestEDIT", criteria)
+        self.assertEqual(anonymous, "false")
+        
+        
 
 
     def suite(self):
