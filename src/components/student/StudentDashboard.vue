@@ -21,7 +21,7 @@
               <!--  //item.workshopName ist die review id siehe https://docs.google.com/spreadsheets/d/1X2nMEH33EQm5FCdruBNx2x0NtEMzxlOo/edit#gid=136308832  !-->
               <md-table-cell class="prp-table-action-cell">
                 <md-button
-                  class="md-icon-button md-list-action"
+                  class="md-icon-button md-list-action btn_review"
                   :to="{
                     path:
                       '/writereview/' +
@@ -51,7 +51,7 @@
               >
               <md-table-cell class="prp-table-action-cell">
                 <md-button
-                  class="md-icon-button md-list-action"
+                  class="md-icon-button md-list-action submission_btn"
                   :to="{
                     path:
                       '/workshopsubmission/' + item.id + '/' + item.workshopName

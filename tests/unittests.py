@@ -94,7 +94,7 @@ class PeerReviewTest(unittest.TestCase):
         #set deadline
 
         deadline_field = self.driver.find_elements_by_class_name("md-input")[3]
-        deadline_field.send_keys("2021-10-12")
+        deadline_field.send_keys("2021-12-12")
 
         #submit
 
@@ -187,7 +187,44 @@ class PeerReviewTest(unittest.TestCase):
         self.assertIn("Gordon Freeman", members)
         self.assertEqual("KriteriumCriteria 1 TestEDIT", criteria)
         self.assertEqual(anonymous, "false")
+    
+    def test_submission(self):
+        self.test_login_student()
         
+        self.driver.find_element_by_class_name("submission_btn").click()
+        
+        self.driver.find_element_by_name("title").send_keys("Meine Submission")
+        self.driver.find_element_by_name("comment").send_keys("Mein Comment")
+        
+        self.driver.find_element_by_class_name("btn_save").click()
+        
+        assert "/studentdashboard" in self.driver.current_url
+        
+        time.sleep(5)
+        
+    def test_write_review(self):
+        
+        self.driver.get(self.BASEURL)
+        username_field = self.driver.find_element_by_name("username")
+        password_field = self.driver.find_element_by_name("password")
+        login_btn = self.driver.find_element_by_name("login")
+
+        username_field.send_keys("s3")
+        password_field.send_keys("1234")
+        login_btn.click()
+
+        time.sleep(1)
+        
+        self.driver.find_element_by_class_name("btn_review").click()
+        
+        self.driver.find_element_by_name("points_inp").send_keys("5")
+        
+        self.driver.find_element_by_name("gesamtfeedback").send_keys("Sehr gut gemacht!")
+        
+        self.driver.find_element_by_class_name("btn_save").click()
+
+        assert "/studentdashboard" in self.driver.current_url
+
         
 
 
@@ -197,6 +234,8 @@ class PeerReviewTest(unittest.TestCase):
         suite.addTest(PeerReviewTest("test_login_student"))
         suite.addTest(PeerReviewTest("test_create_workshop"))
         suite.addTest(PeerReviewTest("test_edit_workshop"))
+        suite.addTest(PeerReviewTest("test_submission"))
+        suite.addTest(PeerReviewTest("test_write_review"))
         suite.addTest(PeerReviewTest("test_delete_workshop"))
 
         return suite

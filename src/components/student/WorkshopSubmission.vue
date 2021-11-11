@@ -17,14 +17,18 @@
       </div>
       <div class="pt-3">
         <h3 class="d-flex justify-content-start">Abgabe Datei</h3>
-        <form @submit.prevent="onSubmit" enctype="multipart/form-data">
-          <md-field>
+        <form @submit.prevent="validateWorkshop" enctype="multipart/form-data">
+          <md-field :class="getValidationClass('title')">
             <label>Titel</label>
-            <md-input v-model="title"></md-input>
+            <md-input name="title" v-model="title" :disabled="sending"></md-input>
+            <span class="md-error" v-if="!$v.title.required"
+              >A title is required</span>
           </md-field>
-          <md-field>
+          <md-field :class="getValidationClass('comment')">
             <label>Kommentar</label>
-            <md-textarea v-model="comment"></md-textarea>
+            <md-textarea name="comment" v-model="comment" :disabled="sending"></md-textarea>
+            <span class="md-error" v-if="!$v.comment.required"
+              >A comment is required</span>
           </md-field>
           <md-field>
             <!--            <label>Abgabe</label>-->
@@ -39,7 +43,7 @@
               <span class="p-1">Abbrechen</span>
               <md-icon class="prp-danger">delete</md-icon>
             </md-button>
-            <md-button class="md-raised prp-success" type="submit">
+            <md-button class="md-raised prp-success btn_save" type="submit">
               <span class="p-1">Speichern</span>
               <md-icon class="prp-success-icon">done_all</md-icon>
             </md-button>
@@ -56,9 +60,12 @@
 <script>
 import DataService from "@/services/DataService";
 import AuthHelper from "@/utils/AuthHelper";
+import { validationMixin } from "vuelidate";
+import { required } from "vuelidate/lib/validators";
 
 export default {
   name: "WorkshopSubmission",
+  mixins: [validationMixin],
   data() {
     return {
       workshop: {},
@@ -68,6 +75,14 @@ export default {
       title: "",
       comment: ""
     };
+  },
+  validations: {
+    title: {
+      required
+    },
+    comment: {
+      required
+    }
   },
   methods: {
     onSelect() {
@@ -161,6 +176,20 @@ export default {
         document.body.appendChild(fURL);
         fURL.click();
       });
+    },
+    getValidationClass(fieldName) {
+      const field = this.$v[fieldName];
+      if (field) {
+        return {
+          "md-invalid": field.$invalid && field.$dirty
+        };
+      }
+    },
+    validateWorkshop() {
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        this.addSubmission();
+      }
     }
   },
   mounted() {

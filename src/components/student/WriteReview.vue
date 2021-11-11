@@ -14,7 +14,7 @@
           </md-button>
         </div>
       </div>
-      <form class="pt-3" @submit.prevent="onSubmit">
+      <form class="pt-3" @submit.prevent="validateWorkshop">
         <div class="px-1 px-md-5">
           <h3 class="d-flex justify-content-start">Kriterien:</h3>
           <div class="mb-3">
@@ -58,6 +58,7 @@
                       <md-field>
                         <label>Punkte</label>
                         <md-input
+                          name="points_inp"
                           v-model="criterion.points"
                           type="number"
                           @change="validate($event, criterion)"
@@ -90,9 +91,11 @@
             </md-card>
           </div>
 
-          <md-field>
+          <md-field :class="getValidationClass('feedback')">
             <label>Gesamtfeedback</label>
-            <md-textarea v-model="form.feedback"></md-textarea>
+            <md-textarea name="gesamtfeedback" v-model="form.feedback"></md-textarea>
+            <span class="md-error" v-if="!$v.form.feedback.required"
+              >Feedback is required</span>
           </md-field>
           <div
             class="pt-3 d-flex justify-content-center justify-content-md-end"
@@ -101,7 +104,7 @@
               <span class="p-1">Abbrechen</span>
               <md-icon class="prp-danger">delete</md-icon>
             </md-button>
-            <md-button class="md-raised prp-success" type="submit">
+            <md-button class="md-raised prp-success btn_save" type="submit">
               <span class="p-1">Speichern</span>
               <md-icon class="prp-success-icon">done_all</md-icon>
             </md-button>
@@ -115,11 +118,13 @@
 
 <script>
 import DataService from "@/services/DataService";
+import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
 import AuthHelper from "@/utils/AuthHelper";
 
 export default {
   name: "WriteReview",
+  mixins: [validationMixin],
   props: {
     done: {
       default: "false",
@@ -229,6 +234,20 @@ export default {
       ).then(response => {
         DataService.writeFile(response, this.attachments[0].title);
       });
+    },
+    getValidationClass(fieldName) {
+      const field = this.$v.form[fieldName];
+      if (field) {
+        return {
+          "md-invalid": field.$invalid && field.$dirty
+        };
+      }
+    },
+    validateWorkshop() {
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        this.createReview;
+      }
     },
     validate(event, param) {
       const value = parseInt(param.points);
