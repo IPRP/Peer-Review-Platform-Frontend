@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL: "http://localhost:8000", //rust backend
+    baseURL: "https://inno.dergeorg.at", //rust backend
     auth: {
         username: "admin",
         password: "admin"

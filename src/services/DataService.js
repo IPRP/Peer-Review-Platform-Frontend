@@ -2,7 +2,7 @@
 import axios from "axios";
 
 class DataService {
-  static baseURL = "http://localhost:8000";
+  static baseURL = "https://inno.dergeorg.at";
 
   uploadFile(username, pw, formData) {
     return axios.post(DataService.baseURL + "/upload", formData, {
@@ -254,7 +254,7 @@ class DataService {
     bodyFormData.append("upload", file);
 
     return axios
-      .post("http://localhost:3000/upload", bodyFormData, {
+      .post("https://inno.dergeorg.at/upload", bodyFormData, {
         headers: {
           "Content-Type": "multipart/form-data"
         },
