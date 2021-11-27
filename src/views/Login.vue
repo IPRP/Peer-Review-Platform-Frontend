@@ -95,18 +95,7 @@ export default {
               this.logout();
             }
             this.$emit("pw", originalText);
-
-            this.$store.commit("setAccount", {
-              username: username,
-              password: originalText,
-              role: role
-            });
-
-            if (this.$store.getters.isReturnRoute) {
-              const route = this.$store.getters.returnRoute;
-              this.$store.commit("setReturnRoute", undefined);
-              this.$router.push(route);
-            } else if (role === "student") {
+            if (username != "t1" && username != "t2") {
               this.$router.push("studentdashboard");
             } else {
               this.$router.push("/teacherdashboard");
