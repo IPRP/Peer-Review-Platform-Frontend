@@ -17,7 +17,19 @@
       </div>
       <div class="pt-3">
         <h3 class="d-flex justify-content-start">Abgabe Datei</h3>
-        <form @submit.prevent="onSubmit" enctype="multipart/form-data">
+        <form @submit.prevent="validateWorkshop" enctype="multipart/form-data">
+          <md-field :class="getValidationClass('title')">
+            <label>Titel</label>
+            <md-input name="title" v-model="title" :disabled="sending"></md-input>
+            <span class="md-error" v-if="!$v.title.required"
+              >A title is required</span>
+          </md-field>
+          <md-field :class="getValidationClass('comment')">
+            <label>Kommentar</label>
+            <md-textarea name="comment" v-model="comment" :disabled="sending"></md-textarea>
+            <span class="md-error" v-if="!$v.comment.required"
+              >A comment is required</span>
+          </md-field>
           <md-field>
             <label>Titel</label>
             <md-input v-model="title"></md-input>
@@ -39,7 +51,7 @@
               <span class="p-1">Abbrechen</span>
               <md-icon class="prp-danger">delete</md-icon>
             </md-button>
-            <md-button class="md-raised prp-success" type="submit">
+            <md-button class="md-raised prp-success btn_save" type="submit">
               <span class="p-1">Speichern</span>
               <md-icon class="prp-success-icon">done_all</md-icon>
             </md-button>
@@ -55,23 +67,37 @@
 
 <script>
 import DataService from "@/services/DataService";
+import AuthHelper from "@/utils/AuthHelper";
+import { validationMixin } from "vuelidate";
+import { required } from "vuelidate/lib/validators";
 
 export default {
   name: "WorkshopSubmission",
+  mixins: [validationMixin],
   data() {
     return {
       workshop: {},
-      file: "",
+      file: undefined,
       message: "",
-      attachment: {},
+      attachment: [],
       title: "",
       comment: ""
     };
   },
+  validations: {
+    title: {
+      required
+    },
+    comment: {
+      required
+    }
+  },
   methods: {
     onSelect() {
       const file = this.$refs.file.files[0];
-      this.file = file;
+      if (file) {
+        this.file = file;
+      }
       // const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
       // if(!allowedTypes.includes(file.type)){
       //   this.message = "Filetype is wrong!!"
@@ -81,36 +107,55 @@ export default {
       // }
     },
     async onSubmit() {
-      const formData = new FormData();
-      formData.append("file", this.file);
-      try {
-        await DataService.uploadFile(this.$parent.username, this.$parent.pw, formData)
-          .then(res => {
-            this.attachment = res.data.attachment;
-            this.addSubmission();
-          })
-          .catch(err => {
-            this.message = err.response.data.error;
-          });
-        this.message = "Uploaded!!";
-      } catch (err) {
-        console.error(err);
-        this.message = err.response.data.error;
+      if (this.file) {
+        const formData = new FormData();
+        console.log(this.file);
+        formData.append("file", this.file);
+        try {
+          await DataService.postSubmissionFile(
+            this.$parent.username,
+            this.$parent.pw,
+            formData
+          )
+            .then(res => {
+              this.attachment = [res.data.attachment.id];
+              this.addSubmission();
+            })
+            .catch(err => {
+              this.message = err;
+            });
+          this.message = "Uploaded!";
+        } catch (err) {
+          console.error(err);
+          this.message = err;
+        }
+      } else {
+        await this.addSubmission();
       }
     },
     async addSubmission() {
+      // Convert object back
+      // See: https://github.com/vuejs/Discussion/issues/292
+      const attachment = JSON.parse(JSON.stringify(this.attachment));
       try {
-        await DataService.addSubmission(this.$parent.username, this.$parent.pw, this.attachment, this.title, this.comment, this.$route.params.id)
-          .then(res => {
-            console.log(res.data.ok);
+        await DataService.addSubmission(
+          this.$parent.username,
+          this.$parent.pw,
+          attachment,
+          this.title,
+          this.comment,
+          this.$route.params.id
+        )
+          .then(() => {
+            // console.log(res.data.ok);
             this.$router.push("/studentdashboard");
           })
           .catch(err => {
-            this.message = err.response.data.error;
+            this.message = err;
           });
       } catch (e) {
         alert(e);
-        this.message = e.response.data.error;
+        this.message = e;
       }
     },
     getWorkshop() {
@@ -130,26 +175,36 @@ export default {
       DataService.downloadSubmission(
         this.$parent.username,
         this.$parent.pw,
-        this.submission.attachments[0].title
-      )
-        .then((response) => {
-          var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-          var fURL = document.createElement("a");
-
-          fURL.href = fileURL;
-          fURL.setAttribute("download", "file.pdf");
-          document.body.appendChild(fURL);
-
-          fURL.click();
-        });
+        this.submission.attachments[0].id
+      ).then(response => {
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        var fURL = document.createElement("a");
+        fURL.href = fileURL;
+        fURL.setAttribute("download", "file.pdf");
+        document.body.appendChild(fURL);
+        fURL.click();
+      });
+    },
+    getValidationClass(fieldName) {
+      const field = this.$v[fieldName];
+      if (field) {
+        return {
+          "md-invalid": field.$invalid && field.$dirty
+        };
+      }
+    },
+    validateWorkshop() {
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        this.addSubmission();
+      }
     }
   },
   mounted() {
-    if (!this.$parent.authenticated) {
-      // this.$router.replace({ name: "Login" });
-      window.location.href = "/peer-Review-Platform-Frontend/login";
-    } else {
+    if (AuthHelper.Authenticated(this)) {
       this.getWorkshop();
+    } else {
+      AuthHelper.Login(this);
     }
   }
 };

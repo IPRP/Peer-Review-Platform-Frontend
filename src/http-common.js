@@ -1,10 +1,10 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL: "http://localhost:3000", //mocked backend
+    baseURL: "http://localhost:8000", //rust backend
     auth: {
-        username: "lukasnowy",
-        password: "1234"
+        username: "admin",
+        password: "admin"
     },
     headers: {
         "Content-type": "application/json"

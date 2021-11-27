@@ -1,108 +1,147 @@
 <template>
-  <div class="p-1 p-md-5">
-    <h1 class="pl-1 pl-md-5">Review für {{ submission.title }} schreiben</h1>
-    <div class="pl-1 pl-md-5 pt-3">
-      <h3 class="pl-1 pt-3">Abgabe:</h3>
-      <md-button class="md-raised md-primary" @click="downloadSubmission">
-        <span>{{ submission.attachments[0].title }}</span>
-        <md-icon>get_app</md-icon>
-      </md-button>
-    </div>
-    <form class="pt-3" @submit.prevent="createReview">
-      <div class="px-1 px-md-5">
-        <h3 class="d-flex justify-content-start">Kriterien:</h3>
-        <div class="mb-3">
-          <md-card class="d-flex mt-3" v-for="criterion in this.form.criteria" :key="criterion.title">
-            <md-card-expand class="align-items-center">
-              <md-card-actions md-alignment="space-between">
-                <h3>{{ criterion.title }}</h3>
-
-                <md-card-expand-trigger>
-                  <md-button class="md-icon-button">
-                    <md-icon>keyboard_arrow_down</md-icon>
-                  </md-button>
-                </md-card-expand-trigger>
-              </md-card-actions>
-
-              <md-card-expand-content>
-                <div class="d-flex flex-wrap flex-md-nowrap px-2">
-                  <div class="pr-md-4">
-                    <p class="md-list-item-text">{{ criterion.content }}</p>
-                  </div>
-
-                  <div class="pr-md-2 flex-grow-1">
-                    <md-field class="prp-feedback">
-                      <label>Feedback</label>
-                      <md-textarea md-autogrow v-model="form.criteria[form.criteria.indexOf(criterion)].feedback"></md-textarea>
-                    </md-field>
-                  </div>
-
-                  <div v-if="criterion.type === 'truefalse'">
-                    <md-switch v-model="form.criteria[form.criteria.indexOf(criterion)].rating" class="align-self-center">Erfüllt</md-switch>
-                  </div>
-                  <div v-if="criterion.type === 'point'">
-                    <md-field>
-                      <label>Punkte</label>
-                      <md-input v-model="form.criteria[form.criteria.indexOf(criterion)].rating" type="number"></md-input>
-                    </md-field>
-                  </div>
-                  <div v-if="criterion.type === 'percentage'">
-                    <md-field>
-                      <label>Prozent</label>
-                      <md-input v-model="form.criteria[form.criteria.indexOf(criterion)].rating" type="number"></md-input>
-                    </md-field>
-                  </div>
-                  <div v-if="criterion.type === 'grade'">
-                    <md-field>
-                      <label>Note</label>
-                      <md-input v-model="form.criteria[form.criteria.indexOf(criterion)].rating" type="number"></md-input>
-                    </md-field>
-                  </div>
-                </div>
-              </md-card-expand-content>
-            </md-card-expand>
-          </md-card>
-        </div>
-
-        <md-field>
-          <label>Gesamtfeedback</label>
-          <md-textarea v-model="form.overallFeedback"></md-textarea>
-        </md-field>
-        <div class="pt-3 d-flex justify-content-center justify-content-md-end">
-          <md-button class="md-raised prp-danger" to="/studentdashboard">
-            <span class="p-1">Abbrechen</span>
-            <md-icon class="prp-danger">delete</md-icon>
-          </md-button>
-          <md-button class="md-raised prp-success" type="submit">
-            <span class="p-1">Speichern</span>
-            <md-icon class="prp-success-icon">done_all</md-icon>
+  <div v-if="loaded">
+    <div class="p-1 p-md-5">
+      <h1 class="pl-1 pl-md-5">Review für {{ title }} schreiben</h1>
+      <div class="pl-1 pl-md-5 pt-1">
+        <h3 class="pl-1 pt-1">Abgabe:</h3>
+        <h4 class="pl-1 pt-1">{{ comment }}</h4>
+        <div
+          v-if="attachments.length > 0 && attachments[0].title !== undefined"
+        >
+          <md-button class="md-raised md-primary" @click="downloadSubmission">
+            <span>{{ attachments[0].title }}</span>
+            <md-icon>get_app</md-icon>
           </md-button>
         </div>
       </div>
-    </form>
+      <form class="pt-3" @submit.prevent="validateWorkshop">
+        <div class="px-1 px-md-5">
+          <h3 class="d-flex justify-content-start">Kriterien:</h3>
+          <div class="mb-3">
+            <md-card
+              class="d-flex mt-3"
+              v-for="criterion in this.form.criteria"
+              :key="criterion.id"
+            >
+              <md-card-expand class="align-items-center">
+                <md-card-actions md-alignment="space-between">
+                  <h3>{{ criterion.title }}</h3>
+
+                  <md-card-expand-trigger>
+                    <md-button class="md-icon-button">
+                      <md-icon>keyboard_arrow_down</md-icon>
+                    </md-button>
+                  </md-card-expand-trigger>
+                </md-card-actions>
+
+                <md-card-expand-content>
+                  <div class="d-flex flex-wrap flex-md-nowrap px-2">
+                    <div class="pr-md-4">
+                      <p class="md-list-item-text">{{ criterion.content }}</p>
+                    </div>
+
+                    <div v-if="criterion.type === 'truefalse'">
+                      <md-switch
+                        v-model="criterion.points"
+                        class="align-self-center"
+                        type="number"
+                      >
+                        <div v-if="criterion.points">
+                          Erfüllt
+                        </div>
+                        <div v-else>
+                          Nicht Erfüllt
+                        </div>
+                      </md-switch>
+                    </div>
+                    <div v-if="criterion.type === 'point'">
+                      <md-field>
+                        <label>Punkte</label>
+                        <md-input
+                          name="points_inp"
+                          v-model="criterion.points"
+                          type="number"
+                          @change="validate($event, criterion)"
+                        ></md-input>
+                      </md-field>
+                    </div>
+                    <div v-if="criterion.type === 'percentage'">
+                      <md-field>
+                        <label>Prozent</label>
+                        <md-input
+                          v-model="criterion.points"
+                          type="number"
+                          @change="validate($event, criterion)"
+                        ></md-input>
+                      </md-field>
+                    </div>
+                    <div v-if="criterion.type === 'grade'">
+                      <md-field>
+                        <label>Note</label>
+                        <md-input
+                          v-model="criterion.points"
+                          type="number"
+                          @change="validate($event, criterion)"
+                        ></md-input>
+                      </md-field>
+                    </div>
+                  </div>
+                </md-card-expand-content>
+              </md-card-expand>
+            </md-card>
+          </div>
+
+          <md-field :class="getValidationClass('feedback')">
+            <label>Gesamtfeedback</label>
+            <md-textarea name="gesamtfeedback" v-model="form.feedback"></md-textarea>
+            <span class="md-error" v-if="!$v.form.feedback.required"
+              >Feedback is required</span>
+          </md-field>
+          <div
+            class="pt-3 d-flex justify-content-center justify-content-md-end"
+          >
+            <md-button class="md-raised prp-danger" to="/studentdashboard">
+              <span class="p-1">Abbrechen</span>
+              <md-icon class="prp-danger">delete</md-icon>
+            </md-button>
+            <md-button class="md-raised prp-success btn_save" type="submit">
+              <span class="p-1">Speichern</span>
+              <md-icon class="prp-success-icon">done_all</md-icon>
+            </md-button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
+  <div v-else></div>
 </template>
 
 <script>
-
 import DataService from "@/services/DataService";
+import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
+import AuthHelper from "@/utils/AuthHelper";
 
 export default {
   name: "WriteReview",
+  mixins: [validationMixin],
+  props: {
+    done: {
+      default: "false",
+      type: String
+    }
+  },
   data() {
     return {
-      submission: {},
+      loaded: false,
+      title: "",
+      comment: "",
+      attachments: null,
       fulfilled: [],
       form: {
-        criteria: [
-          {
-            rating: null,
-            feedback: null
-          }
-        ],
-        overallFeedback: null
-      },
+        criteria: [],
+        feedback: null
+      }
     };
   },
   validations: {
@@ -110,48 +149,77 @@ export default {
       criteria: {
         required
       },
-      overallFeedback: {
+      feedback: {
         required
       }
     }
   },
   methods: {
     getSubmission() {
+      // TODO: prefill values if review was already done
+      // console.log(this.done);
+      // console.log(this.$route.params);
+      // console.log(this.$parent);
+
       DataService.getStudentSubmission(
         this.$parent.username,
         this.$parent.pw,
         this.$route.params.submissionid
       )
         .then(response => {
-          this.submission = response.data;
-          this.form.criteria = this.submission.criteria;
-
-          this.form.criteria = this.form.criteria.map(criteria => {
-            let newCriteria;
-            newCriteria = Object.assign(
-              criteria,
-              { rating: ""},
-              { feedback: ""}
-            );
-            return newCriteria;
+          const submission = response.data;
+          const criteria = submission.criteria;
+          this.form.criteria = criteria.map(criterion => {
+            if (criterion.type === "grade") {
+              criterion.points = 5;
+            } else {
+              criterion.points = 0;
+            }
+            criterion.feedback = "";
+            return criterion;
           });
-          console.log(this.form.criteria);
+          this.title = submission.title;
+          this.comment = submission.comment;
+          this.attachments = submission.attachments;
+          this.loaded = true;
+          // console.log(this.form.criteria, this.title, this.attachments);
         })
         .catch(e => {
           console.error(e);
         });
     },
+    onSubmit() {
+      this.createReview();
+    },
     createReview() {
+      const points = [];
+      for (const criterion of this.form.criteria) {
+        let criterionPoints =
+          typeof criterion.points === "boolean"
+            ? criterion.points === true
+              ? 1
+              : 0
+            : parseInt(criterion.points);
+        points.push({
+          id: criterion.id,
+          points: criterionPoints
+        });
+      }
+      const feedback =
+        this.form.feedback !== null && this.form.feedback !== undefined
+          ? this.form.feedback
+          : "";
+
       DataService.postReview(
-        this.form.criteria,
-        this.form.overallFeedback,
         this.$parent.username,
         this.$parent.pw,
-        this.submission.attachments[0].id
+        points,
+        feedback,
+        this.$route.params.reviewid
       )
         .then(response => {
           console.log(response.data);
-          this.$router.push('/studentdashboard');
+          this.$router.push("/studentdashboard");
         })
         .catch(e => {
           console.log(e);
@@ -162,33 +230,65 @@ export default {
       DataService.downloadSubmission(
         this.$parent.username,
         this.$parent.pw,
-        this.submission.attachments[0].title
-      )
-      .then((response) => {
-        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-        var fURL = document.createElement('a');
-
-        fURL.href = fileURL;
-        fURL.setAttribute('download', 'file.pdf');
-        document.body.appendChild(fURL);
-
-        fURL.click();
+        this.attachments[0].id
+      ).then(response => {
+        DataService.writeFile(response, this.attachments[0].title);
       });
+    },
+    getValidationClass(fieldName) {
+      const field = this.$v.form[fieldName];
+      if (field) {
+        return {
+          "md-invalid": field.$invalid && field.$dirty
+        };
+      }
+    },
+    validateWorkshop() {
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        this.createReview;
+      }
+    },
+    validate(event, param) {
+      const value = parseInt(param.points);
+      if (value < 1 && param.type === "grade") {
+        param.points = 1;
+        return;
+      } else if (value < 0) {
+        param.points = 0;
+        return;
+      }
+
+      switch (param.type) {
+        case "percentage":
+          if (value > 100) {
+            param.points = 100;
+          }
+          break;
+        case "point":
+          if (value > 10) {
+            param.points = 10;
+          }
+          break;
+        case "grade":
+          if (value > 5) {
+            param.points = 5;
+          }
+          break;
+      }
     }
   },
   mounted() {
-    if (!this.$parent.authenticated) {
-      // this.$router.replace({ name: "Login" });
-      window.location.href = "/peer-Review-Platform-Frontend/login";
-    } else {
+    if (AuthHelper.Authenticated(this)) {
       this.getSubmission();
+    } else {
+      AuthHelper.Login(this);
     }
   }
 };
 </script>
 
 <style scoped lang="scss">
-
 .md-list-item-text {
   white-space: normal;
 }
@@ -197,5 +297,4 @@ export default {
   min-width: 40vw;
   max-width: 40vw;
 }
-
 </style>

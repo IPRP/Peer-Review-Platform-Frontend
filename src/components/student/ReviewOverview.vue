@@ -1,22 +1,93 @@
-<template @review-overview="getSubmission">
-  <div class="p-1 p-md-5">
-    <div class="pl-1 pl-md-5">
-      <h1>Review Overview</h1>
-      <h3>Abgabe-Titel: {{ this.submission.title }}</h3>
-      <h3>Meine Abgabe</h3>
-      <md-button class="md-raised md-primary" @click="downloadSubmission">
-        <span>{{submission.attachments[0].title}}</span>
-        <md-icon>get_app</md-icon>
-      </md-button>
-      <h3>Abgegeben am: {{ this.submission.date }}</h3>
-      <div>
-        <md-table v-model="reviews" md-card>
-          <md-table-row slot="md-table-row" slot-scope="{ item }">
-            <md-table-cell md-label="Students" md-sort-by="firstname">{{ item.firstname }} {{item.lastname}}</md-table-cell>
-            <md-table-cell md-label="Feedback" md-sort-by="feedback">{{ item.feedback }}</md-table-cell>
-            <md-table-cell md-label="Punkte" md-sort-by="points">{{ item.points[0].points}}</md-table-cell>
-          </md-table-row>
-        </md-table>
+<template>
+  <div v-if="loaded">
+    <div class="p-1 p-md-5">
+      <div class="pl-1 pl-md-5">
+        <h1>Review Overview</h1>
+        <h3>Abgabe-Titel: {{ submission.title }}</h3>
+        <h3>Meine Abgabe</h3>
+        <h4 class="pl-1 pt-1">{{ submission.comment }}</h4>
+        <div
+          v-if="
+            submission.attachments.length > 0 &&
+              submission.attachments[0].title !== undefined
+          "
+        >
+          <md-button class="md-raised md-primary" @click="downloadSubmission">
+            <span>{{ submission.attachments[0].title }}</span>
+            <md-icon>get_app</md-icon>
+          </md-button>
+        </div>
+        <h3>Abgegeben am: {{ submission.date }}</h3>
+
+        <div v-if="!submission.noReviews">
+          <h3>
+            Gesamtpunkte: {{ submission.points }}/{{ submission.maxPoints }}
+          </h3>
+
+          <div>
+            <md-card
+              class="card"
+              v-for="item in submission.reviews"
+              :key="item.id"
+            >
+              <md-card-header>
+                <div
+                  v-if="item.firstname !== null && item.firstname !== undefined"
+                >
+                  <!--<div class="md-title">ID {{ item.id }}</div>-->
+                  <div class="md-subhead">
+                    Author: {{ item.firstname }} {{ item.lastname }}
+                  </div>
+                </div>
+                <div v-else>
+                  <div class="md-subhead">
+                    Author: Anonymous
+                  </div>
+                </div>
+              </md-card-header>
+
+              <md-card-expand>
+                <md-card-actions md-alignment="space-between">
+                  <md-card-expand-trigger>
+                    <md-button class="md-icon-button">
+                      <md-icon>keyboard_arrow_down</md-icon>
+                    </md-button>
+                  </md-card-expand-trigger>
+                </md-card-actions>
+
+                <md-card-expand-content>
+                  <md-card-content>
+                    <p>Feedback: {{ item.feedback }}</p>
+                    <p>Criterias:</p>
+                    <md-table>
+                      <md-table-row>
+                        <md-table-head>Title</md-table-head>
+                        <md-table-head>Description</md-table-head>
+                        <md-table-head>Type</md-table-head>
+                        <md-table-head>Points</md-table-head>
+                        <md-table-head>Weight</md-table-head>
+                      </md-table-row>
+
+                      <md-table-row
+                        v-for="item in item.points"
+                        :key="item.title"
+                      >
+                        <md-table-cell>{{ item.title }}</md-table-cell>
+                        <md-table-cell>{{ item.content }}</md-table-cell>
+                        <md-table-cell>{{ item.type }}</md-table-cell>
+                        <md-table-cell>{{ item.points }}</md-table-cell>
+                        <md-table-cell>{{ item.weight }}</md-table-cell>
+                      </md-table-row>
+                    </md-table>
+                  </md-card-content>
+                </md-card-expand-content>
+              </md-card-expand>
+            </md-card>
+          </div>
+        </div>
+        <div v-else>
+          <h3>Es wurden keine Reviews rechtzeitig abgegeben</h3>
+        </div>
       </div>
     </div>
   </div>
@@ -24,13 +95,14 @@
 
 <script>
 import DataService from "@/services/DataService";
-
+import AuthHelper from "@/utils/AuthHelper";
 export default {
   name: "ReviewOverview",
   data() {
     return {
       reviews: [],
-      submission: {}
+      submission: {},
+      loaded: false
     };
   },
   methods: {
@@ -43,6 +115,10 @@ export default {
         .then(response => {
           this.submission = response.data;
           this.reviews = response.data.reviews;
+          // console.log(this.submission, this.reviews);
+          console.log(this.submission);
+          console.log(this.reviews);
+          this.loaded = true;
         })
         .catch(e => {
           console.log(e);
@@ -52,31 +128,20 @@ export default {
       DataService.downloadSubmission(
         this.$parent.username,
         this.$parent.pw,
-        this.submission.attachments[0].title
-      )
-        .then((response) => {
-          var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-          var fURL = document.createElement('a');
-
-          fURL.href = fileURL;
-          fURL.setAttribute('download', 'file.pdf');
-          document.body.appendChild(fURL);
-
-          fURL.click();
-        });
+        this.submission.attachments[0].id
+      ).then(response => {
+        DataService.writeFile(response, this.submission.attachments[0].title);
+      });
     }
   },
   mounted() {
-    if (!this.$parent.authenticated) {
-      // this.$router.replace({ name: "Login" });
-      window.location.href = "/peer-Review-Platform-Frontend/login";
-    } else {
+    if (AuthHelper.Authenticated(this)) {
       this.getSubmission(this.$route.params.id);
+    } else {
+      AuthHelper.Login(this);
     }
   }
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

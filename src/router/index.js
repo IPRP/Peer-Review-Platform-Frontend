@@ -4,7 +4,7 @@ import Login from "../views/Login.vue";
 import Home from "../views/Home";
 
 Vue.use(VueRouter);
-//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
+
 const routes = [{
         path: "/",
         name: "Login",
@@ -14,12 +14,13 @@ const routes = [{
                 component: Login
             },
             {
-                path: "peer-Review-Platform-Frontend/login",
+                path: "login",
                 component: Login
             },
             //in the future: path: 'reviewverfassen/:id', same for similar children
             {
-                path: "writereview/:workshopid/:submissionid/:reviewid",
+                path: "writereview/:workshopid/:submissionid/:reviewid/:done?",
+                props: true,
                 component: () =>
                     import (
                         /* webpackChunkName: "ReviewVerfassen" */
@@ -103,7 +104,7 @@ const routes = [{
                     )
             },
             {
-                path: "teacherdashboard/workshopdetails/reviews/:id",
+                path: "teacherdashboard/workshopdetails/:workshopId/reviews/:id",
                 component: () =>
                     import (
                         /* webpackChunkName: "StudentDashboard" */
