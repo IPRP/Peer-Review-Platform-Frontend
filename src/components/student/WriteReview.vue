@@ -170,9 +170,9 @@ export default {
           const criteria = submission.criteria;
           this.form.criteria = criteria.map(criterion => {
             if (criterion.type === "grade") {
-              criterion.points = 5;
+              criterion.points = 5.0;
             } else {
-              criterion.points = 0;
+              criterion.points = 0.0;
             }
             criterion.feedback = "";
             return criterion;
@@ -196,12 +196,12 @@ export default {
         let criterionPoints =
           typeof criterion.points === "boolean"
             ? criterion.points === true
-              ? 1
-              : 0
-            : parseInt(criterion.points);
+              ? 1.0
+              : 0.0
+            : parseFloat(criterion.points);
         points.push({
-          id: criterion.id,
-          points: criterionPoints
+          id: parseInt(criterion.id),
+          points: parseFloat(criterionPoints)
         });
       }
       const feedback =
@@ -245,7 +245,7 @@ export default {
     validateWorkshop() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        this.createReview;
+        this.createReview();
       }
     },
     validate(event, param) {
