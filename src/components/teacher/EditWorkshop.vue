@@ -603,7 +603,8 @@ export default {
         beschreibung: "Beschreibung",
         janein: true,
         prozent: -1,
-        punkte: -1
+        punkte: -1,
+        weight: 1.0
       });
       this.cid_counter++;
     },
