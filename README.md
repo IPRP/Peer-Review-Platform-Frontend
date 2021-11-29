@@ -1,4 +1,7 @@
 # peer-review
+[![Build Status](https://jenkins.dergeorg.at/buildStatus/icon?job=InnoFrontend)](https://jenkins.dergeorg.at/job/InnoFrontend/)
+[Zur App](https://iprp.dergeorg.at)
+
 
 ## Project setup
 ```
