@@ -94,12 +94,11 @@
           <md-field :class="getValidationClass('feedback')">
             <label>Gesamtfeedback</label>
             <md-textarea name="gesamtfeedback" v-model="form.feedback"></md-textarea>
-            <span class="md-error" v-if="!$v.form.feedback.required"
-              >Feedback is required</span>
+            <span class="md-error" v-if="!$v.form.feedback.required">
+              Feedback is required
+            </span>
           </md-field>
-          <div
-            class="pt-3 d-flex justify-content-center justify-content-md-end"
-          >
+          <div class="pt-3 d-flex justify-content-center justify-content-md-end">
             <md-button class="md-raised prp-danger" to="/studentdashboard">
               <span class="p-1">Abbrechen</span>
               <md-icon class="prp-danger">delete</md-icon>
@@ -171,9 +170,9 @@ export default {
           const criteria = submission.criteria;
           this.form.criteria = criteria.map(criterion => {
             if (criterion.type === "grade") {
-              criterion.points = 5;
+              criterion.points = 5.0;
             } else {
-              criterion.points = 0;
+              criterion.points = 0.0;
             }
             criterion.feedback = "";
             return criterion;
@@ -197,12 +196,12 @@ export default {
         let criterionPoints =
           typeof criterion.points === "boolean"
             ? criterion.points === true
-              ? 1
-              : 0
-            : parseInt(criterion.points);
+              ? 1.0
+              : 0.0
+            : parseFloat(criterion.points);
         points.push({
-          id: criterion.id,
-          points: criterionPoints
+          id: parseInt(criterion.id),
+          points: parseFloat(criterionPoints)
         });
       }
       const feedback =
@@ -246,7 +245,7 @@ export default {
     validateWorkshop() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        this.createReview;
+        this.createReview();
       }
     },
     validate(event, param) {

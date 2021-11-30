@@ -199,7 +199,7 @@
           <h2>Anonym</h2>
           <div class="pb-3">
             <md-switch name="sw_an" v-model="form.anonymous">
-              <td name="val_an">{{ form.anonymous }}</td>
+              <td name="val_an">{{ form.anonymous }}</td> <!--what is this supposed to mean? -->
             </md-switch>
           </div>
 
@@ -423,7 +423,7 @@
                     <md-button
                       :disabled="
                         form.members.find(obj => {
-                          return obj.id == item.id;
+                          return obj.id === item.id;
                         })
                       "
                       class="md-icon-button md-raised md-primary"
@@ -488,7 +488,7 @@ export default {
     form: {
       title: {
         required,
-        minLength: minLength(3)
+        minLength: minLength(1)
       },
       members: {
         required
@@ -507,7 +507,7 @@ export default {
     addStudent(id) {
       this.form.members.push(
         this.searchBox.students.find(obj => {
-          return obj.id == id;
+          return obj.id === id;
         })
       );
     },
@@ -603,7 +603,8 @@ export default {
         beschreibung: "Beschreibung",
         janein: true,
         prozent: -1,
-        punkte: -1
+        punkte: -1,
+        weight: 1.0
       });
       this.cid_counter++;
     },
