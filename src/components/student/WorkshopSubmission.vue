@@ -20,15 +20,25 @@
         <form @submit.prevent="validateWorkshop" enctype="multipart/form-data">
           <md-field :class="getValidationClass('title')">
             <label>Titel</label>
-            <md-input name="title" v-model="title" :disabled="sending"></md-input>
+            <md-input
+              name="title"
+              v-model="title"
+              :disabled="sending"
+            ></md-input>
             <span class="md-error" v-if="!$v.title.required"
-              >A title is required</span>
+              >A title is required</span
+            >
           </md-field>
           <md-field :class="getValidationClass('comment')">
             <label>Kommentar</label>
-            <md-textarea name="comment" v-model="comment" :disabled="sending"></md-textarea>
+            <md-textarea
+              name="comment"
+              v-model="comment"
+              :disabled="sending"
+            ></md-textarea>
             <span class="md-error" v-if="!$v.comment.required"
-              >A comment is required</span>
+              >A comment is required</span
+            >
           </md-field>
           <md-field>
             <!--            <label>Abgabe</label>-->
@@ -188,7 +198,7 @@ export default {
     validateWorkshop() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        this.addSubmission();
+        this.onSubmit();
       }
     }
   },
