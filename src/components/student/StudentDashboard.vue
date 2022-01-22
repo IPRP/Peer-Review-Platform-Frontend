@@ -45,7 +45,7 @@
             <md-table-toolbar>
               <h1 class="md-title">Laufende Abgaben</h1>
             </md-table-toolbar>
-            <md-table-row v-for="(item, i) in this.submissionstodo" :key="i">
+            <md-table-row v-for="(item, i) in this.submissionstodo" :key="i" @click="showSubmission(item.id, item.workshopName)">
               <md-table-cell>
                 {{ item.workshopName }} (Abgabe fehlt)</md-table-cell
               >
@@ -103,6 +103,9 @@ export default {
     };
   },
   methods: {
+    showSubmission(id, name) {
+      router.push("/workshopsubmission/" + id + "/" + name);
+    },
     showWorkshopDetail(id) {
       router.push("/workshopoverview/" + id)
     },
