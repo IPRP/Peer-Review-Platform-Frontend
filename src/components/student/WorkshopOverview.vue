@@ -38,6 +38,7 @@
       </div>
       <div v-else>
         <h3>Noch nichts abgegeben</h3>
+        <md-button class="md-primary md-raised" :to="{ path: '/workshopsubmission/1/' + workshop.title}">Abgabe durchführen</md-button>
       </div>
     </div>
   </div>

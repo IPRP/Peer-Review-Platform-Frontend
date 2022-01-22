@@ -176,7 +176,7 @@
 
             <div class="d-flex">
               <md-button name="addcriteriabtn" class="prp-success md-raised" @click="addCriteria()">
-                <span class="p-1">Kriterium hinzugügen</span>
+                <span class="p-1">Kriterium hinzufügen</span>
                 <md-icon class="prp-success-icon">add</md-icon>
               </md-button>
             </div>

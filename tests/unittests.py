@@ -4,7 +4,7 @@ import time
 
 class PeerReviewTest(unittest.TestCase):
 
-    BASEURL = "http://localhost:8081/"
+    BASEURL = "https://iprp.dergeorg.at"
 
     def setUp(self):
         self.driver = webdriver.Firefox(executable_path="geckodriver.exe")
@@ -29,7 +29,7 @@ class PeerReviewTest(unittest.TestCase):
         password_field = self.driver.find_element_by_name("password")
         login_btn = self.driver.find_element_by_name("login")
 
-        username_field.send_keys("s1")
+        username_field.send_keys("s3")
         password_field.send_keys("1234")
         login_btn.click()
 

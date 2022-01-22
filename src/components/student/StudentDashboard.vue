@@ -70,8 +70,8 @@
           <md-table-toolbar>
             <h1 class="md-title">Meine Workshops</h1>
           </md-table-toolbar>
-          <md-table-row v-for="(workshop, w) in this.workshops" :key="w">
-            <md-table-cell>{{ workshop.title }}</md-table-cell>
+          <md-table-row v-for="(workshop, w) in this.workshops" :key="w"  @click="showWorkshopDetail(workshop.id)">
+            <md-table-cell >{{ workshop.title }}</md-table-cell>
             <md-table-cell class="prp-table-action-cell">
               <md-button
                 class="md-icon-button md-list-action"
@@ -91,6 +91,7 @@
 // import axios from "axios";
 import DataService from "../../services/DataService";
 import AuthHelper from "@/utils/AuthHelper";
+import router from "../../router";
 
 export default {
   name: "StudentDashboard",
@@ -102,6 +103,9 @@ export default {
     };
   },
   methods: {
+    showWorkshopDetail(id) {
+      router.push("/workshopoverview/" + id)
+    },
     getStudentWorkshops() {
       DataService.getStudentWorkshops(this.$parent.username, this.$parent.pw)
         .then(response => {

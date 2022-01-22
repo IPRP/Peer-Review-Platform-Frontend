@@ -598,12 +598,9 @@ export default {
 
     addCriteria() {
       this.form.criteria.push({
-        id: this.form.criteria.length + this.cid_counter + 1,
-        name: "Kriterium",
-        beschreibung: "Beschreibung",
-        janein: true,
-        prozent: -1,
-        punkte: -1,
+        title: "Kriterium",
+        content: "Beschreibung",
+        type: "point",
         weight: 1.0
       });
       this.cid_counter++;
